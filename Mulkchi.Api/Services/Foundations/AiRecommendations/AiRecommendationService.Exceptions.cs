@@ -93,6 +93,8 @@ public partial class AiRecommendationService
             message: "AiRecommendation validation error occurred, fix the errors and try again.",
             innerException: exception);
 
+        this.loggingBroker.LogError(aiRecommendationValidationException);
+
         return aiRecommendationValidationException;
     }
 
@@ -101,6 +103,8 @@ public partial class AiRecommendationService
         var aiRecommendationDependencyValidationException = new AiRecommendationDependencyValidationException(
             message: "AiRecommendation dependency validation error occurred, fix the errors and try again.",
             innerException: exception);
+
+        this.loggingBroker.LogError(aiRecommendationDependencyValidationException);
 
         return aiRecommendationDependencyValidationException;
     }
@@ -111,6 +115,8 @@ public partial class AiRecommendationService
             message: "AiRecommendation dependency error occurred, contact support.",
             innerException: exception);
 
+        this.loggingBroker.LogError(aiRecommendationDependencyException);
+
         return aiRecommendationDependencyException;
     }
 
@@ -119,6 +125,8 @@ public partial class AiRecommendationService
         var aiRecommendationServiceException = new AiRecommendationServiceException(
             message: "AiRecommendation service error occurred, contact support.",
             innerException: exception);
+
+        this.loggingBroker.LogError(aiRecommendationServiceException);
 
         return aiRecommendationServiceException;
     }

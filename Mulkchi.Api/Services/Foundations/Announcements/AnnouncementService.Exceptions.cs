@@ -93,6 +93,8 @@ public partial class AnnouncementService
             message: "Announcement validation error occurred, fix the errors and try again.",
             innerException: exception);
 
+        this.loggingBroker.LogError(announcementValidationException);
+
         return announcementValidationException;
     }
 
@@ -101,6 +103,8 @@ public partial class AnnouncementService
         var announcementDependencyValidationException = new AnnouncementDependencyValidationException(
             message: "Announcement dependency validation error occurred, fix the errors and try again.",
             innerException: exception);
+
+        this.loggingBroker.LogError(announcementDependencyValidationException);
 
         return announcementDependencyValidationException;
     }
@@ -111,6 +115,8 @@ public partial class AnnouncementService
             message: "Announcement dependency error occurred, contact support.",
             innerException: exception);
 
+        this.loggingBroker.LogError(announcementDependencyException);
+
         return announcementDependencyException;
     }
 
@@ -119,6 +125,8 @@ public partial class AnnouncementService
         var announcementServiceException = new AnnouncementServiceException(
             message: "Announcement service error occurred, contact support.",
             innerException: exception);
+
+        this.loggingBroker.LogError(announcementServiceException);
 
         return announcementServiceException;
     }

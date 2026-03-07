@@ -1,5 +1,7 @@
 using Mulkchi.Api.Models.Foundations.RentalContracts;
 using Mulkchi.Api.Models.Foundations.RentalContracts.Exceptions;
+using Mulkchi.Api.Brokers.DateTimes;
+using Mulkchi.Api.Brokers.Loggings;
 using Mulkchi.Api.Brokers.Storages;
 
 namespace Mulkchi.Api.Services.Foundations.RentalContracts;
@@ -7,10 +9,17 @@ namespace Mulkchi.Api.Services.Foundations.RentalContracts;
 public partial class RentalContractService : IRentalContractService
 {
     private readonly IStorageBroker storageBroker;
+    private readonly ILoggingBroker loggingBroker;
+    private readonly IDateTimeBroker dateTimeBroker;
 
-    public RentalContractService(IStorageBroker storageBroker)
+    public RentalContractService(
+        IStorageBroker storageBroker,
+        ILoggingBroker loggingBroker,
+        IDateTimeBroker dateTimeBroker)
     {
         this.storageBroker = storageBroker;
+        this.loggingBroker = loggingBroker;
+        this.dateTimeBroker = dateTimeBroker;
     }
 
     public ValueTask<RentalContract> AddRentalContractAsync(RentalContract rentalContract) =>

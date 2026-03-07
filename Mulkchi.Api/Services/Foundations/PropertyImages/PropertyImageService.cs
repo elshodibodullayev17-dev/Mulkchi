@@ -1,5 +1,7 @@
 using Mulkchi.Api.Models.Foundations.PropertyImages;
 using Mulkchi.Api.Models.Foundations.PropertyImages.Exceptions;
+using Mulkchi.Api.Brokers.DateTimes;
+using Mulkchi.Api.Brokers.Loggings;
 using Mulkchi.Api.Brokers.Storages;
 
 namespace Mulkchi.Api.Services.Foundations.PropertyImages;
@@ -7,10 +9,17 @@ namespace Mulkchi.Api.Services.Foundations.PropertyImages;
 public partial class PropertyImageService : IPropertyImageService
 {
     private readonly IStorageBroker storageBroker;
+    private readonly ILoggingBroker loggingBroker;
+    private readonly IDateTimeBroker dateTimeBroker;
 
-    public PropertyImageService(IStorageBroker storageBroker)
+    public PropertyImageService(
+        IStorageBroker storageBroker,
+        ILoggingBroker loggingBroker,
+        IDateTimeBroker dateTimeBroker)
     {
         this.storageBroker = storageBroker;
+        this.loggingBroker = loggingBroker;
+        this.dateTimeBroker = dateTimeBroker;
     }
 
     public ValueTask<PropertyImage> AddPropertyImageAsync(PropertyImage propertyImage) =>

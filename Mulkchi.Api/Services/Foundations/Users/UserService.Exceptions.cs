@@ -93,6 +93,8 @@ public partial class UserService
             message: "User validation error occurred, fix the errors and try again.",
             innerException: exception);
 
+        this.loggingBroker.LogError(userValidationException);
+
         return userValidationException;
     }
 
@@ -101,6 +103,8 @@ public partial class UserService
         var userDependencyValidationException = new UserDependencyValidationException(
             message: "User dependency validation error occurred, fix the errors and try again.",
             innerException: exception);
+
+        this.loggingBroker.LogError(userDependencyValidationException);
 
         return userDependencyValidationException;
     }
@@ -111,6 +115,8 @@ public partial class UserService
             message: "User dependency error occurred, contact support.",
             innerException: exception);
 
+        this.loggingBroker.LogError(userDependencyException);
+
         return userDependencyException;
     }
 
@@ -119,6 +125,8 @@ public partial class UserService
         var userServiceException = new UserServiceException(
             message: "User service error occurred, contact support.",
             innerException: exception);
+
+        this.loggingBroker.LogError(userServiceException);
 
         return userServiceException;
     }

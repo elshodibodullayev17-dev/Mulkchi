@@ -1,5 +1,7 @@
 using Mulkchi.Api.Models.Foundations.AIs;
 using Mulkchi.Api.Models.Foundations.AIs.Exceptions;
+using Mulkchi.Api.Brokers.DateTimes;
+using Mulkchi.Api.Brokers.Loggings;
 using Mulkchi.Api.Brokers.Storages;
 
 namespace Mulkchi.Api.Services.Foundations.AiRecommendations;
@@ -7,10 +9,17 @@ namespace Mulkchi.Api.Services.Foundations.AiRecommendations;
 public partial class AiRecommendationService : IAiRecommendationService
 {
     private readonly IStorageBroker storageBroker;
+    private readonly ILoggingBroker loggingBroker;
+    private readonly IDateTimeBroker dateTimeBroker;
 
-    public AiRecommendationService(IStorageBroker storageBroker)
+    public AiRecommendationService(
+        IStorageBroker storageBroker,
+        ILoggingBroker loggingBroker,
+        IDateTimeBroker dateTimeBroker)
     {
         this.storageBroker = storageBroker;
+        this.loggingBroker = loggingBroker;
+        this.dateTimeBroker = dateTimeBroker;
     }
 
     public ValueTask<AiRecommendation> AddAiRecommendationAsync(AiRecommendation aiRecommendation) =>

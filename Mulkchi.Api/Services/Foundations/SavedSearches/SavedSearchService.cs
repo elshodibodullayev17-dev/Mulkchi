@@ -1,5 +1,7 @@
 using Mulkchi.Api.Models.Foundations.SavedSearches;
 using Mulkchi.Api.Models.Foundations.SavedSearches.Exceptions;
+using Mulkchi.Api.Brokers.DateTimes;
+using Mulkchi.Api.Brokers.Loggings;
 using Mulkchi.Api.Brokers.Storages;
 
 namespace Mulkchi.Api.Services.Foundations.SavedSearches;
@@ -7,10 +9,17 @@ namespace Mulkchi.Api.Services.Foundations.SavedSearches;
 public partial class SavedSearchService : ISavedSearchService
 {
     private readonly IStorageBroker storageBroker;
+    private readonly ILoggingBroker loggingBroker;
+    private readonly IDateTimeBroker dateTimeBroker;
 
-    public SavedSearchService(IStorageBroker storageBroker)
+    public SavedSearchService(
+        IStorageBroker storageBroker,
+        ILoggingBroker loggingBroker,
+        IDateTimeBroker dateTimeBroker)
     {
         this.storageBroker = storageBroker;
+        this.loggingBroker = loggingBroker;
+        this.dateTimeBroker = dateTimeBroker;
     }
 
     public ValueTask<SavedSearch> AddSavedSearchAsync(SavedSearch savedSearch) =>

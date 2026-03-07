@@ -1,5 +1,7 @@
 using Mulkchi.Api.Models.Foundations.HomeRequests;
 using Mulkchi.Api.Models.Foundations.HomeRequests.Exceptions;
+using Mulkchi.Api.Brokers.DateTimes;
+using Mulkchi.Api.Brokers.Loggings;
 using Mulkchi.Api.Brokers.Storages;
 
 namespace Mulkchi.Api.Services.Foundations.HomeRequests;
@@ -7,10 +9,17 @@ namespace Mulkchi.Api.Services.Foundations.HomeRequests;
 public partial class HomeRequestService : IHomeRequestService
 {
     private readonly IStorageBroker storageBroker;
+    private readonly ILoggingBroker loggingBroker;
+    private readonly IDateTimeBroker dateTimeBroker;
 
-    public HomeRequestService(IStorageBroker storageBroker)
+    public HomeRequestService(
+        IStorageBroker storageBroker,
+        ILoggingBroker loggingBroker,
+        IDateTimeBroker dateTimeBroker)
     {
         this.storageBroker = storageBroker;
+        this.loggingBroker = loggingBroker;
+        this.dateTimeBroker = dateTimeBroker;
     }
 
     public ValueTask<HomeRequest> AddHomeRequestAsync(HomeRequest homeRequest) =>

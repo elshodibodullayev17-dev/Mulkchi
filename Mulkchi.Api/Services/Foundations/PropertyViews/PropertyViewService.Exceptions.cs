@@ -93,6 +93,8 @@ public partial class PropertyViewService
             message: "PropertyView validation error occurred, fix the errors and try again.",
             innerException: exception);
 
+        this.loggingBroker.LogError(propertyViewValidationException);
+
         return propertyViewValidationException;
     }
 
@@ -101,6 +103,8 @@ public partial class PropertyViewService
         var propertyViewDependencyValidationException = new PropertyViewDependencyValidationException(
             message: "PropertyView dependency validation error occurred, fix the errors and try again.",
             innerException: exception);
+
+        this.loggingBroker.LogError(propertyViewDependencyValidationException);
 
         return propertyViewDependencyValidationException;
     }
@@ -111,6 +115,8 @@ public partial class PropertyViewService
             message: "PropertyView dependency error occurred, contact support.",
             innerException: exception);
 
+        this.loggingBroker.LogError(propertyViewDependencyException);
+
         return propertyViewDependencyException;
     }
 
@@ -119,6 +125,8 @@ public partial class PropertyViewService
         var propertyViewServiceException = new PropertyViewServiceException(
             message: "PropertyView service error occurred, contact support.",
             innerException: exception);
+
+        this.loggingBroker.LogError(propertyViewServiceException);
 
         return propertyViewServiceException;
     }

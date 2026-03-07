@@ -1,5 +1,7 @@
 using Mulkchi.Api.Models.Foundations.Discounts;
 using Mulkchi.Api.Models.Foundations.Discounts.Exceptions;
+using Mulkchi.Api.Brokers.DateTimes;
+using Mulkchi.Api.Brokers.Loggings;
 using Mulkchi.Api.Brokers.Storages;
 
 namespace Mulkchi.Api.Services.Foundations.Discounts;
@@ -7,10 +9,17 @@ namespace Mulkchi.Api.Services.Foundations.Discounts;
 public partial class DiscountService : IDiscountService
 {
     private readonly IStorageBroker storageBroker;
+    private readonly ILoggingBroker loggingBroker;
+    private readonly IDateTimeBroker dateTimeBroker;
 
-    public DiscountService(IStorageBroker storageBroker)
+    public DiscountService(
+        IStorageBroker storageBroker,
+        ILoggingBroker loggingBroker,
+        IDateTimeBroker dateTimeBroker)
     {
         this.storageBroker = storageBroker;
+        this.loggingBroker = loggingBroker;
+        this.dateTimeBroker = dateTimeBroker;
     }
 
     public ValueTask<Discount> AddDiscountAsync(Discount discount) =>

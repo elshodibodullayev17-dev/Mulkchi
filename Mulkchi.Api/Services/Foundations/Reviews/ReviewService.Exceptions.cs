@@ -93,6 +93,8 @@ public partial class ReviewService
             message: "Review validation error occurred, fix the errors and try again.",
             innerException: exception);
 
+        this.loggingBroker.LogError(reviewValidationException);
+
         return reviewValidationException;
     }
 
@@ -101,6 +103,8 @@ public partial class ReviewService
         var reviewDependencyValidationException = new ReviewDependencyValidationException(
             message: "Review dependency validation error occurred, fix the errors and try again.",
             innerException: exception);
+
+        this.loggingBroker.LogError(reviewDependencyValidationException);
 
         return reviewDependencyValidationException;
     }
@@ -111,6 +115,8 @@ public partial class ReviewService
             message: "Review dependency error occurred, contact support.",
             innerException: exception);
 
+        this.loggingBroker.LogError(reviewDependencyException);
+
         return reviewDependencyException;
     }
 
@@ -119,6 +125,8 @@ public partial class ReviewService
         var reviewServiceException = new ReviewServiceException(
             message: "Review service error occurred, contact support.",
             innerException: exception);
+
+        this.loggingBroker.LogError(reviewServiceException);
 
         return reviewServiceException;
     }

@@ -93,6 +93,8 @@ public partial class PropertyImageService
             message: "PropertyImage validation error occurred, fix the errors and try again.",
             innerException: exception);
 
+        this.loggingBroker.LogError(propertyImageValidationException);
+
         return propertyImageValidationException;
     }
 
@@ -101,6 +103,8 @@ public partial class PropertyImageService
         var propertyImageDependencyValidationException = new PropertyImageDependencyValidationException(
             message: "PropertyImage dependency validation error occurred, fix the errors and try again.",
             innerException: exception);
+
+        this.loggingBroker.LogError(propertyImageDependencyValidationException);
 
         return propertyImageDependencyValidationException;
     }
@@ -111,6 +115,8 @@ public partial class PropertyImageService
             message: "PropertyImage dependency error occurred, contact support.",
             innerException: exception);
 
+        this.loggingBroker.LogError(propertyImageDependencyException);
+
         return propertyImageDependencyException;
     }
 
@@ -119,6 +125,8 @@ public partial class PropertyImageService
         var propertyImageServiceException = new PropertyImageServiceException(
             message: "PropertyImage service error occurred, contact support.",
             innerException: exception);
+
+        this.loggingBroker.LogError(propertyImageServiceException);
 
         return propertyImageServiceException;
     }

@@ -3,6 +3,8 @@ using Microsoft.Data.SqlClient;
 using Moq;
 using Tynamix.ObjectFiller;
 using FluentAssertions;
+using Mulkchi.Api.Brokers.DateTimes;
+using Mulkchi.Api.Brokers.Loggings;
 using Mulkchi.Api.Brokers.Storages;
 using Mulkchi.Api.Models.Foundations.Favorites;
 using Mulkchi.Api.Services.Foundations.Favorites;
@@ -12,12 +14,19 @@ namespace Mulkchi.Api.Tests.Unit.Tests.Foundations.Favorites;
 public partial class FavoriteServiceTests
 {
     private readonly Mock<IStorageBroker> storageBrokerMock;
+    private readonly Mock<ILoggingBroker> loggingBrokerMock;
+    private readonly Mock<IDateTimeBroker> dateTimeBrokerMock;
     private readonly IFavoriteService favoriteService;
 
     public FavoriteServiceTests()
     {
         this.storageBrokerMock = new Mock<IStorageBroker>();
-        this.favoriteService = new FavoriteService(this.storageBrokerMock.Object);
+        this.loggingBrokerMock = new Mock<ILoggingBroker>();
+        this.dateTimeBrokerMock = new Mock<IDateTimeBroker>();
+        this.favoriteService = new FavoriteService(
+            this.storageBrokerMock.Object,
+            this.loggingBrokerMock.Object,
+            this.dateTimeBrokerMock.Object);
     }
 
     private static Favorite CreateRandomFavorite()
