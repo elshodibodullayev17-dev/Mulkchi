@@ -39,6 +39,9 @@ public partial class AuthService
         if (IsInvalid(request.Email))
             invalidRegisterRequestException.UpsertDataList(nameof(RegisterRequest.Email), "Value is required.");
 
+        if (IsInvalid(request.Phone))
+            invalidRegisterRequestException.UpsertDataList(nameof(RegisterRequest.Phone), "Value is required.");
+
         if (IsInvalid(request.Password))
             invalidRegisterRequestException.UpsertDataList(nameof(RegisterRequest.Password), "Value is required.");
 

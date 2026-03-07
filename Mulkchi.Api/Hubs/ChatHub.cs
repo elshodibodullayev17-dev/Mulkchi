@@ -21,8 +21,12 @@ public class ChatHub : Hub
     }
 
     // Send message to specific user and save to DB
-    public async Task SendMessage(Guid senderId, Guid receiverId, string content)
+    public async Task SendMessage(Guid receiverId, string content)
     {
+        var userIdClaim = Context.User?.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
+        if (userIdClaim is null || !Guid.TryParse(userIdClaim.Value, out Guid senderId))
+            throw new HubException("Unauthorized: invalid or missing token.");
+
         try
         {
             var message = new Message

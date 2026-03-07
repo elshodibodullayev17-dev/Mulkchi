@@ -34,7 +34,9 @@ public partial class DiscountServiceTests
         var filler = new Filler<Discount>();
         filler.Setup()
             .OnType<DateTimeOffset>().Use(() => DateTimeOffset.UtcNow)
-            .OnType<DateTimeOffset?>().Use(() => (DateTimeOffset?)DateTimeOffset.UtcNow);
+            .OnType<DateTimeOffset?>().Use(() => (DateTimeOffset?)DateTimeOffset.UtcNow)
+            .OnProperty(d => d.Value).Use(() => (decimal)Random.Shared.Next(1, 100))
+            .OnProperty(d => d.ExpiresAt).Use(() => (DateTimeOffset?)DateTimeOffset.UtcNow.AddDays(Random.Shared.Next(1, 365)));
 
         return filler.Create();
     }

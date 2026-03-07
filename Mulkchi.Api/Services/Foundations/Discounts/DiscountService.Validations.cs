@@ -11,7 +11,9 @@ public partial class DiscountService
         ValidateDiscountIsNotNull(discount);
         Validate(
         (Rule: IsInvalid(discount.Id), Parameter: nameof(Discount.Id)),
-        (Rule: IsInvalid(discount.Code), Parameter: nameof(Discount.Code)));
+        (Rule: IsInvalid(discount.Code), Parameter: nameof(Discount.Code)),
+        (Rule: IsInvalidOrNegative(discount.Value), Parameter: nameof(Discount.Value)),
+        (Rule: IsExpired(discount.ExpiresAt), Parameter: nameof(Discount.ExpiresAt)));
     }
 
     private void ValidateDiscountOnModify(Discount discount)
@@ -19,7 +21,9 @@ public partial class DiscountService
         ValidateDiscountIsNotNull(discount);
         Validate(
         (Rule: IsInvalid(discount.Id), Parameter: nameof(Discount.Id)),
-        (Rule: IsInvalid(discount.Code), Parameter: nameof(Discount.Code)));
+        (Rule: IsInvalid(discount.Code), Parameter: nameof(Discount.Code)),
+        (Rule: IsInvalidOrNegative(discount.Value), Parameter: nameof(Discount.Value)),
+        (Rule: IsExpired(discount.ExpiresAt), Parameter: nameof(Discount.ExpiresAt)));
     }
 
     private static void ValidateDiscountId(Guid discountId)
@@ -47,6 +51,18 @@ public partial class DiscountService
     {
         Condition = string.IsNullOrWhiteSpace(text),
         Message = "Value is required."
+    };
+
+    private static dynamic IsInvalidOrNegative(decimal value) => new
+    {
+        Condition = value <= 0,
+        Message = "Value must be greater than zero."
+    };
+
+    private static dynamic IsExpired(DateTimeOffset? expiresAt) => new
+    {
+        Condition = expiresAt.HasValue && expiresAt.Value <= DateTimeOffset.UtcNow,
+        Message = "Expiry date must be in the future."
     };
 
     private void Validate(params (dynamic Rule, string Parameter)[] validations)
