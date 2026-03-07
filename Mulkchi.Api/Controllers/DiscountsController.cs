@@ -1,0 +1,155 @@
+using Microsoft.AspNetCore.Mvc;
+using Mulkchi.Api.Models.Foundations.Discounts;
+using Mulkchi.Api.Models.Foundations.Discounts.Exceptions;
+using Mulkchi.Api.Services.Foundations.Discounts;
+
+namespace Mulkchi.Api.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public class DiscountsController : ControllerBase
+{
+    private readonly IDiscountService discountService;
+
+    public DiscountsController(IDiscountService discountService)
+    {
+        this.discountService = discountService;
+    }
+
+    [HttpPost]
+    public async ValueTask<ActionResult<Discount>> PostDiscountAsync(Discount discount)
+    {
+        try
+        {
+            Discount addedDiscount = await this.discountService.AddDiscountAsync(discount);
+            return Created("discount", addedDiscount);
+        }
+        catch (DiscountValidationException discountValidationException)
+        {
+            return BadRequest(discountValidationException.InnerException);
+        }
+        catch (DiscountDependencyValidationException discountDependencyValidationException)
+        {
+            return BadRequest(discountDependencyValidationException.InnerException);
+        }
+        catch (DiscountDependencyException discountDependencyException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, discountDependencyException.InnerException);
+        }
+        catch (DiscountServiceException discountServiceException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, discountServiceException.InnerException);
+        }
+    }
+
+    [HttpGet]
+    public ActionResult<IQueryable<Discount>> GetAllDiscounts()
+    {
+        try
+        {
+            IQueryable<Discount> discounts = this.discountService.RetrieveAllDiscounts();
+            return Ok(discounts);
+        }
+        catch (DiscountDependencyException discountDependencyException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, discountDependencyException.InnerException);
+        }
+        catch (DiscountServiceException discountServiceException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, discountServiceException.InnerException);
+        }
+    }
+
+    [HttpGet("{id}")]
+    public async ValueTask<ActionResult<Discount>> GetDiscountByIdAsync(Guid id)
+    {
+        try
+        {
+            Discount discount = await this.discountService.RetrieveDiscountByIdAsync(id);
+            return Ok(discount);
+        }
+        catch (DiscountValidationException discountValidationException)
+        {
+            return BadRequest(discountValidationException.InnerException);
+        }
+        catch (DiscountDependencyValidationException discountDependencyValidationException)
+            when (discountDependencyValidationException.InnerException is NotFoundDiscountException)
+        {
+            return NotFound(discountDependencyValidationException.InnerException);
+        }
+        catch (DiscountDependencyValidationException discountDependencyValidationException)
+        {
+            return BadRequest(discountDependencyValidationException.InnerException);
+        }
+        catch (DiscountDependencyException discountDependencyException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, discountDependencyException.InnerException);
+        }
+        catch (DiscountServiceException discountServiceException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, discountServiceException.InnerException);
+        }
+    }
+
+    [HttpPut]
+    public async ValueTask<ActionResult<Discount>> PutDiscountAsync(Discount discount)
+    {
+        try
+        {
+            Discount modifiedDiscount = await this.discountService.ModifyDiscountAsync(discount);
+            return Ok(modifiedDiscount);
+        }
+        catch (DiscountValidationException discountValidationException)
+        {
+            return BadRequest(discountValidationException.InnerException);
+        }
+        catch (DiscountDependencyValidationException discountDependencyValidationException)
+            when (discountDependencyValidationException.InnerException is NotFoundDiscountException)
+        {
+            return NotFound(discountDependencyValidationException.InnerException);
+        }
+        catch (DiscountDependencyValidationException discountDependencyValidationException)
+        {
+            return BadRequest(discountDependencyValidationException.InnerException);
+        }
+        catch (DiscountDependencyException discountDependencyException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, discountDependencyException.InnerException);
+        }
+        catch (DiscountServiceException discountServiceException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, discountServiceException.InnerException);
+        }
+    }
+
+    [HttpDelete("{id}")]
+    public async ValueTask<ActionResult<Discount>> DeleteDiscountByIdAsync(Guid id)
+    {
+        try
+        {
+            Discount deletedDiscount = await this.discountService.RemoveDiscountByIdAsync(id);
+            return Ok(deletedDiscount);
+        }
+        catch (DiscountValidationException discountValidationException)
+        {
+            return BadRequest(discountValidationException.InnerException);
+        }
+        catch (DiscountDependencyValidationException discountDependencyValidationException)
+            when (discountDependencyValidationException.InnerException is NotFoundDiscountException)
+        {
+            return NotFound(discountDependencyValidationException.InnerException);
+        }
+        catch (DiscountDependencyValidationException discountDependencyValidationException)
+        {
+            return BadRequest(discountDependencyValidationException.InnerException);
+        }
+        catch (DiscountDependencyException discountDependencyException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, discountDependencyException.InnerException);
+        }
+        catch (DiscountServiceException discountServiceException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, discountServiceException.InnerException);
+        }
+    }
+}

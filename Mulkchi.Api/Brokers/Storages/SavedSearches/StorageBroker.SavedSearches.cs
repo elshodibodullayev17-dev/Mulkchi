@@ -1,0 +1,37 @@
+using Microsoft.EntityFrameworkCore;
+using Mulkchi.Api.Models.Foundations.SavedSearches;
+
+namespace Mulkchi.Api.Brokers.Storages;
+
+public partial class StorageBroker
+{
+    public DbSet<SavedSearch> SavedSearches { get; set; }
+
+    public async ValueTask<SavedSearch> InsertSavedSearchAsync(SavedSearch savedSearch)
+    {
+        var entry = await this.SavedSearches.AddAsync(savedSearch);
+        await this.SaveChangesAsync();
+        return entry.Entity;
+    }
+
+    public IQueryable<SavedSearch> SelectAllSavedSearches()
+        => this.SavedSearches.AsQueryable();
+
+    public async ValueTask<SavedSearch> SelectSavedSearchByIdAsync(Guid savedSearchId)
+        => (await this.SavedSearches.FindAsync(savedSearchId))!;
+
+    public async ValueTask<SavedSearch> UpdateSavedSearchAsync(SavedSearch savedSearch)
+    {
+        this.Entry(savedSearch).State = EntityState.Modified;
+        await this.SaveChangesAsync();
+        return savedSearch;
+    }
+
+    public async ValueTask<SavedSearch> DeleteSavedSearchByIdAsync(Guid savedSearchId)
+    {
+        SavedSearch savedSearch = (await this.SavedSearches.FindAsync(savedSearchId))!;
+        this.SavedSearches.Remove(savedSearch);
+        await this.SaveChangesAsync();
+        return savedSearch;
+    }
+}

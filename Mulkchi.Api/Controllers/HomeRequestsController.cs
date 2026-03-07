@@ -1,0 +1,155 @@
+using Microsoft.AspNetCore.Mvc;
+using Mulkchi.Api.Models.Foundations.HomeRequests;
+using Mulkchi.Api.Models.Foundations.HomeRequests.Exceptions;
+using Mulkchi.Api.Services.Foundations.HomeRequests;
+
+namespace Mulkchi.Api.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public class HomeRequestsController : ControllerBase
+{
+    private readonly IHomeRequestService homeRequestService;
+
+    public HomeRequestsController(IHomeRequestService homeRequestService)
+    {
+        this.homeRequestService = homeRequestService;
+    }
+
+    [HttpPost]
+    public async ValueTask<ActionResult<HomeRequest>> PostHomeRequestAsync(HomeRequest homeRequest)
+    {
+        try
+        {
+            HomeRequest addedHomeRequest = await this.homeRequestService.AddHomeRequestAsync(homeRequest);
+            return Created("homeRequest", addedHomeRequest);
+        }
+        catch (HomeRequestValidationException homeRequestValidationException)
+        {
+            return BadRequest(homeRequestValidationException.InnerException);
+        }
+        catch (HomeRequestDependencyValidationException homeRequestDependencyValidationException)
+        {
+            return BadRequest(homeRequestDependencyValidationException.InnerException);
+        }
+        catch (HomeRequestDependencyException homeRequestDependencyException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, homeRequestDependencyException.InnerException);
+        }
+        catch (HomeRequestServiceException homeRequestServiceException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, homeRequestServiceException.InnerException);
+        }
+    }
+
+    [HttpGet]
+    public ActionResult<IQueryable<HomeRequest>> GetAllHomeRequests()
+    {
+        try
+        {
+            IQueryable<HomeRequest> homeRequests = this.homeRequestService.RetrieveAllHomeRequests();
+            return Ok(homeRequests);
+        }
+        catch (HomeRequestDependencyException homeRequestDependencyException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, homeRequestDependencyException.InnerException);
+        }
+        catch (HomeRequestServiceException homeRequestServiceException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, homeRequestServiceException.InnerException);
+        }
+    }
+
+    [HttpGet("{id}")]
+    public async ValueTask<ActionResult<HomeRequest>> GetHomeRequestByIdAsync(Guid id)
+    {
+        try
+        {
+            HomeRequest homeRequest = await this.homeRequestService.RetrieveHomeRequestByIdAsync(id);
+            return Ok(homeRequest);
+        }
+        catch (HomeRequestValidationException homeRequestValidationException)
+        {
+            return BadRequest(homeRequestValidationException.InnerException);
+        }
+        catch (HomeRequestDependencyValidationException homeRequestDependencyValidationException)
+            when (homeRequestDependencyValidationException.InnerException is NotFoundHomeRequestException)
+        {
+            return NotFound(homeRequestDependencyValidationException.InnerException);
+        }
+        catch (HomeRequestDependencyValidationException homeRequestDependencyValidationException)
+        {
+            return BadRequest(homeRequestDependencyValidationException.InnerException);
+        }
+        catch (HomeRequestDependencyException homeRequestDependencyException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, homeRequestDependencyException.InnerException);
+        }
+        catch (HomeRequestServiceException homeRequestServiceException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, homeRequestServiceException.InnerException);
+        }
+    }
+
+    [HttpPut]
+    public async ValueTask<ActionResult<HomeRequest>> PutHomeRequestAsync(HomeRequest homeRequest)
+    {
+        try
+        {
+            HomeRequest modifiedHomeRequest = await this.homeRequestService.ModifyHomeRequestAsync(homeRequest);
+            return Ok(modifiedHomeRequest);
+        }
+        catch (HomeRequestValidationException homeRequestValidationException)
+        {
+            return BadRequest(homeRequestValidationException.InnerException);
+        }
+        catch (HomeRequestDependencyValidationException homeRequestDependencyValidationException)
+            when (homeRequestDependencyValidationException.InnerException is NotFoundHomeRequestException)
+        {
+            return NotFound(homeRequestDependencyValidationException.InnerException);
+        }
+        catch (HomeRequestDependencyValidationException homeRequestDependencyValidationException)
+        {
+            return BadRequest(homeRequestDependencyValidationException.InnerException);
+        }
+        catch (HomeRequestDependencyException homeRequestDependencyException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, homeRequestDependencyException.InnerException);
+        }
+        catch (HomeRequestServiceException homeRequestServiceException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, homeRequestServiceException.InnerException);
+        }
+    }
+
+    [HttpDelete("{id}")]
+    public async ValueTask<ActionResult<HomeRequest>> DeleteHomeRequestByIdAsync(Guid id)
+    {
+        try
+        {
+            HomeRequest deletedHomeRequest = await this.homeRequestService.RemoveHomeRequestByIdAsync(id);
+            return Ok(deletedHomeRequest);
+        }
+        catch (HomeRequestValidationException homeRequestValidationException)
+        {
+            return BadRequest(homeRequestValidationException.InnerException);
+        }
+        catch (HomeRequestDependencyValidationException homeRequestDependencyValidationException)
+            when (homeRequestDependencyValidationException.InnerException is NotFoundHomeRequestException)
+        {
+            return NotFound(homeRequestDependencyValidationException.InnerException);
+        }
+        catch (HomeRequestDependencyValidationException homeRequestDependencyValidationException)
+        {
+            return BadRequest(homeRequestDependencyValidationException.InnerException);
+        }
+        catch (HomeRequestDependencyException homeRequestDependencyException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, homeRequestDependencyException.InnerException);
+        }
+        catch (HomeRequestServiceException homeRequestServiceException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, homeRequestServiceException.InnerException);
+        }
+    }
+}

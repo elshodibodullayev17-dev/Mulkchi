@@ -5,6 +5,21 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Mulkchi.Api.Brokers.Storages;
 using Mulkchi.Api.Hubs;
+using Mulkchi.Api.Services.Foundations.Users;
+using Mulkchi.Api.Services.Foundations.Properties;
+using Mulkchi.Api.Services.Foundations.HomeRequests;
+using Mulkchi.Api.Services.Foundations.Payments;
+using Mulkchi.Api.Services.Foundations.Reviews;
+using Mulkchi.Api.Services.Foundations.Messages;
+using Mulkchi.Api.Services.Foundations.Notifications;
+using Mulkchi.Api.Services.Foundations.RentalContracts;
+using Mulkchi.Api.Services.Foundations.Favorites;
+using Mulkchi.Api.Services.Foundations.SavedSearches;
+using Mulkchi.Api.Services.Foundations.PropertyImages;
+using Mulkchi.Api.Services.Foundations.PropertyViews;
+using Mulkchi.Api.Services.Foundations.AiRecommendations;
+using Mulkchi.Api.Services.Foundations.Discounts;
+using Mulkchi.Api.Services.Foundations.Announcements;
 
 namespace Mulkchi.Api;
 
@@ -24,6 +39,7 @@ public class Startup
         AddSwagger(services);
         AddJwtAuthentication(services);
         AddDbContext(services);
+        AddFoundationServices(services);
         services.AddSignalR();
         AddCors(services);
     }
@@ -114,6 +130,25 @@ public class Startup
         });
 
         services.AddAuthorization();
+    }
+
+    private void AddFoundationServices(IServiceCollection services)
+    {
+        services.AddScoped<IUserService, UserService>();
+        services.AddScoped<IPropertyService, PropertyService>();
+        services.AddScoped<IHomeRequestService, HomeRequestService>();
+        services.AddScoped<IPaymentService, PaymentService>();
+        services.AddScoped<IReviewService, ReviewService>();
+        services.AddScoped<IMessageService, MessageService>();
+        services.AddScoped<INotificationService, NotificationService>();
+        services.AddScoped<IRentalContractService, RentalContractService>();
+        services.AddScoped<IFavoriteService, FavoriteService>();
+        services.AddScoped<ISavedSearchService, SavedSearchService>();
+        services.AddScoped<IPropertyImageService, PropertyImageService>();
+        services.AddScoped<IPropertyViewService, PropertyViewService>();
+        services.AddScoped<IAiRecommendationService, AiRecommendationService>();
+        services.AddScoped<IDiscountService, DiscountService>();
+        services.AddScoped<IAnnouncementService, AnnouncementService>();
     }
 
     private void AddDbContext(IServiceCollection services)

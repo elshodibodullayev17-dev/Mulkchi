@@ -1,0 +1,12 @@
+using Mulkchi.Api.Models.Foundations.AIs;
+
+namespace Mulkchi.Api.Services.Foundations.AiRecommendations;
+
+public interface IAiRecommendationService
+{
+    ValueTask<AiRecommendation> AddAiRecommendationAsync(AiRecommendation aiRecommendation);
+    IQueryable<AiRecommendation> RetrieveAllAiRecommendations();
+    ValueTask<AiRecommendation> RetrieveAiRecommendationByIdAsync(Guid aiRecommendationId);
+    ValueTask<AiRecommendation> ModifyAiRecommendationAsync(AiRecommendation aiRecommendation);
+    ValueTask<AiRecommendation> RemoveAiRecommendationByIdAsync(Guid aiRecommendationId);
+}

@@ -1,0 +1,155 @@
+using Microsoft.AspNetCore.Mvc;
+using Mulkchi.Api.Models.Foundations.Users;
+using Mulkchi.Api.Models.Foundations.Users.Exceptions;
+using Mulkchi.Api.Services.Foundations.Users;
+
+namespace Mulkchi.Api.Controllers;
+
+[ApiController]
+[Route("api/[controller]")]
+public class UsersController : ControllerBase
+{
+    private readonly IUserService userService;
+
+    public UsersController(IUserService userService)
+    {
+        this.userService = userService;
+    }
+
+    [HttpPost]
+    public async ValueTask<ActionResult<User>> PostUserAsync(User user)
+    {
+        try
+        {
+            User addedUser = await this.userService.AddUserAsync(user);
+            return Created("user", addedUser);
+        }
+        catch (UserValidationException userValidationException)
+        {
+            return BadRequest(userValidationException.InnerException);
+        }
+        catch (UserDependencyValidationException userDependencyValidationException)
+        {
+            return BadRequest(userDependencyValidationException.InnerException);
+        }
+        catch (UserDependencyException userDependencyException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, userDependencyException.InnerException);
+        }
+        catch (UserServiceException userServiceException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, userServiceException.InnerException);
+        }
+    }
+
+    [HttpGet]
+    public ActionResult<IQueryable<User>> GetAllUsers()
+    {
+        try
+        {
+            IQueryable<User> users = this.userService.RetrieveAllUsers();
+            return Ok(users);
+        }
+        catch (UserDependencyException userDependencyException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, userDependencyException.InnerException);
+        }
+        catch (UserServiceException userServiceException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, userServiceException.InnerException);
+        }
+    }
+
+    [HttpGet("{id}")]
+    public async ValueTask<ActionResult<User>> GetUserByIdAsync(Guid id)
+    {
+        try
+        {
+            User user = await this.userService.RetrieveUserByIdAsync(id);
+            return Ok(user);
+        }
+        catch (UserValidationException userValidationException)
+        {
+            return BadRequest(userValidationException.InnerException);
+        }
+        catch (UserDependencyValidationException userDependencyValidationException)
+            when (userDependencyValidationException.InnerException is NotFoundUserException)
+        {
+            return NotFound(userDependencyValidationException.InnerException);
+        }
+        catch (UserDependencyValidationException userDependencyValidationException)
+        {
+            return BadRequest(userDependencyValidationException.InnerException);
+        }
+        catch (UserDependencyException userDependencyException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, userDependencyException.InnerException);
+        }
+        catch (UserServiceException userServiceException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, userServiceException.InnerException);
+        }
+    }
+
+    [HttpPut]
+    public async ValueTask<ActionResult<User>> PutUserAsync(User user)
+    {
+        try
+        {
+            User modifiedUser = await this.userService.ModifyUserAsync(user);
+            return Ok(modifiedUser);
+        }
+        catch (UserValidationException userValidationException)
+        {
+            return BadRequest(userValidationException.InnerException);
+        }
+        catch (UserDependencyValidationException userDependencyValidationException)
+            when (userDependencyValidationException.InnerException is NotFoundUserException)
+        {
+            return NotFound(userDependencyValidationException.InnerException);
+        }
+        catch (UserDependencyValidationException userDependencyValidationException)
+        {
+            return BadRequest(userDependencyValidationException.InnerException);
+        }
+        catch (UserDependencyException userDependencyException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, userDependencyException.InnerException);
+        }
+        catch (UserServiceException userServiceException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, userServiceException.InnerException);
+        }
+    }
+
+    [HttpDelete("{id}")]
+    public async ValueTask<ActionResult<User>> DeleteUserByIdAsync(Guid id)
+    {
+        try
+        {
+            User deletedUser = await this.userService.RemoveUserByIdAsync(id);
+            return Ok(deletedUser);
+        }
+        catch (UserValidationException userValidationException)
+        {
+            return BadRequest(userValidationException.InnerException);
+        }
+        catch (UserDependencyValidationException userDependencyValidationException)
+            when (userDependencyValidationException.InnerException is NotFoundUserException)
+        {
+            return NotFound(userDependencyValidationException.InnerException);
+        }
+        catch (UserDependencyValidationException userDependencyValidationException)
+        {
+            return BadRequest(userDependencyValidationException.InnerException);
+        }
+        catch (UserDependencyException userDependencyException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, userDependencyException.InnerException);
+        }
+        catch (UserServiceException userServiceException)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, userServiceException.InnerException);
+        }
+    }
+}

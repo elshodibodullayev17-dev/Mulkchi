@@ -1,0 +1,37 @@
+using Microsoft.EntityFrameworkCore;
+using Mulkchi.Api.Models.Foundations.Properties;
+
+namespace Mulkchi.Api.Brokers.Storages;
+
+public partial class StorageBroker
+{
+    public DbSet<Property> Properties { get; set; }
+
+    public async ValueTask<Property> InsertPropertyAsync(Property property)
+    {
+        var entry = await this.Properties.AddAsync(property);
+        await this.SaveChangesAsync();
+        return entry.Entity;
+    }
+
+    public IQueryable<Property> SelectAllProperties()
+        => this.Properties.AsQueryable();
+
+    public async ValueTask<Property> SelectPropertyByIdAsync(Guid propertyId)
+        => (await this.Properties.FindAsync(propertyId))!;
+
+    public async ValueTask<Property> UpdatePropertyAsync(Property property)
+    {
+        this.Entry(property).State = EntityState.Modified;
+        await this.SaveChangesAsync();
+        return property;
+    }
+
+    public async ValueTask<Property> DeletePropertyByIdAsync(Guid propertyId)
+    {
+        Property property = (await this.Properties.FindAsync(propertyId))!;
+        this.Properties.Remove(property);
+        await this.SaveChangesAsync();
+        return property;
+    }
+}
