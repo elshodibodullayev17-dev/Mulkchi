@@ -17,33 +17,6 @@ public class UsersController : ControllerBase
         this.userService = userService;
     }
 
-    [HttpPost]
-    [AllowAnonymous]
-    public async ValueTask<ActionResult<User>> PostUserAsync(User user)
-    {
-        try
-        {
-            User addedUser = await this.userService.AddUserAsync(user);
-            return Created("user", addedUser);
-        }
-        catch (UserValidationException userValidationException)
-        {
-            return BadRequest(userValidationException.InnerException);
-        }
-        catch (UserDependencyValidationException userDependencyValidationException)
-        {
-            return BadRequest(userDependencyValidationException.InnerException);
-        }
-        catch (UserDependencyException userDependencyException)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, userDependencyException.InnerException);
-        }
-        catch (UserServiceException userServiceException)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError, userServiceException.InnerException);
-        }
-    }
-
     [HttpGet]
     [Authorize]
     public ActionResult<IQueryable<User>> GetAllUsers()

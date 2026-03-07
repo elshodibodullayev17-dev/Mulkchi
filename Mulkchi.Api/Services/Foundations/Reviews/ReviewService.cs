@@ -1,3 +1,4 @@
+using Mulkchi.Api.Models.Foundations.Properties;
 using Mulkchi.Api.Models.Foundations.Reviews;
 using Mulkchi.Api.Models.Foundations.Reviews.Exceptions;
 using Mulkchi.Api.Brokers.DateTimes;
@@ -11,22 +12,27 @@ public partial class ReviewService : IReviewService
     private readonly IStorageBroker storageBroker;
     private readonly ILoggingBroker loggingBroker;
     private readonly IDateTimeBroker dateTimeBroker;
+    private readonly Services.Foundations.Properties.IPropertyService propertyService;
 
     public ReviewService(
         IStorageBroker storageBroker,
         ILoggingBroker loggingBroker,
-        IDateTimeBroker dateTimeBroker)
+        IDateTimeBroker dateTimeBroker,
+        Services.Foundations.Properties.IPropertyService propertyService)
     {
         this.storageBroker = storageBroker;
         this.loggingBroker = loggingBroker;
         this.dateTimeBroker = dateTimeBroker;
+        this.propertyService = propertyService;
     }
 
     public ValueTask<Review> AddReviewAsync(Review review) =>
         TryCatch(async () =>
         {
             ValidateReviewOnAdd(review);
-            return await this.storageBroker.InsertReviewAsync(review);
+            Review addedReview = await this.storageBroker.InsertReviewAsync(review);
+            await UpdatePropertyAverageRatingAsync(review.PropertyId);
+            return addedReview;
         });
 
     public IQueryable<Review> RetrieveAllReviews() =>
@@ -55,6 +61,27 @@ public partial class ReviewService : IReviewService
         TryCatch(async () =>
         {
             ValidateReviewId(reviewId);
-            return await this.storageBroker.DeleteReviewByIdAsync(reviewId);
+            Review deletedReview = await this.storageBroker.DeleteReviewByIdAsync(reviewId);
+            await UpdatePropertyAverageRatingAsync(deletedReview.PropertyId);
+            return deletedReview;
         });
+
+    private async ValueTask UpdatePropertyAverageRatingAsync(Guid propertyId)
+    {
+        var reviews = this.storageBroker.SelectAllReviews()
+            .Where(r => r.PropertyId == propertyId)
+            .ToList();
+
+        decimal averageRating = reviews.Count > 0
+            ? reviews.Average(r => r.OverallRating)
+            : 0m;
+
+        Property maybeProperty = await this.storageBroker.SelectPropertyByIdAsync(propertyId);
+        if (maybeProperty is not null)
+        {
+            maybeProperty.AverageRating = averageRating;
+            maybeProperty.UpdatedDate = this.dateTimeBroker.GetCurrentDateTimeOffset();
+            await this.storageBroker.UpdatePropertyAsync(maybeProperty);
+        }
+    }
 }

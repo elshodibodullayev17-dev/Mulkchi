@@ -26,6 +26,13 @@ public partial class HomeRequestService : IHomeRequestService
         TryCatch(async () =>
         {
             ValidateHomeRequestOnAdd(homeRequest);
+
+            if (homeRequest.CheckInDate.HasValue && homeRequest.CheckOutDate.HasValue
+                && homeRequest.CheckOutDate > homeRequest.CheckInDate)
+            {
+                homeRequest.TotalNights = (int)(homeRequest.CheckOutDate.Value - homeRequest.CheckInDate.Value).TotalDays;
+            }
+
             return await this.storageBroker.InsertHomeRequestAsync(homeRequest);
         });
 
@@ -48,6 +55,13 @@ public partial class HomeRequestService : IHomeRequestService
         TryCatch(async () =>
         {
             ValidateHomeRequestOnModify(homeRequest);
+
+            if (homeRequest.CheckInDate.HasValue && homeRequest.CheckOutDate.HasValue
+                && homeRequest.CheckOutDate > homeRequest.CheckInDate)
+            {
+                homeRequest.TotalNights = (int)(homeRequest.CheckOutDate.Value - homeRequest.CheckInDate.Value).TotalDays;
+            }
+
             return await this.storageBroker.UpdateHomeRequestAsync(homeRequest);
         });
 
