@@ -1,0 +1,35 @@
+using System.Runtime.CompilerServices;
+using Microsoft.Data.SqlClient;
+using Moq;
+using Tynamix.ObjectFiller;
+using FluentAssertions;
+using Mulkchi.Api.Brokers.Storages;
+using Mulkchi.Api.Models.Foundations.HomeRequests;
+using Mulkchi.Api.Services.Foundations.HomeRequests;
+
+namespace Mulkchi.Api.Tests.Unit.Tests.Foundations.HomeRequests;
+
+public partial class HomeRequestServiceTests
+{
+    private readonly Mock<IStorageBroker> storageBrokerMock;
+    private readonly IHomeRequestService homeRequestService;
+
+    public HomeRequestServiceTests()
+    {
+        this.storageBrokerMock = new Mock<IStorageBroker>();
+        this.homeRequestService = new HomeRequestService(this.storageBrokerMock.Object);
+    }
+
+    private static HomeRequest CreateRandomHomeRequest()
+    {
+        var filler = new Filler<HomeRequest>();
+        filler.Setup()
+            .OnType<DateTimeOffset>().Use(() => DateTimeOffset.UtcNow)
+            .OnType<DateTimeOffset?>().Use(() => (DateTimeOffset?)DateTimeOffset.UtcNow);
+
+        return filler.Create();
+    }
+
+    private static SqlException CreateSqlException() =>
+        (SqlException)RuntimeHelpers.GetUninitializedObject(typeof(SqlException));
+}

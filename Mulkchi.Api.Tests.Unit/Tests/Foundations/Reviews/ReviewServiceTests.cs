@@ -1,0 +1,35 @@
+using System.Runtime.CompilerServices;
+using Microsoft.Data.SqlClient;
+using Moq;
+using Tynamix.ObjectFiller;
+using FluentAssertions;
+using Mulkchi.Api.Brokers.Storages;
+using Mulkchi.Api.Models.Foundations.Reviews;
+using Mulkchi.Api.Services.Foundations.Reviews;
+
+namespace Mulkchi.Api.Tests.Unit.Tests.Foundations.Reviews;
+
+public partial class ReviewServiceTests
+{
+    private readonly Mock<IStorageBroker> storageBrokerMock;
+    private readonly IReviewService reviewService;
+
+    public ReviewServiceTests()
+    {
+        this.storageBrokerMock = new Mock<IStorageBroker>();
+        this.reviewService = new ReviewService(this.storageBrokerMock.Object);
+    }
+
+    private static Review CreateRandomReview()
+    {
+        var filler = new Filler<Review>();
+        filler.Setup()
+            .OnType<DateTimeOffset>().Use(() => DateTimeOffset.UtcNow)
+            .OnType<DateTimeOffset?>().Use(() => (DateTimeOffset?)DateTimeOffset.UtcNow);
+
+        return filler.Create();
+    }
+
+    private static SqlException CreateSqlException() =>
+        (SqlException)RuntimeHelpers.GetUninitializedObject(typeof(SqlException));
+}
