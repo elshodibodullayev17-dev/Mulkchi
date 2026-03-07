@@ -1,0 +1,125 @@
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
+using Mulkchi.Api.Models.Foundations.Favorites;
+using Mulkchi.Api.Models.Foundations.Favorites.Exceptions;
+using Xeptions;
+
+namespace Mulkchi.Api.Services.Foundations.Favorites;
+
+public partial class FavoriteService
+{
+    private delegate ValueTask<Favorite> ReturningFavoriteFunction();
+    private delegate IQueryable<Favorite> ReturningFavoritesFunction();
+
+    private async ValueTask<Favorite> TryCatch(ReturningFavoriteFunction returningFavoriteFunction)
+    {
+        try
+        {
+            return await returningFavoriteFunction();
+        }
+        catch (NullFavoriteException nullFavoriteException)
+        {
+            throw CreateAndLogValidationException(nullFavoriteException);
+        }
+        catch (InvalidFavoriteException invalidFavoriteException)
+        {
+            throw CreateAndLogValidationException(invalidFavoriteException);
+        }
+        catch (NotFoundFavoriteException notFoundFavoriteException)
+        {
+            throw CreateAndLogDependencyValidationException(notFoundFavoriteException);
+        }
+        catch (SqlException sqlException)
+        {
+            var failedStorage = new FailedFavoriteStorageException(
+                message: "Failed Favorite storage error occurred, contact support.",
+                innerException: sqlException);
+
+            throw CreateAndLogDependencyException(failedStorage);
+        }
+        catch (DbUpdateConcurrencyException dbUpdateConcurrencyException)
+        {
+            var failedStorage = new FailedFavoriteStorageException(
+                message: "Failed Favorite storage error occurred, contact support.",
+                innerException: dbUpdateConcurrencyException);
+
+            throw CreateAndLogDependencyException(failedStorage);
+        }
+        catch (DbUpdateException dbUpdateException)
+        {
+            var failedStorage = new FailedFavoriteStorageException(
+                message: "Failed Favorite storage error occurred, contact support.",
+                innerException: dbUpdateException);
+
+            throw CreateAndLogDependencyException(failedStorage);
+        }
+        catch (Exception exception)
+        {
+            var failedService = new FailedFavoriteServiceException(
+                message: "Failed Favorite service error occurred, contact support.",
+                innerException: exception);
+
+            throw CreateAndLogServiceException(failedService);
+        }
+    }
+
+    private IQueryable<Favorite> TryCatch(ReturningFavoritesFunction returningFavoritesFunction)
+    {
+        try
+        {
+            return returningFavoritesFunction();
+        }
+        catch (SqlException sqlException)
+        {
+            var failedStorage = new FailedFavoriteStorageException(
+                message: "Failed Favorite storage error occurred, contact support.",
+                innerException: sqlException);
+
+            throw CreateAndLogDependencyException(failedStorage);
+        }
+        catch (Exception exception)
+        {
+            var failedService = new FailedFavoriteServiceException(
+                message: "Failed Favorite service error occurred, contact support.",
+                innerException: exception);
+
+            throw CreateAndLogServiceException(failedService);
+        }
+    }
+
+    private FavoriteValidationException CreateAndLogValidationException(Xeption exception)
+    {
+        var favoriteValidationException = new FavoriteValidationException(
+            message: "Favorite validation error occurred, fix the errors and try again.",
+            innerException: exception);
+
+        return favoriteValidationException;
+    }
+
+    private FavoriteDependencyValidationException CreateAndLogDependencyValidationException(Xeption exception)
+    {
+        var favoriteDependencyValidationException = new FavoriteDependencyValidationException(
+            message: "Favorite dependency validation error occurred, fix the errors and try again.",
+            innerException: exception);
+
+        return favoriteDependencyValidationException;
+    }
+
+    private FavoriteDependencyException CreateAndLogDependencyException(Xeption exception)
+    {
+        var favoriteDependencyException = new FavoriteDependencyException(
+            message: "Favorite dependency error occurred, contact support.",
+            innerException: exception);
+
+        return favoriteDependencyException;
+    }
+
+    private FavoriteServiceException CreateAndLogServiceException(Xeption exception)
+    {
+        var favoriteServiceException = new FavoriteServiceException(
+            message: "Favorite service error occurred, contact support.",
+            innerException: exception);
+
+        return favoriteServiceException;
+    }
+}
