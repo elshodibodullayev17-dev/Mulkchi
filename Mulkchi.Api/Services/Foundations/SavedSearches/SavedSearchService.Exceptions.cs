@@ -93,6 +93,8 @@ public partial class SavedSearchService
             message: "SavedSearch validation error occurred, fix the errors and try again.",
             innerException: exception);
 
+        this.loggingBroker.LogError(savedSearchValidationException);
+
         return savedSearchValidationException;
     }
 
@@ -101,6 +103,8 @@ public partial class SavedSearchService
         var savedSearchDependencyValidationException = new SavedSearchDependencyValidationException(
             message: "SavedSearch dependency validation error occurred, fix the errors and try again.",
             innerException: exception);
+
+        this.loggingBroker.LogError(savedSearchDependencyValidationException);
 
         return savedSearchDependencyValidationException;
     }
@@ -111,6 +115,8 @@ public partial class SavedSearchService
             message: "SavedSearch dependency error occurred, contact support.",
             innerException: exception);
 
+        this.loggingBroker.LogError(savedSearchDependencyException);
+
         return savedSearchDependencyException;
     }
 
@@ -119,6 +125,8 @@ public partial class SavedSearchService
         var savedSearchServiceException = new SavedSearchServiceException(
             message: "SavedSearch service error occurred, contact support.",
             innerException: exception);
+
+        this.loggingBroker.LogError(savedSearchServiceException);
 
         return savedSearchServiceException;
     }

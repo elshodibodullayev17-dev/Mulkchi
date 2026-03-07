@@ -1,5 +1,7 @@
 using Mulkchi.Api.Models.Foundations.PropertyViews;
 using Mulkchi.Api.Models.Foundations.PropertyViews.Exceptions;
+using Mulkchi.Api.Brokers.DateTimes;
+using Mulkchi.Api.Brokers.Loggings;
 using Mulkchi.Api.Brokers.Storages;
 
 namespace Mulkchi.Api.Services.Foundations.PropertyViews;
@@ -7,10 +9,17 @@ namespace Mulkchi.Api.Services.Foundations.PropertyViews;
 public partial class PropertyViewService : IPropertyViewService
 {
     private readonly IStorageBroker storageBroker;
+    private readonly ILoggingBroker loggingBroker;
+    private readonly IDateTimeBroker dateTimeBroker;
 
-    public PropertyViewService(IStorageBroker storageBroker)
+    public PropertyViewService(
+        IStorageBroker storageBroker,
+        ILoggingBroker loggingBroker,
+        IDateTimeBroker dateTimeBroker)
     {
         this.storageBroker = storageBroker;
+        this.loggingBroker = loggingBroker;
+        this.dateTimeBroker = dateTimeBroker;
     }
 
     public ValueTask<PropertyView> AddPropertyViewAsync(PropertyView propertyView) =>

@@ -93,6 +93,8 @@ public partial class DiscountService
             message: "Discount validation error occurred, fix the errors and try again.",
             innerException: exception);
 
+        this.loggingBroker.LogError(discountValidationException);
+
         return discountValidationException;
     }
 
@@ -101,6 +103,8 @@ public partial class DiscountService
         var discountDependencyValidationException = new DiscountDependencyValidationException(
             message: "Discount dependency validation error occurred, fix the errors and try again.",
             innerException: exception);
+
+        this.loggingBroker.LogError(discountDependencyValidationException);
 
         return discountDependencyValidationException;
     }
@@ -111,6 +115,8 @@ public partial class DiscountService
             message: "Discount dependency error occurred, contact support.",
             innerException: exception);
 
+        this.loggingBroker.LogError(discountDependencyException);
+
         return discountDependencyException;
     }
 
@@ -119,6 +125,8 @@ public partial class DiscountService
         var discountServiceException = new DiscountServiceException(
             message: "Discount service error occurred, contact support.",
             innerException: exception);
+
+        this.loggingBroker.LogError(discountServiceException);
 
         return discountServiceException;
     }

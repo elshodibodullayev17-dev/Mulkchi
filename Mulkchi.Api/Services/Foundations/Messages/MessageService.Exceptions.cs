@@ -93,6 +93,8 @@ public partial class MessageService
             message: "Message validation error occurred, fix the errors and try again.",
             innerException: exception);
 
+        this.loggingBroker.LogError(messageValidationException);
+
         return messageValidationException;
     }
 
@@ -101,6 +103,8 @@ public partial class MessageService
         var messageDependencyValidationException = new MessageDependencyValidationException(
             message: "Message dependency validation error occurred, fix the errors and try again.",
             innerException: exception);
+
+        this.loggingBroker.LogError(messageDependencyValidationException);
 
         return messageDependencyValidationException;
     }
@@ -111,6 +115,8 @@ public partial class MessageService
             message: "Message dependency error occurred, contact support.",
             innerException: exception);
 
+        this.loggingBroker.LogError(messageDependencyException);
+
         return messageDependencyException;
     }
 
@@ -119,6 +125,8 @@ public partial class MessageService
         var messageServiceException = new MessageServiceException(
             message: "Message service error occurred, contact support.",
             innerException: exception);
+
+        this.loggingBroker.LogError(messageServiceException);
 
         return messageServiceException;
     }

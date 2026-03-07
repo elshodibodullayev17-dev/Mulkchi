@@ -93,6 +93,8 @@ public partial class NotificationService
             message: "Notification validation error occurred, fix the errors and try again.",
             innerException: exception);
 
+        this.loggingBroker.LogError(notificationValidationException);
+
         return notificationValidationException;
     }
 
@@ -101,6 +103,8 @@ public partial class NotificationService
         var notificationDependencyValidationException = new NotificationDependencyValidationException(
             message: "Notification dependency validation error occurred, fix the errors and try again.",
             innerException: exception);
+
+        this.loggingBroker.LogError(notificationDependencyValidationException);
 
         return notificationDependencyValidationException;
     }
@@ -111,6 +115,8 @@ public partial class NotificationService
             message: "Notification dependency error occurred, contact support.",
             innerException: exception);
 
+        this.loggingBroker.LogError(notificationDependencyException);
+
         return notificationDependencyException;
     }
 
@@ -119,6 +125,8 @@ public partial class NotificationService
         var notificationServiceException = new NotificationServiceException(
             message: "Notification service error occurred, contact support.",
             innerException: exception);
+
+        this.loggingBroker.LogError(notificationServiceException);
 
         return notificationServiceException;
     }

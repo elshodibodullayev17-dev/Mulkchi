@@ -93,6 +93,8 @@ public partial class PaymentService
             message: "Payment validation error occurred, fix the errors and try again.",
             innerException: exception);
 
+        this.loggingBroker.LogError(paymentValidationException);
+
         return paymentValidationException;
     }
 
@@ -101,6 +103,8 @@ public partial class PaymentService
         var paymentDependencyValidationException = new PaymentDependencyValidationException(
             message: "Payment dependency validation error occurred, fix the errors and try again.",
             innerException: exception);
+
+        this.loggingBroker.LogError(paymentDependencyValidationException);
 
         return paymentDependencyValidationException;
     }
@@ -111,6 +115,8 @@ public partial class PaymentService
             message: "Payment dependency error occurred, contact support.",
             innerException: exception);
 
+        this.loggingBroker.LogError(paymentDependencyException);
+
         return paymentDependencyException;
     }
 
@@ -119,6 +125,8 @@ public partial class PaymentService
         var paymentServiceException = new PaymentServiceException(
             message: "Payment service error occurred, contact support.",
             innerException: exception);
+
+        this.loggingBroker.LogError(paymentServiceException);
 
         return paymentServiceException;
     }

@@ -34,7 +34,12 @@ public partial class HomeRequestServiceTests
             broker.InsertHomeRequestAsync(It.IsAny<HomeRequest>()),
             Times.Once);
 
+        this.loggingBrokerMock.Verify(broker =>
+            broker.LogError(It.IsAny<Exception>()),
+            Times.Once);
+
         this.storageBrokerMock.VerifyNoOtherCalls();
+        this.loggingBrokerMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -63,6 +68,11 @@ public partial class HomeRequestServiceTests
             broker.InsertHomeRequestAsync(It.IsAny<HomeRequest>()),
             Times.Once);
 
+        this.loggingBrokerMock.Verify(broker =>
+            broker.LogError(It.IsAny<Exception>()),
+            Times.Once);
+
         this.storageBrokerMock.VerifyNoOtherCalls();
+        this.loggingBrokerMock.VerifyNoOtherCalls();
     }
 }

@@ -93,6 +93,8 @@ public partial class RentalContractService
             message: "RentalContract validation error occurred, fix the errors and try again.",
             innerException: exception);
 
+        this.loggingBroker.LogError(rentalContractValidationException);
+
         return rentalContractValidationException;
     }
 
@@ -101,6 +103,8 @@ public partial class RentalContractService
         var rentalContractDependencyValidationException = new RentalContractDependencyValidationException(
             message: "RentalContract dependency validation error occurred, fix the errors and try again.",
             innerException: exception);
+
+        this.loggingBroker.LogError(rentalContractDependencyValidationException);
 
         return rentalContractDependencyValidationException;
     }
@@ -111,6 +115,8 @@ public partial class RentalContractService
             message: "RentalContract dependency error occurred, contact support.",
             innerException: exception);
 
+        this.loggingBroker.LogError(rentalContractDependencyException);
+
         return rentalContractDependencyException;
     }
 
@@ -119,6 +125,8 @@ public partial class RentalContractService
         var rentalContractServiceException = new RentalContractServiceException(
             message: "RentalContract service error occurred, contact support.",
             innerException: exception);
+
+        this.loggingBroker.LogError(rentalContractServiceException);
 
         return rentalContractServiceException;
     }

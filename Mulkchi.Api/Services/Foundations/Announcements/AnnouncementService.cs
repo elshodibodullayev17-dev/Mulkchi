@@ -1,5 +1,7 @@
 using Mulkchi.Api.Models.Foundations.Announcements;
 using Mulkchi.Api.Models.Foundations.Announcements.Exceptions;
+using Mulkchi.Api.Brokers.DateTimes;
+using Mulkchi.Api.Brokers.Loggings;
 using Mulkchi.Api.Brokers.Storages;
 
 namespace Mulkchi.Api.Services.Foundations.Announcements;
@@ -7,10 +9,17 @@ namespace Mulkchi.Api.Services.Foundations.Announcements;
 public partial class AnnouncementService : IAnnouncementService
 {
     private readonly IStorageBroker storageBroker;
+    private readonly ILoggingBroker loggingBroker;
+    private readonly IDateTimeBroker dateTimeBroker;
 
-    public AnnouncementService(IStorageBroker storageBroker)
+    public AnnouncementService(
+        IStorageBroker storageBroker,
+        ILoggingBroker loggingBroker,
+        IDateTimeBroker dateTimeBroker)
     {
         this.storageBroker = storageBroker;
+        this.loggingBroker = loggingBroker;
+        this.dateTimeBroker = dateTimeBroker;
     }
 
     public ValueTask<Announcement> AddAnnouncementAsync(Announcement announcement) =>

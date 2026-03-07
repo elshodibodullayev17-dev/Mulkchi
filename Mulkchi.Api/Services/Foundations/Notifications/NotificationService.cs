@@ -1,5 +1,7 @@
 using Mulkchi.Api.Models.Foundations.Notifications;
 using Mulkchi.Api.Models.Foundations.Notifications.Exceptions;
+using Mulkchi.Api.Brokers.DateTimes;
+using Mulkchi.Api.Brokers.Loggings;
 using Mulkchi.Api.Brokers.Storages;
 
 namespace Mulkchi.Api.Services.Foundations.Notifications;
@@ -7,10 +9,17 @@ namespace Mulkchi.Api.Services.Foundations.Notifications;
 public partial class NotificationService : INotificationService
 {
     private readonly IStorageBroker storageBroker;
+    private readonly ILoggingBroker loggingBroker;
+    private readonly IDateTimeBroker dateTimeBroker;
 
-    public NotificationService(IStorageBroker storageBroker)
+    public NotificationService(
+        IStorageBroker storageBroker,
+        ILoggingBroker loggingBroker,
+        IDateTimeBroker dateTimeBroker)
     {
         this.storageBroker = storageBroker;
+        this.loggingBroker = loggingBroker;
+        this.dateTimeBroker = dateTimeBroker;
     }
 
     public ValueTask<Notification> AddNotificationAsync(Notification notification) =>

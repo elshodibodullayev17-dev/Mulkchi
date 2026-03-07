@@ -1,5 +1,7 @@
 using Mulkchi.Api.Models.Foundations.Messages;
 using Mulkchi.Api.Models.Foundations.Messages.Exceptions;
+using Mulkchi.Api.Brokers.DateTimes;
+using Mulkchi.Api.Brokers.Loggings;
 using Mulkchi.Api.Brokers.Storages;
 
 namespace Mulkchi.Api.Services.Foundations.Messages;
@@ -7,10 +9,17 @@ namespace Mulkchi.Api.Services.Foundations.Messages;
 public partial class MessageService : IMessageService
 {
     private readonly IStorageBroker storageBroker;
+    private readonly ILoggingBroker loggingBroker;
+    private readonly IDateTimeBroker dateTimeBroker;
 
-    public MessageService(IStorageBroker storageBroker)
+    public MessageService(
+        IStorageBroker storageBroker,
+        ILoggingBroker loggingBroker,
+        IDateTimeBroker dateTimeBroker)
     {
         this.storageBroker = storageBroker;
+        this.loggingBroker = loggingBroker;
+        this.dateTimeBroker = dateTimeBroker;
     }
 
     public ValueTask<Message> AddMessageAsync(Message message) =>

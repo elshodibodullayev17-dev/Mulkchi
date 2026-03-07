@@ -34,7 +34,12 @@ public partial class AiRecommendationServiceTests
             broker.InsertAiRecommendationAsync(It.IsAny<AiRecommendation>()),
             Times.Once);
 
+        this.loggingBrokerMock.Verify(broker =>
+            broker.LogError(It.IsAny<Exception>()),
+            Times.Once);
+
         this.storageBrokerMock.VerifyNoOtherCalls();
+        this.loggingBrokerMock.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -63,6 +68,11 @@ public partial class AiRecommendationServiceTests
             broker.InsertAiRecommendationAsync(It.IsAny<AiRecommendation>()),
             Times.Once);
 
+        this.loggingBrokerMock.Verify(broker =>
+            broker.LogError(It.IsAny<Exception>()),
+            Times.Once);
+
         this.storageBrokerMock.VerifyNoOtherCalls();
+        this.loggingBrokerMock.VerifyNoOtherCalls();
     }
 }

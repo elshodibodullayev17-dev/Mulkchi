@@ -93,6 +93,8 @@ public partial class FavoriteService
             message: "Favorite validation error occurred, fix the errors and try again.",
             innerException: exception);
 
+        this.loggingBroker.LogError(favoriteValidationException);
+
         return favoriteValidationException;
     }
 
@@ -101,6 +103,8 @@ public partial class FavoriteService
         var favoriteDependencyValidationException = new FavoriteDependencyValidationException(
             message: "Favorite dependency validation error occurred, fix the errors and try again.",
             innerException: exception);
+
+        this.loggingBroker.LogError(favoriteDependencyValidationException);
 
         return favoriteDependencyValidationException;
     }
@@ -111,6 +115,8 @@ public partial class FavoriteService
             message: "Favorite dependency error occurred, contact support.",
             innerException: exception);
 
+        this.loggingBroker.LogError(favoriteDependencyException);
+
         return favoriteDependencyException;
     }
 
@@ -119,6 +125,8 @@ public partial class FavoriteService
         var favoriteServiceException = new FavoriteServiceException(
             message: "Favorite service error occurred, contact support.",
             innerException: exception);
+
+        this.loggingBroker.LogError(favoriteServiceException);
 
         return favoriteServiceException;
     }

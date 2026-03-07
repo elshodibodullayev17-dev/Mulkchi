@@ -93,6 +93,8 @@ public partial class HomeRequestService
             message: "HomeRequest validation error occurred, fix the errors and try again.",
             innerException: exception);
 
+        this.loggingBroker.LogError(homeRequestValidationException);
+
         return homeRequestValidationException;
     }
 
@@ -101,6 +103,8 @@ public partial class HomeRequestService
         var homeRequestDependencyValidationException = new HomeRequestDependencyValidationException(
             message: "HomeRequest dependency validation error occurred, fix the errors and try again.",
             innerException: exception);
+
+        this.loggingBroker.LogError(homeRequestDependencyValidationException);
 
         return homeRequestDependencyValidationException;
     }
@@ -111,6 +115,8 @@ public partial class HomeRequestService
             message: "HomeRequest dependency error occurred, contact support.",
             innerException: exception);
 
+        this.loggingBroker.LogError(homeRequestDependencyException);
+
         return homeRequestDependencyException;
     }
 
@@ -119,6 +125,8 @@ public partial class HomeRequestService
         var homeRequestServiceException = new HomeRequestServiceException(
             message: "HomeRequest service error occurred, contact support.",
             innerException: exception);
+
+        this.loggingBroker.LogError(homeRequestServiceException);
 
         return homeRequestServiceException;
     }

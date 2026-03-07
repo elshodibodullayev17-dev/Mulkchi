@@ -93,6 +93,8 @@ public partial class PropertyService
             message: "Property validation error occurred, fix the errors and try again.",
             innerException: exception);
 
+        this.loggingBroker.LogError(propertyValidationException);
+
         return propertyValidationException;
     }
 
@@ -101,6 +103,8 @@ public partial class PropertyService
         var propertyDependencyValidationException = new PropertyDependencyValidationException(
             message: "Property dependency validation error occurred, fix the errors and try again.",
             innerException: exception);
+
+        this.loggingBroker.LogError(propertyDependencyValidationException);
 
         return propertyDependencyValidationException;
     }
@@ -111,6 +115,8 @@ public partial class PropertyService
             message: "Property dependency error occurred, contact support.",
             innerException: exception);
 
+        this.loggingBroker.LogError(propertyDependencyException);
+
         return propertyDependencyException;
     }
 
@@ -119,6 +125,8 @@ public partial class PropertyService
         var propertyServiceException = new PropertyServiceException(
             message: "Property service error occurred, contact support.",
             innerException: exception);
+
+        this.loggingBroker.LogError(propertyServiceException);
 
         return propertyServiceException;
     }

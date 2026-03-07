@@ -3,6 +3,8 @@ using Microsoft.Data.SqlClient;
 using Moq;
 using Tynamix.ObjectFiller;
 using FluentAssertions;
+using Mulkchi.Api.Brokers.DateTimes;
+using Mulkchi.Api.Brokers.Loggings;
 using Mulkchi.Api.Brokers.Storages;
 using Mulkchi.Api.Models.Foundations.Notifications;
 using Mulkchi.Api.Services.Foundations.Notifications;
@@ -12,12 +14,19 @@ namespace Mulkchi.Api.Tests.Unit.Tests.Foundations.Notifications;
 public partial class NotificationServiceTests
 {
     private readonly Mock<IStorageBroker> storageBrokerMock;
+    private readonly Mock<ILoggingBroker> loggingBrokerMock;
+    private readonly Mock<IDateTimeBroker> dateTimeBrokerMock;
     private readonly INotificationService notificationService;
 
     public NotificationServiceTests()
     {
         this.storageBrokerMock = new Mock<IStorageBroker>();
-        this.notificationService = new NotificationService(this.storageBrokerMock.Object);
+        this.loggingBrokerMock = new Mock<ILoggingBroker>();
+        this.dateTimeBrokerMock = new Mock<IDateTimeBroker>();
+        this.notificationService = new NotificationService(
+            this.storageBrokerMock.Object,
+            this.loggingBrokerMock.Object,
+            this.dateTimeBrokerMock.Object);
     }
 
     private static Notification CreateRandomNotification()
