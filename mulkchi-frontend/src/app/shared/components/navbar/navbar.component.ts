@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
 import { NotificationService } from '../../../core/services/notification.service';
+import { ListingType } from '../../../core/models/property.models';
 
 @Component({
   selector: 'app-navbar',
@@ -18,8 +19,8 @@ import { NotificationService } from '../../../core/services/notification.service
 
         <ul class="nav-links">
           <li><a routerLink="/properties" routerLinkActive="active">Mulklar</a></li>
-          <li><a routerLink="/properties" [queryParams]="{listingType: '0'}" routerLinkActive="active">Ijaraga berish</a></li>
-          <li><a routerLink="/properties" [queryParams]="{listingType: '1'}" routerLinkActive="active">Narxlar</a></li>
+          <li><a routerLink="/properties" [queryParams]="{listingType: ListingType.Rent}" routerLinkActive="active">Ijaraga berish</a></li>
+          <li><a routerLink="/properties" [queryParams]="{listingType: ListingType.Sale}" routerLinkActive="active">Narxlar</a></li>
           <li><a routerLink="/announcements" routerLinkActive="active">📢 E'lonlar</a></li>
         </ul>
 
@@ -71,6 +72,7 @@ import { NotificationService } from '../../../core/services/notification.service
 export class NavbarComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly notificationService = inject(NotificationService);
+  readonly ListingType = ListingType;
   isLoggedIn = false;
   isScrolled = false;
   showDropdown = false;

@@ -73,7 +73,10 @@ export class FavoritesComponent implements OnInit {
         ).pipe(
           switchMap((properties) => {
             const combined: FavoriteWithProperty[] = result.items
-              .map((fav, i) => ({ favorite: fav, property: properties[i] as Property }))
+              .map((fav, i) => ({
+                favorite: fav,
+                property: properties[i] as Property,
+              }))
               .filter((item) => item.property != null);
             return of(combined);
           })

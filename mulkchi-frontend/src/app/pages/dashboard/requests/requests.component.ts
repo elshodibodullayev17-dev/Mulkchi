@@ -95,10 +95,10 @@ export class RequestsComponent implements OnInit {
   private readonly langService = inject(LanguageService);
   readonly RequestStatus = RequestStatus;
   requests: HomeRequest[] = [];
-  isHost =
-    this.authService.getRole() === String(1) ||
-    this.authService.getRole() === 'Host' ||
-    this.authService.getRole() === 'Admin';
+  isHost = (() => {
+    const role = this.authService.getRole();
+    return role === '1' || role === '2' || role === 'Host' || role === 'Admin';
+  })();
 
   ngOnInit(): void {
     this.loadRequests();

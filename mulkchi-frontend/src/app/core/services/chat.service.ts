@@ -16,7 +16,7 @@ export class ChatService {
   startConnection(): void {
     if (this.hubConnection) return;
 
-    const hubUrl = environment.apiUrl.replace('/api', '/hub');
+    const hubUrl = environment.hubUrl;
     const token = this.authService.getToken();
 
     this.hubConnection = new signalR.HubConnectionBuilder()
