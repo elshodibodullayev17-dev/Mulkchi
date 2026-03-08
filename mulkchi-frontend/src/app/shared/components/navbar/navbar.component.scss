@@ -1,18 +1,17 @@
 .navbar {
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
   z-index: 1000;
-  background: rgba(15, 15, 15, 0.92);
-  border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+  width: 100%;
+  background: color-mix(in srgb, var(--background) 85%, transparent);
+  border-bottom: 1px solid var(--border-color);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  transition: all 0.3s;
+  transition: background 0.3s, border-color 0.3s, box-shadow 0.3s;
 
   &.scrolled {
-    background: rgba(15, 15, 15, 0.98);
-    border-bottom-color: rgba(201, 168, 76, 0.25);
+    box-shadow: 0 2px 20px var(--shadow);
+    border-bottom-color: color-mix(in srgb, var(--primary) 25%, transparent);
   }
 }
 
@@ -20,42 +19,48 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 0 24px;
-  height: 72px;
+  height: 68px;
   display: flex;
   align-items: center;
-  gap: 40px;
+  gap: 32px;
 }
 
 .nav-logo {
   text-decoration: none;
   display: flex;
-  align-items: center;
+  align-items: baseline;
+  flex-shrink: 0;
 
   .logo-text {
-    font-family: 'Playfair Display', serif;
-    font-size: 24px;
+    font-family: "Playfair Display", serif;
+    font-size: 22px;
     font-weight: 700;
-    color: var(--text);
-    letter-spacing: -0.5px;
+    color: var(--foreground);
+    letter-spacing: -0.3px;
+    transition: color 0.2s;
   }
 
   .logo-dot {
-    font-family: 'Playfair Display', serif;
-    font-size: 28px;
+    font-family: "Playfair Display", serif;
+    font-size: 26px;
     font-weight: 700;
-    color: var(--gold);
+    color: var(--primary);
     line-height: 1;
+  }
+
+  &:hover .logo-text {
+    color: var(--primary);
   }
 }
 
 .nav-links {
   display: flex;
   list-style: none;
-  gap: 32px;
+  gap: 28px;
   flex: 1;
 
   a {
-    color: var(--text-muted);
+    color: var(--muted);
     text-decoration: none;
     font-size: 14px;
     font-weight: 500;
@@ -63,7 +68,7 @@
 
     &:hover,
     &.active {
-      color: var(--text);
+      color: var(--foreground);
     }
   }
 }
@@ -71,14 +76,80 @@
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
+  flex-shrink: 0;
+}
 
-  .btn-gold, .btn-outline-gold {
-    font-size: 13px;
-    padding: 9px 20px;
-    text-decoration: none;
-    display: inline-block;
+.nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  font-family: "DM Sans", sans-serif;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: all 0.2s;
+  white-space: nowrap;
+
+  &--ghost {
+    background: transparent;
+    border-color: var(--border-color);
+    color: var(--foreground);
+
+    &:hover {
+      background: var(--muted-bg);
+    }
   }
+
+  &--primary {
+    background: var(--primary);
+    color: #000;
+    border-color: var(--primary);
+
+    &:hover {
+      background: var(--primary-hover);
+      border-color: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+  }
+
+  &.mobile-full {
+    width: 100%;
+  }
+}
+
+.notif-bell {
+  position: relative;
+  font-size: 18px;
+  text-decoration: none;
+  padding: 6px 8px;
+  border-radius: 8px;
+  transition: background 0.2s;
+  color: inherit;
+
+  &:hover {
+    background: var(--muted-bg);
+  }
+}
+
+.notif-count {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  background: var(--primary);
+  color: #000;
+  font-size: 10px;
+  font-weight: 700;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .user-menu {
@@ -89,29 +160,29 @@
   cursor: pointer;
   padding: 6px 12px;
   border-radius: 8px;
-  border: 1px solid var(--border);
-  transition: border-color 0.2s;
+  border: 1px solid var(--border-color);
+  transition: border-color 0.2s, background 0.2s;
 
   &:hover {
-    border-color: rgba(201, 168, 76, 0.3);
+    background: var(--muted-bg);
   }
 
   .avatar {
-    width: 32px;
-    height: 32px;
+    width: 30px;
+    height: 30px;
     border-radius: 50%;
-    background: rgba(201, 168, 76, 0.2);
-    color: var(--gold);
+    background: rgba(201, 168, 76, 0.18);
+    color: var(--primary);
     font-weight: 700;
-    font-size: 14px;
+    font-size: 13px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
   .chevron {
-    color: var(--text-muted);
-    font-size: 12px;
+    color: var(--muted);
+    font-size: 11px;
   }
 
   .dropdown {
@@ -119,34 +190,34 @@
     top: calc(100% + 8px);
     right: 0;
     min-width: 180px;
-    background: var(--card-bg-2);
-    border: 1px solid var(--border);
+    background: var(--card);
+    border: 1px solid var(--border-color);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 20px 60px var(--shadow);
   }
 
   .dropdown-item {
     display: block;
-    padding: 12px 16px;
-    color: var(--text);
+    padding: 11px 16px;
+    color: var(--foreground);
     font-size: 13px;
     text-decoration: none;
     cursor: pointer;
     transition: background 0.15s;
     width: 100%;
     text-align: left;
+    background: transparent;
+    border: none;
+    font-family: "DM Sans", sans-serif;
 
     &:hover {
-      background: rgba(255, 255, 255, 0.05);
+      background: var(--muted-bg);
     }
   }
 
   .logout-btn {
-    background: none;
-    border: none;
-    font-family: 'DM Sans', sans-serif;
-    color: var(--red);
+    color: var(--danger);
 
     &:hover {
       background: rgba(224, 82, 82, 0.08);
@@ -155,92 +226,108 @@
 
   .divider {
     height: 1px;
-    background: var(--border);
+    background: var(--border-color);
   }
 }
 
-.mobile-menu-btn {
+.mobile-row {
   display: none;
+  align-items: center;
+  gap: 8px;
+  margin-left: auto;
+}
+
+.mobile-menu-btn {
+  display: flex;
   flex-direction: column;
   gap: 5px;
-  background: none;
-  border: none;
+  background: var(--muted-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
   cursor: pointer;
-  padding: 4px;
-  margin-left: auto;
+  padding: 0;
+  width: 38px;
+  height: 38px;
+  justify-content: center;
+  align-items: center;
 
   span {
     display: block;
-    width: 24px;
-    height: 2px;
-    background: var(--text);
+    width: 18px;
+    height: 1.5px;
+    background: var(--foreground);
     border-radius: 2px;
+    transition: all 0.25s;
+
+    &.open:nth-child(1) {
+      transform: translateY(6.5px) rotate(45deg);
+    }
+    &.open:nth-child(2) {
+      opacity: 0;
+    }
+    &.open:nth-child(3) {
+      transform: translateY(-6.5px) rotate(-45deg);
+    }
   }
 }
 
 .mobile-menu {
   display: none;
-  padding: 16px 24px;
-  background: var(--card-bg);
-  border-top: 1px solid var(--border);
+  max-height: 0;
+  overflow: hidden;
+  padding: 0 24px;
+  background: var(--card);
+  border-top: 1px solid var(--border-color);
   flex-direction: column;
-  gap: 12px;
+  gap: 4px;
+  transition: max-height 0.3s ease, padding 0.3s ease;
 
-  a, button {
-    color: var(--text);
+  &.open {
+    max-height: 400px;
+    padding: 16px 24px;
+  }
+
+  a {
+    color: var(--foreground);
     text-decoration: none;
     font-size: 15px;
     padding: 10px 0;
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid var(--border-color);
     display: block;
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-family: 'DM Sans', sans-serif;
-    text-align: left;
+    transition: color 0.2s;
+
+    &:hover {
+      color: var(--primary);
+    }
   }
 }
 
-.notif-bell {
-  position: relative;
-  font-size: 1.2rem;
-  text-decoration: none;
-  padding: 0.25rem 0.5rem;
-  border-radius: 6px;
-  transition: background 0.2s;
-  color: inherit;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.1);
-  }
+.mobile-divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: 8px 0;
 }
 
-.notif-count {
-  position: absolute;
-  top: -4px;
-  right: -4px;
-  background: #d4af37;
-  color: #0a0a0a;
-  font-size: 0.65rem;
-  font-weight: 700;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.mobile-logout {
+  background: none;
+  border: none;
+  color: var(--danger);
+  cursor: pointer;
+  font-family: "DM Sans", sans-serif;
+  font-size: 15px;
+  padding: 10px 0;
+  display: block;
+  width: 100%;
+  text-align: left;
 }
 
 @media (max-width: 768px) {
-  .nav-links {
-    display: none;
-  }
-
+  .nav-links,
   .nav-actions {
     display: none;
   }
 
-  .mobile-menu-btn {
+  .mobile-row {
     display: flex;
   }
 

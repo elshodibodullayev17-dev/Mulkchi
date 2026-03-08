@@ -1,30 +1,49 @@
-import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { Router, RouterModule } from '@angular/router';
+import {
+  ListingType,
+  Property,
+  PropertyCategory,
+  PropertyStatus,
+  PropertyType,
+  UzbekistanRegion,
+} from '../../core/models/property.models';
 import { PropertyCardComponent } from '../../shared/components/property-card/property-card.component';
-import { Property, ListingType, PropertyType, PropertyCategory, PropertyStatus, UzbekistanRegion } from '../../core/models/property.models';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, PropertyCardComponent],
+  imports: [CommonModule, RouterModule, PropertyCardComponent],
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
   private readonly router = inject(Router);
 
-  searchLocation = '';
-  searchType = '';
-  searchPurpose = '';
-  searchRooms = '';
+  activeCategory: string | null = null;
+
+  heroStats = [
+    { value: '12,400+', label: "E'lonlar" },
+    { value: '8,200+', label: 'Bitimlar' },
+    { value: '14', label: 'Viloyatlar' },
+  ];
+
+  categories = [
+    { id: 'apartment', label: 'Kvartira', icon: '🏢', count: 4250 },
+    { id: 'house', label: 'Uy', icon: '🏠', count: 2180 },
+    { id: 'villa', label: 'Villa', icon: '🏰', count: 890 },
+    { id: 'room', label: 'Xona', icon: '🚪', count: 1560 },
+    { id: 'office', label: 'Ofis', icon: '💼', count: 720 },
+    { id: 'land', label: 'Yer', icon: '🌄', count: 2800 },
+  ];
 
   sampleProperties: Property[] = [
     {
       id: '1',
       title: 'Zamonaviy 3 xonali kvartira',
-      description: 'Yangilangan, mebelli, barcha qulayliklar bilan jihozlangan.',
+      description:
+        'Yangilangan, mebelli, barcha qulayliklar bilan jihozlangan.',
       type: PropertyType.Apartment,
       category: PropertyCategory.Residential,
       status: PropertyStatus.Active,
@@ -72,7 +91,7 @@ export class HomeComponent {
       favoritesCount: 18,
       hostId: 'host1',
       createdDate: '2024-01-15T00:00:00Z',
-      updatedDate: '2024-01-15T00:00:00Z'
+      updatedDate: '2024-01-15T00:00:00Z',
     },
     {
       id: '2',
@@ -90,7 +109,7 @@ export class HomeComponent {
       region: UzbekistanRegion.Samarqand,
       city: 'Samarqand',
       district: 'Markaz',
-      address: 'Registon ko\'chasi, 15',
+      address: "Registon ko'chasi, 15",
       hasWifi: true,
       hasParking: true,
       hasPool: true,
@@ -125,7 +144,7 @@ export class HomeComponent {
       favoritesCount: 47,
       hostId: 'host2',
       createdDate: '2024-02-01T00:00:00Z',
-      updatedDate: '2024-02-01T00:00:00Z'
+      updatedDate: '2024-02-01T00:00:00Z',
     },
     {
       id: '3',
@@ -178,23 +197,30 @@ export class HomeComponent {
       favoritesCount: 9,
       hostId: 'host3',
       createdDate: '2024-03-01T00:00:00Z',
-      updatedDate: '2024-03-01T00:00:00Z'
-    }
+      updatedDate: '2024-03-01T00:00:00Z',
+    },
   ];
 
   features = [
-    { icon: '🔐', title: 'Xavfsiz bitimlar', desc: 'Barcha to\'lovlar xavfsiz tizim orqali amalga oshiriladi' },
-    { icon: '💬', title: 'Real-time chat', desc: 'Mulkdor bilan bevosita muloqot qiling' },
-    { icon: '🤖', title: 'AI tavsiyalar', desc: 'Sizning ehtiyojlaringizga mos mulklarni topamiz' },
-    { icon: '🗺️', title: 'Xaritada qidirish', desc: 'Interaktiv xaritada kerakli hududni tanlang' }
+    {
+      icon: '🔐',
+      title: 'Xavfsiz bitimlar',
+      desc: "Barcha to'lovlar xavfsiz tizim orqali amalga oshiriladi",
+    },
+    {
+      icon: '💬',
+      title: 'Real-time chat',
+      desc: 'Mulkdor bilan bevosita muloqot qiling',
+    },
+    {
+      icon: '🤖',
+      title: 'AI tavsiyalar',
+      desc: 'Sizning ehtiyojlaringizga mos mulklarni topamiz',
+    },
+    {
+      icon: '🗺️',
+      title: 'Xaritada qidirish',
+      desc: 'Interaktiv xaritada kerakli hududni tanlang',
+    },
   ];
-
-  onSearch(): void {
-    const queryParams: Record<string, string> = {};
-    if (this.searchLocation) queryParams['city'] = this.searchLocation;
-    if (this.searchType) queryParams['type'] = this.searchType;
-    if (this.searchPurpose) queryParams['listingType'] = this.searchPurpose;
-    if (this.searchRooms) queryParams['bedrooms'] = this.searchRooms;
-    this.router.navigate(['/properties'], { queryParams });
-  }
 }
