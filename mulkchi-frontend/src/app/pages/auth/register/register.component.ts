@@ -181,26 +181,26 @@ const passwordStrengthValidator: ValidatorFn = (
         width: 100%;
         padding: 12px;
         border-radius: 12px;
-        background: #1e1e1e; /* To'q rangli fon (loyihangizga qarab o'zgartiring) */
-        color: white; /* Matn rangi oq */
-        border: 1px solid #444;
+        background: var(--card-alt);
+        color: var(--foreground);
+        border: 1px solid var(--border-color);
         font-size: 14px;
         outline: none;
         cursor: pointer;
-        appearance: auto; /* Brauzerning standart strelkasini chiqaradi */
+        appearance: auto;
         margin-bottom: 10px;
       }
       .lang-select:focus {
-        border-color: #c9a84c;
+        border-color: var(--primary);
       }
       .lang-select.error {
-        border-color: #ff4d4d;
+        border-color: var(--danger);
       }
       label {
         display: block;
         margin-bottom: 8px;
         font-weight: 500;
-        color: #aaa;
+        color: var(--muted);
       }
       .role-selector {
         margin-bottom: 16px;
@@ -221,9 +221,9 @@ const passwordStrengthValidator: ValidatorFn = (
         gap: 4px;
         padding: 14px 10px;
         border-radius: 12px;
-        border: 2px solid #333;
-        background: #1a1a1a;
-        color: #ccc;
+        border: 2px solid var(--border-color);
+        background: var(--card);
+        color: var(--foreground);
         cursor: pointer;
         font-size: 15px;
         font-weight: 600;
@@ -232,19 +232,20 @@ const passwordStrengthValidator: ValidatorFn = (
       .role-btn small {
         font-size: 11px;
         font-weight: 400;
-        color: #888;
+        color: var(--muted);
       }
       .role-btn:hover {
-        border-color: #c9a84c;
-        color: #fff;
+        border-color: var(--primary);
+        color: var(--foreground);
       }
       .role-btn.active {
-        border-color: #c9a84c;
+        border-color: var(--primary);
         background: rgba(201, 168, 76, 0.12);
-        color: #c9a84c;
+        color: var(--primary);
       }
       .role-btn.active small {
-        color: #c9a84c99;
+        color: var(--primary);
+        opacity: 0.7;
       }
     `,
   ],
