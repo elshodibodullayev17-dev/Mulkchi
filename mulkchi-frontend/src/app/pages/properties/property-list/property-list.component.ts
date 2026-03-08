@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, ActivatedRoute, Router } from '@angular/router';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { PropertyService } from '../../../core/services/property.service';
 import { Property, PropertyFilter, ListingType } from '../../../core/models/property.models';
@@ -17,7 +17,6 @@ import { LoadingSpinnerComponent } from '../../../shared/components/loading-spin
 export class PropertyListComponent implements OnInit {
   private readonly propertyService = inject(PropertyService);
   private readonly route = inject(ActivatedRoute);
-  private readonly router = inject(Router);
 
   readonly ListingType = ListingType;
   properties: Property[] = [];
@@ -27,11 +26,13 @@ export class PropertyListComponent implements OnInit {
   pageSize = 12;
 
   // Filters
+  searchQuery = '';
   filterCity = '';
   filterListingType: ListingType | '' = '';
   filterMinPrice: number | null = null;
   filterMaxPrice: number | null = null;
   filterBedrooms: number | null = null;
+  sortBy = '';
 
   get totalPages(): number {
     return Math.ceil(this.totalCount / this.pageSize);
@@ -52,10 +53,7 @@ export class PropertyListComponent implements OnInit {
 
   loadProperties(): void {
     this.isLoading = true;
-    const filter: PropertyFilter = {
-      page: this.currentPage,
-      pageSize: this.pageSize
-    };
+    const filter: PropertyFilter = { page: this.currentPage, pageSize: this.pageSize };
     if (this.filterCity) filter.city = this.filterCity;
     if (this.filterListingType) filter.listingType = this.filterListingType as ListingType;
     if (this.filterMinPrice != null) filter.minPrice = this.filterMinPrice;
@@ -68,15 +66,24 @@ export class PropertyListComponent implements OnInit {
         this.totalCount = result.totalCount;
         this.isLoading = false;
       },
-      error: () => {
-        this.isLoading = false;
-      }
+      error: () => { this.isLoading = false; }
     });
   }
 
   applyFilters(): void {
     this.currentPage = 1;
     this.loadProperties();
+  }
+
+  clearFilters(): void {
+    this.searchQuery = '';
+    this.filterCity = '';
+    this.filterListingType = '';
+    this.filterMinPrice = null;
+    this.filterMaxPrice = null;
+    this.filterBedrooms = null;
+    this.sortBy = '';
+    this.applyFilters();
   }
 
   setListingType(type: ListingType | ''): void {

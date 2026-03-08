@@ -5,14 +5,14 @@
     font-family: "Playfair Display", serif;
     font-size: 28px;
     font-weight: 700;
-    color: var(--text);
+    color: var(--foreground);
     margin-bottom: 32px;
   }
 }
 
 .table-wrapper {
-  background: var(--card-bg);
-  border: 1px solid var(--border);
+  background: var(--card);
+  border: 1px solid var(--border-color);
   border-radius: 14px;
   overflow: auto;
 }
@@ -27,18 +27,18 @@
     text-align: left;
     font-size: 11px;
     font-weight: 700;
-    color: var(--text-muted);
+    color: var(--muted);
     text-transform: uppercase;
     letter-spacing: 1px;
-    background: var(--card-bg-2);
-    border-bottom: 1px solid var(--border);
+    background: var(--card-alt);
+    border-bottom: 1px solid var(--border-color);
   }
 
   td {
     padding: 15px 20px;
     font-size: 13px;
-    color: var(--text-muted);
-    border-bottom: 1px solid var(--border);
+    color: var(--muted);
+    border-bottom: 1px solid var(--border-color);
     transition: background 0.15s;
   }
 
@@ -48,7 +48,7 @@
 
   tr:hover td {
     background: rgba(201, 168, 76, 0.03);
-    color: var(--text);
+    color: var(--foreground);
   }
 }
 
@@ -62,7 +62,7 @@
 
   &.status-pending {
     background: rgba(201, 168, 76, 0.12);
-    color: var(--gold);
+    color: var(--primary);
   }
   &.status-processing {
     background: rgba(99, 102, 241, 0.12);
@@ -70,7 +70,7 @@
   }
   &.status-completed {
     background: rgba(76, 175, 130, 0.12);
-    color: var(--green);
+    color: var(--success);
   }
   &.status-failed {
     background: rgba(224, 82, 82, 0.12);
@@ -82,14 +82,14 @@
   }
   &.status-cancelled {
     background: rgba(138, 134, 128, 0.12);
-    color: var(--text-muted);
+    color: var(--muted);
   }
 }
 
 .empty-state {
   text-align: center;
   padding: 80px 60px;
-  color: var(--text-muted);
+  color: var(--muted);
   font-size: 14px;
   line-height: 1.6;
 }

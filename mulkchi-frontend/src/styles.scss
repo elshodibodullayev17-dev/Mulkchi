@@ -1,15 +1,57 @@
+/* ============================================================
+   THEME VARIABLES — dark default, overridden by html.light
+   ============================================================ */
 :root {
-  --primary-dark: #0F0F0F;
-  --dark-2: #1A1A1A;
-  --card-bg: #1E1E1E;
-  --card-bg-2: #242424;
-  --border: rgba(255, 255, 255, 0.07);
-  --gold: #C9A84C;
-  --gold-light: #E8C97A;
-  --text: #F0EDE8;
-  --text-muted: #8A8680;
-  --green: #4CAF82;
-  --red: #E05252;
+  /* Semantic tokens (used in new components) */
+  --background: #0f0f0f;
+  --surface: #1a1a1a;
+  --card: #1e1e1e;
+  --card-alt: #242424;
+  --border-color: rgba(255, 255, 255, 0.07);
+  --primary: #c9a84c;
+  --primary-hover: #e8c97a;
+  --primary-fg: #000000;
+  --foreground: #f0ede8;
+  --muted: #8a8680;
+  --muted-bg: rgba(255, 255, 255, 0.06);
+  --success: #4caf82;
+  --danger: #e05252;
+  --sidebar-bg: #111111;
+  --sidebar-border: rgba(255, 255, 255, 0.06);
+  --shadow: rgba(0, 0, 0, 0.4);
+
+  /* Legacy aliases kept for backward-compat */
+  --primary-dark: var(--background);
+  --dark-2: var(--surface);
+  --card-bg: var(--card);
+  --card-bg-2: var(--card-alt);
+  --border: var(--border-color);
+  --gold: var(--primary);
+  --gold-light: var(--primary-hover);
+  --text: var(--foreground);
+  --text-muted: var(--muted);
+  --green: var(--success);
+  --red: var(--danger);
+}
+
+/* ============ LIGHT MODE OVERRIDES ============ */
+html.light {
+  --background: #fafaf8;
+  --surface: #f4f1ee;
+  --card: #ffffff;
+  --card-alt: #f8f6f3;
+  --border-color: rgba(0, 0, 0, 0.09);
+  --primary: #c9a84c;
+  --primary-hover: #b8922f;
+  --primary-fg: #ffffff;
+  --foreground: #1a1a1a;
+  --muted: #7a7774;
+  --muted-bg: rgba(0, 0, 0, 0.04);
+  --success: #2d8c5f;
+  --danger: #c0392b;
+  --sidebar-bg: #f4f1ee;
+  --sidebar-border: rgba(0, 0, 0, 0.07);
+  --shadow: rgba(0, 0, 0, 0.08);
 }
 
 * {
@@ -19,15 +61,20 @@
 }
 
 body {
-  background: var(--primary-dark);
-  color: var(--text);
-  font-family: 'DM Sans', sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: "DM Sans", sans-serif;
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }
 
-h1, h2, h3 {
-  font-family: 'Playfair Display', serif;
+h1,
+h2,
+h3 {
+  font-family: "Playfair Display", serif;
 }
 
 a {
@@ -43,7 +90,7 @@ a {
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
+  font-family: "DM Sans", sans-serif;
   font-size: 14px;
   transition: all 0.2s;
 
@@ -67,7 +114,7 @@ a {
   border-radius: 8px;
   font-weight: 500;
   cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
+  font-family: "DM Sans", sans-serif;
   font-size: 14px;
   transition: all 0.2s;
 
@@ -84,7 +131,7 @@ a {
   border-radius: 8px;
   font-weight: 500;
   cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
+  font-family: "DM Sans", sans-serif;
   font-size: 14px;
   transition: all 0.2s;
 
@@ -110,7 +157,7 @@ a {
   gap: 10px;
 
   &::after {
-    content: '';
+    content: "";
     flex: 1;
     max-width: 60px;
     height: 1px;
@@ -119,13 +166,15 @@ a {
   }
 }
 
-input, select, textarea {
-  background: var(--card-bg-2);
-  border: 1px solid var(--border);
-  color: var(--text);
+input,
+select,
+textarea {
+  background: var(--card-alt);
+  border: 1px solid var(--border-color);
+  color: var(--foreground);
   padding: 10px 14px;
   border-radius: 8px;
-  font-family: 'DM Sans', sans-serif;
+  font-family: "DM Sans", sans-serif;
   font-size: 14px;
   outline: none;
   width: 100%;
@@ -136,13 +185,13 @@ input, select, textarea {
   }
 
   &::placeholder {
-    color: var(--text-muted);
+    color: var(--muted);
   }
 }
 
 select option {
-  background: var(--card-bg-2);
-  color: var(--text);
+  background: var(--card-alt);
+  color: var(--foreground);
 }
 
 .text-gold {
@@ -174,8 +223,8 @@ select option {
 
 /* Material overrides */
 .mat-mdc-snack-bar-container {
-  --mdc-snackbar-container-color: var(--card-bg-2);
-  --mdc-snackbar-supporting-text-color: var(--text);
+  --mdc-snackbar-container-color: var(--card-alt);
+  --mdc-snackbar-supporting-text-color: var(--foreground);
 }
 
 /* Scrollbar */
@@ -185,7 +234,7 @@ select option {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--primary-dark);
+  background: var(--background);
 }
 
 ::-webkit-scrollbar-thumb {
@@ -194,5 +243,5 @@ select option {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--gold);
+  background: var(--primary);
 }
