@@ -8,7 +8,9 @@ import {
 } from '@angular/forms';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Router, RouterModule } from '@angular/router';
+import { UserRole } from '../../../core/models/user.models';
 import { AuthService } from '../../../core/services/auth.service';
+import { UserService } from '../../../core/services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -62,6 +64,31 @@ import { AuthService } from '../../../core/services/auth.service';
             >
               To'g'ri email kiriting
             </span>
+          </div>
+
+          <!-- Role Selector -->
+          <div class="role-selector">
+            <label>Siz kim sifatida ro'yxatdan o'tyapsiz?</label>
+            <div class="role-options">
+              <button
+                type="button"
+                class="role-btn"
+                [class.active]="registerForm.get('role')?.value === 'Host'"
+                (click)="registerForm.patchValue({ role: 'Host' })"
+              >
+                🏠 Mulkdor
+                <small>Mulk ijaraga bering yoki soting</small>
+              </button>
+              <button
+                type="button"
+                class="role-btn"
+                [class.active]="registerForm.get('role')?.value === 'Guest'"
+                (click)="registerForm.patchValue({ role: 'Guest' })"
+              >
+                🔍 Ijarachi
+                <small>Mulk izlang va ijaraga oling</small>
+              </button>
+            </div>
           </div>
 
           <div class="form-group">
@@ -166,12 +193,57 @@ import { AuthService } from '../../../core/services/auth.service';
         font-weight: 500;
         color: #aaa;
       }
+      .role-selector {
+        margin-bottom: 16px;
+      }
+      .role-selector > label {
+        margin-bottom: 10px;
+        font-size: 14px;
+      }
+      .role-options {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .role-btn {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        padding: 14px 10px;
+        border-radius: 12px;
+        border: 2px solid #333;
+        background: #1a1a1a;
+        color: #ccc;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: 600;
+        transition: all 0.2s;
+      }
+      .role-btn small {
+        font-size: 11px;
+        font-weight: 400;
+        color: #888;
+      }
+      .role-btn:hover {
+        border-color: #c9a84c;
+        color: #fff;
+      }
+      .role-btn.active {
+        border-color: #c9a84c;
+        background: rgba(201, 168, 76, 0.12);
+        color: #c9a84c;
+      }
+      .role-btn.active small {
+        color: #c9a84c99;
+      }
     `,
   ],
 })
 export class RegisterComponent {
   private readonly fb = inject(FormBuilder);
   private readonly authService = inject(AuthService);
+  private readonly userService = inject(UserService);
   private readonly router = inject(Router);
   private readonly snackBar = inject(MatSnackBar);
 
@@ -186,6 +258,7 @@ export class RegisterComponent {
     phone: ['', [Validators.required]],
     password: ['', [Validators.required, Validators.minLength(8)]],
     preferredLanguage: ['uz', [Validators.required]],
+    role: ['Guest', [Validators.required]],
   });
 
   get f() {
@@ -201,17 +274,33 @@ export class RegisterComponent {
     this.isLoading = true;
     this.errorMessage = '';
 
-    this.authService.register(this.registerForm.value).subscribe({
+    const { role, ...registerPayload } = this.registerForm.value;
+
+    this.authService.register(registerPayload).subscribe({
       next: () => {
-        this.snackBar.open("Muvaffaqiyatli ro'yxatdan o'tdingiz!", 'Yopish', {
-          duration: 3000,
-        });
-        this.router.navigate(['/dashboard']);
+        if (role === 'Host') {
+          const userId = this.authService.getUserId()!;
+          this.userService.getProfile(userId).subscribe({
+            next: (user) => {
+              this.userService
+                .update({ ...user, role: UserRole.Host })
+                .subscribe({
+                  next: () => this.router.navigate(['/dashboard']),
+                  error: () => this.router.navigate(['/dashboard']),
+                });
+            },
+            error: () => this.router.navigate(['/dashboard']),
+          });
+        } else {
+          this.router.navigate(['/dashboard']);
+        }
       },
       error: (err) => {
         this.isLoading = false;
         this.errorMessage =
-          err.error?.message ?? "Ro'yxatdan o'tishda xatolik yuz berdi";
+          (err.error?.message ?? err.error?.errors)
+            ? JSON.stringify(err.error?.errors)
+            : "Ro'yxatdan o'tishda xatolik yuz berdi";
       },
     });
   }

@@ -1,8 +1,8 @@
-import { HttpInterceptorFn, HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.service';
 import { catchError, switchMap, throwError } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
@@ -16,7 +16,7 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
           return authService.refreshToken().pipe(
             switchMap((response) => {
               const retried = req.clone({
-                setHeaders: { Authorization: `Bearer ${response.token}` }
+                setHeaders: { Authorization: `Bearer ${response.token}` },
               });
               return next(retried);
             }),
@@ -24,18 +24,18 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
               authService.logout();
               router.navigate(['/login']);
               return throwError(() => refreshError);
-            })
+            }),
           );
         } else {
           authService.logout();
           router.navigate(['/login']);
         }
       } else if (error.status === 403) {
-        router.navigate(['/']);
+        console.warn('Access forbidden (403):', error);
       } else if (error.status >= 500) {
         console.error('Server error:', error);
       }
       return throwError(() => error);
-    })
+    }),
   );
 };
