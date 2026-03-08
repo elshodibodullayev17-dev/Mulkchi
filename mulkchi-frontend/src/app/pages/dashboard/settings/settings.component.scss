@@ -170,3 +170,54 @@
     border-color: var(--red);
   }
 }
+
+.role-upgrade {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 28px 32px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(201, 168, 76, 0.3);
+
+  .role-upgrade-icon {
+    font-size: 40px;
+    flex-shrink: 0;
+  }
+
+  .role-upgrade-content {
+    flex: 1;
+
+    h3 {
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+
+      strong {
+        color: var(--text);
+      }
+    }
+  }
+
+  .upgrade-btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+  }
+}
+
+.role-badge {
+  padding: 18px 28px;
+  margin-bottom: 24px;
+
+  .host-badge {
+    font-size: 14px;
+    font-weight: 500;
+    color: #4ade80;
+  }
+}

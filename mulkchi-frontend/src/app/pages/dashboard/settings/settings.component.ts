@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { User } from '../../../core/models/user.models';
+import { User, UserRole } from '../../../core/models/user.models';
 import { AuthService } from '../../../core/services/auth.service';
 import { LanguageService } from '../../../core/services/language.service';
 import { UserService } from '../../../core/services/user.service';
@@ -120,6 +120,40 @@ import { TranslatePipe } from '../../../shared/pipes/translate.pipe';
           {{ 'settings.logout_btn' | translate }}
         </button>
       </div>
+
+      <!-- Role Upgrade Card -->
+      <div
+        class="role-upgrade card-dark"
+        *ngIf="
+          user && user.role !== UserRole.Host && user.role !== UserRole.Admin
+        "
+      >
+        <div class="role-upgrade-icon">🏠</div>
+        <div class="role-upgrade-content">
+          <h3>Mulkdor bo'ling</h3>
+          <p>
+            Siz hozir <strong>Ijarachi</strong> sifatida ro'yxatdan o'tgansiz.
+            Mulk qo'shish, ijaraga berish yoki sotish uchun
+            <strong>Mulkdor</strong> roliga o'ting.
+          </p>
+        </div>
+        <button
+          class="btn-gold upgrade-btn"
+          (click)="upgradeToHost()"
+          [disabled]="isUpgrading"
+        >
+          {{ isUpgrading ? 'Yuklanmoqda...' : 'Mulkdor bo'lish →' }}
+        </button>
+      </div>
+
+      <div
+        class="role-badge card-dark"
+        *ngIf="user && user.role === UserRole.Host"
+      >
+        <span class="host-badge"
+          >✅ Siz Mulkdor sifatida ro'yxatdan o'tgansiz</span
+        >
+      </div>
     </div>
   `,
   styleUrls: ['./settings.component.scss'],
@@ -131,8 +165,10 @@ export class SettingsComponent implements OnInit {
   private readonly snackBar = inject(MatSnackBar);
   protected readonly langService = inject(LanguageService);
 
+  readonly UserRole = UserRole;
   user: User | null = null;
   isLoading = false;
+  isUpgrading = false;
 
   settingsForm: FormGroup = this.fb.group({
     firstName: ['', Validators.required],
@@ -193,5 +229,30 @@ export class SettingsComponent implements OnInit {
 
   logout(): void {
     this.authService.logout();
+  }
+
+  upgradeToHost(): void {
+    if (!this.user) return;
+    if (!confirm("Mulkdor roliga o'tmoqchimisiz? Tasdiqlang.")) return;
+    this.isUpgrading = true;
+    const updated: User = { ...this.user, role: UserRole.Host };
+    this.userService.update(updated).subscribe({
+      next: (user) => {
+        this.user = user;
+        this.isUpgrading = false;
+        // Update stored role so JWT reflects new role after re-login
+        this.snackBar.open(
+          'Muvaffaqiyatli! Endi siz Mulkdorsiz. Iltimos, qayta kiring (logout → login).',
+          'OK',
+          { duration: 8000 },
+        );
+      },
+      error: (err) => {
+        this.isUpgrading = false;
+        const msg =
+          err?.error?.message ?? "Rolni o'zgartirishda xatolik yuz berdi";
+        this.snackBar.open(msg, 'OK', { duration: 5000 });
+      },
+    });
   }
 }
