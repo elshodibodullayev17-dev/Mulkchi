@@ -29,19 +29,19 @@ public class NotificationsController : ControllerBase
         }
         catch (NotificationValidationException notificationValidationException)
         {
-            return BadRequest(notificationValidationException.InnerException);
+            return BadRequest(new { message = notificationValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (NotificationDependencyValidationException notificationDependencyValidationException)
         {
-            return BadRequest(notificationDependencyValidationException.InnerException);
+            return BadRequest(new { message = notificationDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (NotificationDependencyException notificationDependencyException)
+        catch (NotificationDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, notificationDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (NotificationServiceException notificationServiceException)
+        catch (NotificationServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, notificationServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -69,13 +69,13 @@ public class NotificationsController : ControllerBase
 
             return Ok(result);
         }
-        catch (NotificationDependencyException notificationDependencyException)
+        catch (NotificationDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, notificationDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (NotificationServiceException notificationServiceException)
+        catch (NotificationServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, notificationServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -90,24 +90,24 @@ public class NotificationsController : ControllerBase
         }
         catch (NotificationValidationException notificationValidationException)
         {
-            return BadRequest(notificationValidationException.InnerException);
+            return BadRequest(new { message = notificationValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (NotificationDependencyValidationException notificationDependencyValidationException)
             when (notificationDependencyValidationException.InnerException is NotFoundNotificationException)
         {
-            return NotFound(notificationDependencyValidationException.InnerException);
+            return NotFound(new { message = notificationDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (NotificationDependencyValidationException notificationDependencyValidationException)
         {
-            return BadRequest(notificationDependencyValidationException.InnerException);
+            return BadRequest(new { message = notificationDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (NotificationDependencyException notificationDependencyException)
+        catch (NotificationDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, notificationDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (NotificationServiceException notificationServiceException)
+        catch (NotificationServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, notificationServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -122,24 +122,24 @@ public class NotificationsController : ControllerBase
         }
         catch (NotificationValidationException notificationValidationException)
         {
-            return BadRequest(notificationValidationException.InnerException);
+            return BadRequest(new { message = notificationValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (NotificationDependencyValidationException notificationDependencyValidationException)
             when (notificationDependencyValidationException.InnerException is NotFoundNotificationException)
         {
-            return NotFound(notificationDependencyValidationException.InnerException);
+            return NotFound(new { message = notificationDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (NotificationDependencyValidationException notificationDependencyValidationException)
         {
-            return BadRequest(notificationDependencyValidationException.InnerException);
+            return BadRequest(new { message = notificationDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (NotificationDependencyException notificationDependencyException)
+        catch (NotificationDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, notificationDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (NotificationServiceException notificationServiceException)
+        catch (NotificationServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, notificationServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -154,24 +154,24 @@ public class NotificationsController : ControllerBase
         }
         catch (NotificationValidationException notificationValidationException)
         {
-            return BadRequest(notificationValidationException.InnerException);
+            return BadRequest(new { message = notificationValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (NotificationDependencyValidationException notificationDependencyValidationException)
             when (notificationDependencyValidationException.InnerException is NotFoundNotificationException)
         {
-            return NotFound(notificationDependencyValidationException.InnerException);
+            return NotFound(new { message = notificationDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (NotificationDependencyValidationException notificationDependencyValidationException)
         {
-            return BadRequest(notificationDependencyValidationException.InnerException);
+            return BadRequest(new { message = notificationDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (NotificationDependencyException notificationDependencyException)
+        catch (NotificationDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, notificationDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (NotificationServiceException notificationServiceException)
+        catch (NotificationServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, notificationServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 }

@@ -42,19 +42,19 @@ public class PropertyViewsController : ControllerBase
         }
         catch (PropertyViewValidationException propertyViewValidationException)
         {
-            return BadRequest(propertyViewValidationException.InnerException);
+            return BadRequest(new { message = propertyViewValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PropertyViewDependencyValidationException propertyViewDependencyValidationException)
         {
-            return BadRequest(propertyViewDependencyValidationException.InnerException);
+            return BadRequest(new { message = propertyViewDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (PropertyViewDependencyException propertyViewDependencyException)
+        catch (PropertyViewDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyViewDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (PropertyViewServiceException propertyViewServiceException)
+        catch (PropertyViewServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyViewServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -82,13 +82,13 @@ public class PropertyViewsController : ControllerBase
 
             return Ok(result);
         }
-        catch (PropertyViewDependencyException propertyViewDependencyException)
+        catch (PropertyViewDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyViewDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (PropertyViewServiceException propertyViewServiceException)
+        catch (PropertyViewServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyViewServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -103,24 +103,24 @@ public class PropertyViewsController : ControllerBase
         }
         catch (PropertyViewValidationException propertyViewValidationException)
         {
-            return BadRequest(propertyViewValidationException.InnerException);
+            return BadRequest(new { message = propertyViewValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PropertyViewDependencyValidationException propertyViewDependencyValidationException)
             when (propertyViewDependencyValidationException.InnerException is NotFoundPropertyViewException)
         {
-            return NotFound(propertyViewDependencyValidationException.InnerException);
+            return NotFound(new { message = propertyViewDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PropertyViewDependencyValidationException propertyViewDependencyValidationException)
         {
-            return BadRequest(propertyViewDependencyValidationException.InnerException);
+            return BadRequest(new { message = propertyViewDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (PropertyViewDependencyException propertyViewDependencyException)
+        catch (PropertyViewDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyViewDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (PropertyViewServiceException propertyViewServiceException)
+        catch (PropertyViewServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyViewServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -135,24 +135,24 @@ public class PropertyViewsController : ControllerBase
         }
         catch (PropertyViewValidationException propertyViewValidationException)
         {
-            return BadRequest(propertyViewValidationException.InnerException);
+            return BadRequest(new { message = propertyViewValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PropertyViewDependencyValidationException propertyViewDependencyValidationException)
             when (propertyViewDependencyValidationException.InnerException is NotFoundPropertyViewException)
         {
-            return NotFound(propertyViewDependencyValidationException.InnerException);
+            return NotFound(new { message = propertyViewDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PropertyViewDependencyValidationException propertyViewDependencyValidationException)
         {
-            return BadRequest(propertyViewDependencyValidationException.InnerException);
+            return BadRequest(new { message = propertyViewDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (PropertyViewDependencyException propertyViewDependencyException)
+        catch (PropertyViewDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyViewDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (PropertyViewServiceException propertyViewServiceException)
+        catch (PropertyViewServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyViewServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -167,24 +167,24 @@ public class PropertyViewsController : ControllerBase
         }
         catch (PropertyViewValidationException propertyViewValidationException)
         {
-            return BadRequest(propertyViewValidationException.InnerException);
+            return BadRequest(new { message = propertyViewValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PropertyViewDependencyValidationException propertyViewDependencyValidationException)
             when (propertyViewDependencyValidationException.InnerException is NotFoundPropertyViewException)
         {
-            return NotFound(propertyViewDependencyValidationException.InnerException);
+            return NotFound(new { message = propertyViewDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PropertyViewDependencyValidationException propertyViewDependencyValidationException)
         {
-            return BadRequest(propertyViewDependencyValidationException.InnerException);
+            return BadRequest(new { message = propertyViewDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (PropertyViewDependencyException propertyViewDependencyException)
+        catch (PropertyViewDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyViewDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (PropertyViewServiceException propertyViewServiceException)
+        catch (PropertyViewServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyViewServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 }

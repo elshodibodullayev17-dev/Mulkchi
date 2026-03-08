@@ -35,19 +35,19 @@ public class HomeRequestsController : ControllerBase
         }
         catch (HomeRequestValidationException homeRequestValidationException)
         {
-            return BadRequest(homeRequestValidationException.InnerException);
+            return BadRequest(new { message = homeRequestValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (HomeRequestDependencyValidationException homeRequestDependencyValidationException)
         {
-            return BadRequest(homeRequestDependencyValidationException.InnerException);
+            return BadRequest(new { message = homeRequestDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (HomeRequestDependencyException homeRequestDependencyException)
+        catch (HomeRequestDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, homeRequestDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (HomeRequestServiceException homeRequestServiceException)
+        catch (HomeRequestServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, homeRequestServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -75,13 +75,13 @@ public class HomeRequestsController : ControllerBase
 
             return Ok(result);
         }
-        catch (HomeRequestDependencyException homeRequestDependencyException)
+        catch (HomeRequestDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, homeRequestDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (HomeRequestServiceException homeRequestServiceException)
+        catch (HomeRequestServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, homeRequestServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -96,24 +96,24 @@ public class HomeRequestsController : ControllerBase
         }
         catch (HomeRequestValidationException homeRequestValidationException)
         {
-            return BadRequest(homeRequestValidationException.InnerException);
+            return BadRequest(new { message = homeRequestValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (HomeRequestDependencyValidationException homeRequestDependencyValidationException)
             when (homeRequestDependencyValidationException.InnerException is NotFoundHomeRequestException)
         {
-            return NotFound(homeRequestDependencyValidationException.InnerException);
+            return NotFound(new { message = homeRequestDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (HomeRequestDependencyValidationException homeRequestDependencyValidationException)
         {
-            return BadRequest(homeRequestDependencyValidationException.InnerException);
+            return BadRequest(new { message = homeRequestDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (HomeRequestDependencyException homeRequestDependencyException)
+        catch (HomeRequestDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, homeRequestDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (HomeRequestServiceException homeRequestServiceException)
+        catch (HomeRequestServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, homeRequestServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -128,24 +128,24 @@ public class HomeRequestsController : ControllerBase
         }
         catch (HomeRequestValidationException homeRequestValidationException)
         {
-            return BadRequest(homeRequestValidationException.InnerException);
+            return BadRequest(new { message = homeRequestValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (HomeRequestDependencyValidationException homeRequestDependencyValidationException)
             when (homeRequestDependencyValidationException.InnerException is NotFoundHomeRequestException)
         {
-            return NotFound(homeRequestDependencyValidationException.InnerException);
+            return NotFound(new { message = homeRequestDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (HomeRequestDependencyValidationException homeRequestDependencyValidationException)
         {
-            return BadRequest(homeRequestDependencyValidationException.InnerException);
+            return BadRequest(new { message = homeRequestDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (HomeRequestDependencyException homeRequestDependencyException)
+        catch (HomeRequestDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, homeRequestDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (HomeRequestServiceException homeRequestServiceException)
+        catch (HomeRequestServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, homeRequestServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -160,24 +160,24 @@ public class HomeRequestsController : ControllerBase
         }
         catch (HomeRequestValidationException homeRequestValidationException)
         {
-            return BadRequest(homeRequestValidationException.InnerException);
+            return BadRequest(new { message = homeRequestValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (HomeRequestDependencyValidationException homeRequestDependencyValidationException)
             when (homeRequestDependencyValidationException.InnerException is NotFoundHomeRequestException)
         {
-            return NotFound(homeRequestDependencyValidationException.InnerException);
+            return NotFound(new { message = homeRequestDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (HomeRequestDependencyValidationException homeRequestDependencyValidationException)
         {
-            return BadRequest(homeRequestDependencyValidationException.InnerException);
+            return BadRequest(new { message = homeRequestDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (HomeRequestDependencyException homeRequestDependencyException)
+        catch (HomeRequestDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, homeRequestDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (HomeRequestServiceException homeRequestServiceException)
+        catch (HomeRequestServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, homeRequestServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 }

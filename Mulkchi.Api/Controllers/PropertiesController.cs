@@ -41,19 +41,19 @@ public class PropertiesController : ControllerBase
         }
         catch (PropertyValidationException propertyValidationException)
         {
-            return BadRequest(propertyValidationException.InnerException);
+            return BadRequest(new { message = propertyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PropertyDependencyValidationException propertyDependencyValidationException)
         {
-            return BadRequest(propertyDependencyValidationException.InnerException);
+            return BadRequest(new { message = propertyDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (PropertyDependencyException propertyDependencyException)
+        catch (PropertyDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (PropertyServiceException propertyServiceException)
+        catch (PropertyServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -107,13 +107,13 @@ public class PropertiesController : ControllerBase
 
             return Ok(result);
         }
-        catch (PropertyDependencyException propertyDependencyException)
+        catch (PropertyDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (PropertyServiceException propertyServiceException)
+        catch (PropertyServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -128,24 +128,24 @@ public class PropertiesController : ControllerBase
         }
         catch (PropertyValidationException propertyValidationException)
         {
-            return BadRequest(propertyValidationException.InnerException);
+            return BadRequest(new { message = propertyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PropertyDependencyValidationException propertyDependencyValidationException)
             when (propertyDependencyValidationException.InnerException is NotFoundPropertyException)
         {
-            return NotFound(propertyDependencyValidationException.InnerException);
+            return NotFound(new { message = propertyDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PropertyDependencyValidationException propertyDependencyValidationException)
         {
-            return BadRequest(propertyDependencyValidationException.InnerException);
+            return BadRequest(new { message = propertyDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (PropertyDependencyException propertyDependencyException)
+        catch (PropertyDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (PropertyServiceException propertyServiceException)
+        catch (PropertyServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -172,24 +172,24 @@ public class PropertiesController : ControllerBase
         }
         catch (PropertyValidationException propertyValidationException)
         {
-            return BadRequest(propertyValidationException.InnerException);
+            return BadRequest(new { message = propertyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PropertyDependencyValidationException propertyDependencyValidationException)
             when (propertyDependencyValidationException.InnerException is NotFoundPropertyException)
         {
-            return NotFound(propertyDependencyValidationException.InnerException);
+            return NotFound(new { message = propertyDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PropertyDependencyValidationException propertyDependencyValidationException)
         {
-            return BadRequest(propertyDependencyValidationException.InnerException);
+            return BadRequest(new { message = propertyDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (PropertyDependencyException propertyDependencyException)
+        catch (PropertyDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (PropertyServiceException propertyServiceException)
+        catch (PropertyServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -204,24 +204,24 @@ public class PropertiesController : ControllerBase
         }
         catch (PropertyValidationException propertyValidationException)
         {
-            return BadRequest(propertyValidationException.InnerException);
+            return BadRequest(new { message = propertyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PropertyDependencyValidationException propertyDependencyValidationException)
             when (propertyDependencyValidationException.InnerException is NotFoundPropertyException)
         {
-            return NotFound(propertyDependencyValidationException.InnerException);
+            return NotFound(new { message = propertyDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PropertyDependencyValidationException propertyDependencyValidationException)
         {
-            return BadRequest(propertyDependencyValidationException.InnerException);
+            return BadRequest(new { message = propertyDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (PropertyDependencyException propertyDependencyException)
+        catch (PropertyDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (PropertyServiceException propertyServiceException)
+        catch (PropertyServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 }

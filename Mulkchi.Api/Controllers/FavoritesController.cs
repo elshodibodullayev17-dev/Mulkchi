@@ -36,19 +36,19 @@ public class FavoritesController : ControllerBase
         }
         catch (FavoriteValidationException favoriteValidationException)
         {
-            return BadRequest(favoriteValidationException.InnerException);
+            return BadRequest(new { message = favoriteValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (FavoriteDependencyValidationException favoriteDependencyValidationException)
         {
-            return BadRequest(favoriteDependencyValidationException.InnerException);
+            return BadRequest(new { message = favoriteDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (FavoriteDependencyException favoriteDependencyException)
+        catch (FavoriteDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, favoriteDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (FavoriteServiceException favoriteServiceException)
+        catch (FavoriteServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, favoriteServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -76,13 +76,13 @@ public class FavoritesController : ControllerBase
 
             return Ok(result);
         }
-        catch (FavoriteDependencyException favoriteDependencyException)
+        catch (FavoriteDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, favoriteDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (FavoriteServiceException favoriteServiceException)
+        catch (FavoriteServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, favoriteServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -97,24 +97,24 @@ public class FavoritesController : ControllerBase
         }
         catch (FavoriteValidationException favoriteValidationException)
         {
-            return BadRequest(favoriteValidationException.InnerException);
+            return BadRequest(new { message = favoriteValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (FavoriteDependencyValidationException favoriteDependencyValidationException)
             when (favoriteDependencyValidationException.InnerException is NotFoundFavoriteException)
         {
-            return NotFound(favoriteDependencyValidationException.InnerException);
+            return NotFound(new { message = favoriteDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (FavoriteDependencyValidationException favoriteDependencyValidationException)
         {
-            return BadRequest(favoriteDependencyValidationException.InnerException);
+            return BadRequest(new { message = favoriteDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (FavoriteDependencyException favoriteDependencyException)
+        catch (FavoriteDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, favoriteDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (FavoriteServiceException favoriteServiceException)
+        catch (FavoriteServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, favoriteServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -129,24 +129,24 @@ public class FavoritesController : ControllerBase
         }
         catch (FavoriteValidationException favoriteValidationException)
         {
-            return BadRequest(favoriteValidationException.InnerException);
+            return BadRequest(new { message = favoriteValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (FavoriteDependencyValidationException favoriteDependencyValidationException)
             when (favoriteDependencyValidationException.InnerException is NotFoundFavoriteException)
         {
-            return NotFound(favoriteDependencyValidationException.InnerException);
+            return NotFound(new { message = favoriteDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (FavoriteDependencyValidationException favoriteDependencyValidationException)
         {
-            return BadRequest(favoriteDependencyValidationException.InnerException);
+            return BadRequest(new { message = favoriteDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (FavoriteDependencyException favoriteDependencyException)
+        catch (FavoriteDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, favoriteDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (FavoriteServiceException favoriteServiceException)
+        catch (FavoriteServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, favoriteServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -161,24 +161,24 @@ public class FavoritesController : ControllerBase
         }
         catch (FavoriteValidationException favoriteValidationException)
         {
-            return BadRequest(favoriteValidationException.InnerException);
+            return BadRequest(new { message = favoriteValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (FavoriteDependencyValidationException favoriteDependencyValidationException)
             when (favoriteDependencyValidationException.InnerException is NotFoundFavoriteException)
         {
-            return NotFound(favoriteDependencyValidationException.InnerException);
+            return NotFound(new { message = favoriteDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (FavoriteDependencyValidationException favoriteDependencyValidationException)
         {
-            return BadRequest(favoriteDependencyValidationException.InnerException);
+            return BadRequest(new { message = favoriteDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (FavoriteDependencyException favoriteDependencyException)
+        catch (FavoriteDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, favoriteDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (FavoriteServiceException favoriteServiceException)
+        catch (FavoriteServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, favoriteServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 }

@@ -27,13 +27,13 @@ public class UsersController : ControllerBase
             IQueryable<User> users = this.userService.RetrieveAllUsers();
             return Ok(users);
         }
-        catch (UserDependencyException userDependencyException)
+        catch (UserDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, userDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (UserServiceException userServiceException)
+        catch (UserServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, userServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -56,24 +56,24 @@ public class UsersController : ControllerBase
         }
         catch (UserValidationException userValidationException)
         {
-            return BadRequest(userValidationException.InnerException);
+            return BadRequest(new { message = userValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (UserDependencyValidationException userDependencyValidationException)
             when (userDependencyValidationException.InnerException is NotFoundUserException)
         {
-            return NotFound(userDependencyValidationException.InnerException);
+            return NotFound(new { message = userDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (UserDependencyValidationException userDependencyValidationException)
         {
-            return BadRequest(userDependencyValidationException.InnerException);
+            return BadRequest(new { message = userDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (UserDependencyException userDependencyException)
+        catch (UserDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, userDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (UserServiceException userServiceException)
+        catch (UserServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, userServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -96,24 +96,24 @@ public class UsersController : ControllerBase
         }
         catch (UserValidationException userValidationException)
         {
-            return BadRequest(userValidationException.InnerException);
+            return BadRequest(new { message = userValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (UserDependencyValidationException userDependencyValidationException)
             when (userDependencyValidationException.InnerException is NotFoundUserException)
         {
-            return NotFound(userDependencyValidationException.InnerException);
+            return NotFound(new { message = userDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (UserDependencyValidationException userDependencyValidationException)
         {
-            return BadRequest(userDependencyValidationException.InnerException);
+            return BadRequest(new { message = userDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (UserDependencyException userDependencyException)
+        catch (UserDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, userDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (UserServiceException userServiceException)
+        catch (UserServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, userServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -128,24 +128,24 @@ public class UsersController : ControllerBase
         }
         catch (UserValidationException userValidationException)
         {
-            return BadRequest(userValidationException.InnerException);
+            return BadRequest(new { message = userValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (UserDependencyValidationException userDependencyValidationException)
             when (userDependencyValidationException.InnerException is NotFoundUserException)
         {
-            return NotFound(userDependencyValidationException.InnerException);
+            return NotFound(new { message = userDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (UserDependencyValidationException userDependencyValidationException)
         {
-            return BadRequest(userDependencyValidationException.InnerException);
+            return BadRequest(new { message = userDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (UserDependencyException userDependencyException)
+        catch (UserDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, userDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (UserServiceException userServiceException)
+        catch (UserServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, userServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 }

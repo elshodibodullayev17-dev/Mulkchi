@@ -35,19 +35,19 @@ public class ReviewsController : ControllerBase
         }
         catch (ReviewValidationException reviewValidationException)
         {
-            return BadRequest(reviewValidationException.InnerException);
+            return BadRequest(new { message = reviewValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (ReviewDependencyValidationException reviewDependencyValidationException)
         {
-            return BadRequest(reviewDependencyValidationException.InnerException);
+            return BadRequest(new { message = reviewDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (ReviewDependencyException reviewDependencyException)
+        catch (ReviewDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, reviewDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (ReviewServiceException reviewServiceException)
+        catch (ReviewServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, reviewServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -75,13 +75,13 @@ public class ReviewsController : ControllerBase
 
             return Ok(result);
         }
-        catch (ReviewDependencyException reviewDependencyException)
+        catch (ReviewDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, reviewDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (ReviewServiceException reviewServiceException)
+        catch (ReviewServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, reviewServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -96,24 +96,24 @@ public class ReviewsController : ControllerBase
         }
         catch (ReviewValidationException reviewValidationException)
         {
-            return BadRequest(reviewValidationException.InnerException);
+            return BadRequest(new { message = reviewValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (ReviewDependencyValidationException reviewDependencyValidationException)
             when (reviewDependencyValidationException.InnerException is NotFoundReviewException)
         {
-            return NotFound(reviewDependencyValidationException.InnerException);
+            return NotFound(new { message = reviewDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (ReviewDependencyValidationException reviewDependencyValidationException)
         {
-            return BadRequest(reviewDependencyValidationException.InnerException);
+            return BadRequest(new { message = reviewDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (ReviewDependencyException reviewDependencyException)
+        catch (ReviewDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, reviewDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (ReviewServiceException reviewServiceException)
+        catch (ReviewServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, reviewServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -128,24 +128,24 @@ public class ReviewsController : ControllerBase
         }
         catch (ReviewValidationException reviewValidationException)
         {
-            return BadRequest(reviewValidationException.InnerException);
+            return BadRequest(new { message = reviewValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (ReviewDependencyValidationException reviewDependencyValidationException)
             when (reviewDependencyValidationException.InnerException is NotFoundReviewException)
         {
-            return NotFound(reviewDependencyValidationException.InnerException);
+            return NotFound(new { message = reviewDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (ReviewDependencyValidationException reviewDependencyValidationException)
         {
-            return BadRequest(reviewDependencyValidationException.InnerException);
+            return BadRequest(new { message = reviewDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (ReviewDependencyException reviewDependencyException)
+        catch (ReviewDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, reviewDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (ReviewServiceException reviewServiceException)
+        catch (ReviewServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, reviewServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -160,24 +160,24 @@ public class ReviewsController : ControllerBase
         }
         catch (ReviewValidationException reviewValidationException)
         {
-            return BadRequest(reviewValidationException.InnerException);
+            return BadRequest(new { message = reviewValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (ReviewDependencyValidationException reviewDependencyValidationException)
             when (reviewDependencyValidationException.InnerException is NotFoundReviewException)
         {
-            return NotFound(reviewDependencyValidationException.InnerException);
+            return NotFound(new { message = reviewDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (ReviewDependencyValidationException reviewDependencyValidationException)
         {
-            return BadRequest(reviewDependencyValidationException.InnerException);
+            return BadRequest(new { message = reviewDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (ReviewDependencyException reviewDependencyException)
+        catch (ReviewDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, reviewDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (ReviewServiceException reviewServiceException)
+        catch (ReviewServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, reviewServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 }

@@ -29,19 +29,19 @@ public class DiscountUsagesController : ControllerBase
         }
         catch (DiscountUsageValidationException discountUsageValidationException)
         {
-            return BadRequest(discountUsageValidationException.InnerException);
+            return BadRequest(new { message = discountUsageValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (DiscountUsageDependencyValidationException discountUsageDependencyValidationException)
         {
-            return BadRequest(discountUsageDependencyValidationException.InnerException);
+            return BadRequest(new { message = discountUsageDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (DiscountUsageDependencyException discountUsageDependencyException)
+        catch (DiscountUsageDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, discountUsageDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (DiscountUsageServiceException discountUsageServiceException)
+        catch (DiscountUsageServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, discountUsageServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -69,13 +69,13 @@ public class DiscountUsagesController : ControllerBase
 
             return Ok(result);
         }
-        catch (DiscountUsageDependencyException discountUsageDependencyException)
+        catch (DiscountUsageDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, discountUsageDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (DiscountUsageServiceException discountUsageServiceException)
+        catch (DiscountUsageServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, discountUsageServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -90,24 +90,24 @@ public class DiscountUsagesController : ControllerBase
         }
         catch (DiscountUsageValidationException discountUsageValidationException)
         {
-            return BadRequest(discountUsageValidationException.InnerException);
+            return BadRequest(new { message = discountUsageValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (DiscountUsageDependencyValidationException discountUsageDependencyValidationException)
             when (discountUsageDependencyValidationException.InnerException is NotFoundDiscountUsageException)
         {
-            return NotFound(discountUsageDependencyValidationException.InnerException);
+            return NotFound(new { message = discountUsageDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (DiscountUsageDependencyValidationException discountUsageDependencyValidationException)
         {
-            return BadRequest(discountUsageDependencyValidationException.InnerException);
+            return BadRequest(new { message = discountUsageDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (DiscountUsageDependencyException discountUsageDependencyException)
+        catch (DiscountUsageDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, discountUsageDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (DiscountUsageServiceException discountUsageServiceException)
+        catch (DiscountUsageServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, discountUsageServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -122,24 +122,24 @@ public class DiscountUsagesController : ControllerBase
         }
         catch (DiscountUsageValidationException discountUsageValidationException)
         {
-            return BadRequest(discountUsageValidationException.InnerException);
+            return BadRequest(new { message = discountUsageValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (DiscountUsageDependencyValidationException discountUsageDependencyValidationException)
             when (discountUsageDependencyValidationException.InnerException is NotFoundDiscountUsageException)
         {
-            return NotFound(discountUsageDependencyValidationException.InnerException);
+            return NotFound(new { message = discountUsageDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (DiscountUsageDependencyValidationException discountUsageDependencyValidationException)
         {
-            return BadRequest(discountUsageDependencyValidationException.InnerException);
+            return BadRequest(new { message = discountUsageDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (DiscountUsageDependencyException discountUsageDependencyException)
+        catch (DiscountUsageDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, discountUsageDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (DiscountUsageServiceException discountUsageServiceException)
+        catch (DiscountUsageServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, discountUsageServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -154,24 +154,24 @@ public class DiscountUsagesController : ControllerBase
         }
         catch (DiscountUsageValidationException discountUsageValidationException)
         {
-            return BadRequest(discountUsageValidationException.InnerException);
+            return BadRequest(new { message = discountUsageValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (DiscountUsageDependencyValidationException discountUsageDependencyValidationException)
             when (discountUsageDependencyValidationException.InnerException is NotFoundDiscountUsageException)
         {
-            return NotFound(discountUsageDependencyValidationException.InnerException);
+            return NotFound(new { message = discountUsageDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (DiscountUsageDependencyValidationException discountUsageDependencyValidationException)
         {
-            return BadRequest(discountUsageDependencyValidationException.InnerException);
+            return BadRequest(new { message = discountUsageDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (DiscountUsageDependencyException discountUsageDependencyException)
+        catch (DiscountUsageDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, discountUsageDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (DiscountUsageServiceException discountUsageServiceException)
+        catch (DiscountUsageServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, discountUsageServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 }

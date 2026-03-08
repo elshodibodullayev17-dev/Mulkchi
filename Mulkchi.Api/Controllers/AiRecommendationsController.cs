@@ -29,19 +29,19 @@ public class AiRecommendationsController : ControllerBase
         }
         catch (AiRecommendationValidationException aiRecommendationValidationException)
         {
-            return BadRequest(aiRecommendationValidationException.InnerException);
+            return BadRequest(new { message = aiRecommendationValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (AiRecommendationDependencyValidationException aiRecommendationDependencyValidationException)
         {
-            return BadRequest(aiRecommendationDependencyValidationException.InnerException);
+            return BadRequest(new { message = aiRecommendationDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (AiRecommendationDependencyException aiRecommendationDependencyException)
+        catch (AiRecommendationDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, aiRecommendationDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (AiRecommendationServiceException aiRecommendationServiceException)
+        catch (AiRecommendationServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, aiRecommendationServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -69,13 +69,13 @@ public class AiRecommendationsController : ControllerBase
 
             return Ok(result);
         }
-        catch (AiRecommendationDependencyException aiRecommendationDependencyException)
+        catch (AiRecommendationDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, aiRecommendationDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (AiRecommendationServiceException aiRecommendationServiceException)
+        catch (AiRecommendationServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, aiRecommendationServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -90,24 +90,24 @@ public class AiRecommendationsController : ControllerBase
         }
         catch (AiRecommendationValidationException aiRecommendationValidationException)
         {
-            return BadRequest(aiRecommendationValidationException.InnerException);
+            return BadRequest(new { message = aiRecommendationValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (AiRecommendationDependencyValidationException aiRecommendationDependencyValidationException)
             when (aiRecommendationDependencyValidationException.InnerException is NotFoundAiRecommendationException)
         {
-            return NotFound(aiRecommendationDependencyValidationException.InnerException);
+            return NotFound(new { message = aiRecommendationDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (AiRecommendationDependencyValidationException aiRecommendationDependencyValidationException)
         {
-            return BadRequest(aiRecommendationDependencyValidationException.InnerException);
+            return BadRequest(new { message = aiRecommendationDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (AiRecommendationDependencyException aiRecommendationDependencyException)
+        catch (AiRecommendationDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, aiRecommendationDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (AiRecommendationServiceException aiRecommendationServiceException)
+        catch (AiRecommendationServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, aiRecommendationServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -122,24 +122,24 @@ public class AiRecommendationsController : ControllerBase
         }
         catch (AiRecommendationValidationException aiRecommendationValidationException)
         {
-            return BadRequest(aiRecommendationValidationException.InnerException);
+            return BadRequest(new { message = aiRecommendationValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (AiRecommendationDependencyValidationException aiRecommendationDependencyValidationException)
             when (aiRecommendationDependencyValidationException.InnerException is NotFoundAiRecommendationException)
         {
-            return NotFound(aiRecommendationDependencyValidationException.InnerException);
+            return NotFound(new { message = aiRecommendationDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (AiRecommendationDependencyValidationException aiRecommendationDependencyValidationException)
         {
-            return BadRequest(aiRecommendationDependencyValidationException.InnerException);
+            return BadRequest(new { message = aiRecommendationDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (AiRecommendationDependencyException aiRecommendationDependencyException)
+        catch (AiRecommendationDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, aiRecommendationDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (AiRecommendationServiceException aiRecommendationServiceException)
+        catch (AiRecommendationServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, aiRecommendationServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -154,24 +154,24 @@ public class AiRecommendationsController : ControllerBase
         }
         catch (AiRecommendationValidationException aiRecommendationValidationException)
         {
-            return BadRequest(aiRecommendationValidationException.InnerException);
+            return BadRequest(new { message = aiRecommendationValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (AiRecommendationDependencyValidationException aiRecommendationDependencyValidationException)
             when (aiRecommendationDependencyValidationException.InnerException is NotFoundAiRecommendationException)
         {
-            return NotFound(aiRecommendationDependencyValidationException.InnerException);
+            return NotFound(new { message = aiRecommendationDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (AiRecommendationDependencyValidationException aiRecommendationDependencyValidationException)
         {
-            return BadRequest(aiRecommendationDependencyValidationException.InnerException);
+            return BadRequest(new { message = aiRecommendationDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (AiRecommendationDependencyException aiRecommendationDependencyException)
+        catch (AiRecommendationDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, aiRecommendationDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (AiRecommendationServiceException aiRecommendationServiceException)
+        catch (AiRecommendationServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, aiRecommendationServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 }

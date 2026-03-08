@@ -29,19 +29,19 @@ public class MessagesController : ControllerBase
         }
         catch (MessageValidationException messageValidationException)
         {
-            return BadRequest(messageValidationException.InnerException);
+            return BadRequest(new { message = messageValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (MessageDependencyValidationException messageDependencyValidationException)
         {
-            return BadRequest(messageDependencyValidationException.InnerException);
+            return BadRequest(new { message = messageDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (MessageDependencyException messageDependencyException)
+        catch (MessageDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, messageDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (MessageServiceException messageServiceException)
+        catch (MessageServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, messageServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -69,13 +69,13 @@ public class MessagesController : ControllerBase
 
             return Ok(result);
         }
-        catch (MessageDependencyException messageDependencyException)
+        catch (MessageDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, messageDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (MessageServiceException messageServiceException)
+        catch (MessageServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, messageServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -90,24 +90,24 @@ public class MessagesController : ControllerBase
         }
         catch (MessageValidationException messageValidationException)
         {
-            return BadRequest(messageValidationException.InnerException);
+            return BadRequest(new { message = messageValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (MessageDependencyValidationException messageDependencyValidationException)
             when (messageDependencyValidationException.InnerException is NotFoundMessageException)
         {
-            return NotFound(messageDependencyValidationException.InnerException);
+            return NotFound(new { message = messageDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (MessageDependencyValidationException messageDependencyValidationException)
         {
-            return BadRequest(messageDependencyValidationException.InnerException);
+            return BadRequest(new { message = messageDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (MessageDependencyException messageDependencyException)
+        catch (MessageDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, messageDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (MessageServiceException messageServiceException)
+        catch (MessageServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, messageServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -122,24 +122,24 @@ public class MessagesController : ControllerBase
         }
         catch (MessageValidationException messageValidationException)
         {
-            return BadRequest(messageValidationException.InnerException);
+            return BadRequest(new { message = messageValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (MessageDependencyValidationException messageDependencyValidationException)
             when (messageDependencyValidationException.InnerException is NotFoundMessageException)
         {
-            return NotFound(messageDependencyValidationException.InnerException);
+            return NotFound(new { message = messageDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (MessageDependencyValidationException messageDependencyValidationException)
         {
-            return BadRequest(messageDependencyValidationException.InnerException);
+            return BadRequest(new { message = messageDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (MessageDependencyException messageDependencyException)
+        catch (MessageDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, messageDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (MessageServiceException messageServiceException)
+        catch (MessageServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, messageServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -154,24 +154,24 @@ public class MessagesController : ControllerBase
         }
         catch (MessageValidationException messageValidationException)
         {
-            return BadRequest(messageValidationException.InnerException);
+            return BadRequest(new { message = messageValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (MessageDependencyValidationException messageDependencyValidationException)
             when (messageDependencyValidationException.InnerException is NotFoundMessageException)
         {
-            return NotFound(messageDependencyValidationException.InnerException);
+            return NotFound(new { message = messageDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (MessageDependencyValidationException messageDependencyValidationException)
         {
-            return BadRequest(messageDependencyValidationException.InnerException);
+            return BadRequest(new { message = messageDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (MessageDependencyException messageDependencyException)
+        catch (MessageDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, messageDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (MessageServiceException messageServiceException)
+        catch (MessageServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, messageServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 }

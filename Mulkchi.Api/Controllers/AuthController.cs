@@ -27,24 +27,24 @@ public class AuthController : ControllerBase
         }
         catch (AuthValidationException authValidationException)
         {
-            return BadRequest(authValidationException.InnerException);
+            return BadRequest(new { message = authValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (AuthDependencyValidationException authDependencyValidationException)
             when (authDependencyValidationException.InnerException is NotFoundUserByEmailException)
         {
-            return NotFound(authDependencyValidationException.InnerException);
+            return NotFound(new { message = authDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (AuthDependencyValidationException authDependencyValidationException)
         {
-            return BadRequest(authDependencyValidationException.InnerException);
+            return BadRequest(new { message = authDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (AuthDependencyException authDependencyException)
+        catch (AuthDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, authDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (AuthServiceException authServiceException)
+        catch (AuthServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, authServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -58,24 +58,24 @@ public class AuthController : ControllerBase
         }
         catch (AuthValidationException authValidationException)
         {
-            return BadRequest(authValidationException.InnerException);
+            return BadRequest(new { message = authValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (AuthDependencyValidationException authDependencyValidationException)
             when (authDependencyValidationException.InnerException is AlreadyExistsUserEmailException)
         {
-            return Conflict(authDependencyValidationException.InnerException);
+            return Conflict(new { message = authDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (AuthDependencyValidationException authDependencyValidationException)
         {
-            return BadRequest(authDependencyValidationException.InnerException);
+            return BadRequest(new { message = authDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (AuthDependencyException authDependencyException)
+        catch (AuthDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, authDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (AuthServiceException authServiceException)
+        catch (AuthServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, authServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -89,24 +89,24 @@ public class AuthController : ControllerBase
         }
         catch (AuthValidationException authValidationException)
         {
-            return BadRequest(authValidationException.InnerException);
+            return BadRequest(new { message = authValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (AuthDependencyValidationException authDependencyValidationException)
             when (authDependencyValidationException.InnerException is NotFoundUserByEmailException)
         {
-            return NotFound(authDependencyValidationException.InnerException);
+            return NotFound(new { message = authDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (AuthDependencyValidationException authDependencyValidationException)
         {
-            return BadRequest(authDependencyValidationException.InnerException);
+            return BadRequest(new { message = authDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (AuthDependencyException authDependencyException)
+        catch (AuthDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, authDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (AuthServiceException authServiceException)
+        catch (AuthServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, authServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -121,15 +121,15 @@ public class AuthController : ControllerBase
         }
         catch (AuthValidationException authValidationException)
         {
-            return BadRequest(authValidationException.InnerException);
+            return BadRequest(new { message = authValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (AuthDependencyException authDependencyException)
+        catch (AuthDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, authDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (AuthServiceException authServiceException)
+        catch (AuthServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, authServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 }

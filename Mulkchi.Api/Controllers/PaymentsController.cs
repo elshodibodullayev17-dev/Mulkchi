@@ -35,19 +35,19 @@ public class PaymentsController : ControllerBase
         }
         catch (PaymentValidationException paymentValidationException)
         {
-            return BadRequest(paymentValidationException.InnerException);
+            return BadRequest(new { message = paymentValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PaymentDependencyValidationException paymentDependencyValidationException)
         {
-            return BadRequest(paymentDependencyValidationException.InnerException);
+            return BadRequest(new { message = paymentDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (PaymentDependencyException paymentDependencyException)
+        catch (PaymentDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, paymentDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (PaymentServiceException paymentServiceException)
+        catch (PaymentServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, paymentServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -83,13 +83,13 @@ public class PaymentsController : ControllerBase
 
             return Ok(result);
         }
-        catch (PaymentDependencyException paymentDependencyException)
+        catch (PaymentDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, paymentDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (PaymentServiceException paymentServiceException)
+        catch (PaymentServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, paymentServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -104,24 +104,24 @@ public class PaymentsController : ControllerBase
         }
         catch (PaymentValidationException paymentValidationException)
         {
-            return BadRequest(paymentValidationException.InnerException);
+            return BadRequest(new { message = paymentValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PaymentDependencyValidationException paymentDependencyValidationException)
             when (paymentDependencyValidationException.InnerException is NotFoundPaymentException)
         {
-            return NotFound(paymentDependencyValidationException.InnerException);
+            return NotFound(new { message = paymentDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PaymentDependencyValidationException paymentDependencyValidationException)
         {
-            return BadRequest(paymentDependencyValidationException.InnerException);
+            return BadRequest(new { message = paymentDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (PaymentDependencyException paymentDependencyException)
+        catch (PaymentDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, paymentDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (PaymentServiceException paymentServiceException)
+        catch (PaymentServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, paymentServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -136,24 +136,24 @@ public class PaymentsController : ControllerBase
         }
         catch (PaymentValidationException paymentValidationException)
         {
-            return BadRequest(paymentValidationException.InnerException);
+            return BadRequest(new { message = paymentValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PaymentDependencyValidationException paymentDependencyValidationException)
             when (paymentDependencyValidationException.InnerException is NotFoundPaymentException)
         {
-            return NotFound(paymentDependencyValidationException.InnerException);
+            return NotFound(new { message = paymentDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PaymentDependencyValidationException paymentDependencyValidationException)
         {
-            return BadRequest(paymentDependencyValidationException.InnerException);
+            return BadRequest(new { message = paymentDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (PaymentDependencyException paymentDependencyException)
+        catch (PaymentDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, paymentDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (PaymentServiceException paymentServiceException)
+        catch (PaymentServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, paymentServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -168,24 +168,24 @@ public class PaymentsController : ControllerBase
         }
         catch (PaymentValidationException paymentValidationException)
         {
-            return BadRequest(paymentValidationException.InnerException);
+            return BadRequest(new { message = paymentValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PaymentDependencyValidationException paymentDependencyValidationException)
             when (paymentDependencyValidationException.InnerException is NotFoundPaymentException)
         {
-            return NotFound(paymentDependencyValidationException.InnerException);
+            return NotFound(new { message = paymentDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PaymentDependencyValidationException paymentDependencyValidationException)
         {
-            return BadRequest(paymentDependencyValidationException.InnerException);
+            return BadRequest(new { message = paymentDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (PaymentDependencyException paymentDependencyException)
+        catch (PaymentDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, paymentDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (PaymentServiceException paymentServiceException)
+        catch (PaymentServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, paymentServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 }

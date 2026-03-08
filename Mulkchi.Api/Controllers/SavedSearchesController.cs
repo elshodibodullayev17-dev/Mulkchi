@@ -29,19 +29,19 @@ public class SavedSearchesController : ControllerBase
         }
         catch (SavedSearchValidationException savedSearchValidationException)
         {
-            return BadRequest(savedSearchValidationException.InnerException);
+            return BadRequest(new { message = savedSearchValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (SavedSearchDependencyValidationException savedSearchDependencyValidationException)
         {
-            return BadRequest(savedSearchDependencyValidationException.InnerException);
+            return BadRequest(new { message = savedSearchDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (SavedSearchDependencyException savedSearchDependencyException)
+        catch (SavedSearchDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, savedSearchDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (SavedSearchServiceException savedSearchServiceException)
+        catch (SavedSearchServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, savedSearchServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -69,13 +69,13 @@ public class SavedSearchesController : ControllerBase
 
             return Ok(result);
         }
-        catch (SavedSearchDependencyException savedSearchDependencyException)
+        catch (SavedSearchDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, savedSearchDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (SavedSearchServiceException savedSearchServiceException)
+        catch (SavedSearchServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, savedSearchServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -90,24 +90,24 @@ public class SavedSearchesController : ControllerBase
         }
         catch (SavedSearchValidationException savedSearchValidationException)
         {
-            return BadRequest(savedSearchValidationException.InnerException);
+            return BadRequest(new { message = savedSearchValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (SavedSearchDependencyValidationException savedSearchDependencyValidationException)
             when (savedSearchDependencyValidationException.InnerException is NotFoundSavedSearchException)
         {
-            return NotFound(savedSearchDependencyValidationException.InnerException);
+            return NotFound(new { message = savedSearchDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (SavedSearchDependencyValidationException savedSearchDependencyValidationException)
         {
-            return BadRequest(savedSearchDependencyValidationException.InnerException);
+            return BadRequest(new { message = savedSearchDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (SavedSearchDependencyException savedSearchDependencyException)
+        catch (SavedSearchDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, savedSearchDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (SavedSearchServiceException savedSearchServiceException)
+        catch (SavedSearchServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, savedSearchServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -122,24 +122,24 @@ public class SavedSearchesController : ControllerBase
         }
         catch (SavedSearchValidationException savedSearchValidationException)
         {
-            return BadRequest(savedSearchValidationException.InnerException);
+            return BadRequest(new { message = savedSearchValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (SavedSearchDependencyValidationException savedSearchDependencyValidationException)
             when (savedSearchDependencyValidationException.InnerException is NotFoundSavedSearchException)
         {
-            return NotFound(savedSearchDependencyValidationException.InnerException);
+            return NotFound(new { message = savedSearchDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (SavedSearchDependencyValidationException savedSearchDependencyValidationException)
         {
-            return BadRequest(savedSearchDependencyValidationException.InnerException);
+            return BadRequest(new { message = savedSearchDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (SavedSearchDependencyException savedSearchDependencyException)
+        catch (SavedSearchDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, savedSearchDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (SavedSearchServiceException savedSearchServiceException)
+        catch (SavedSearchServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, savedSearchServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -154,24 +154,24 @@ public class SavedSearchesController : ControllerBase
         }
         catch (SavedSearchValidationException savedSearchValidationException)
         {
-            return BadRequest(savedSearchValidationException.InnerException);
+            return BadRequest(new { message = savedSearchValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (SavedSearchDependencyValidationException savedSearchDependencyValidationException)
             when (savedSearchDependencyValidationException.InnerException is NotFoundSavedSearchException)
         {
-            return NotFound(savedSearchDependencyValidationException.InnerException);
+            return NotFound(new { message = savedSearchDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (SavedSearchDependencyValidationException savedSearchDependencyValidationException)
         {
-            return BadRequest(savedSearchDependencyValidationException.InnerException);
+            return BadRequest(new { message = savedSearchDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (SavedSearchDependencyException savedSearchDependencyException)
+        catch (SavedSearchDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, savedSearchDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (SavedSearchServiceException savedSearchServiceException)
+        catch (SavedSearchServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, savedSearchServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 }

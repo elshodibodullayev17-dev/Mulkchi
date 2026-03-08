@@ -43,6 +43,14 @@ public partial class AuthService : IAuthService
                 throw new NotFoundUserByEmailException(
                     message: $"User with email '{request.Email}' was not found.");
 
+            if (string.IsNullOrWhiteSpace(request.Password))
+                throw new InvalidLoginRequestException(
+                    message: "Password is required.");
+
+            if (string.IsNullOrWhiteSpace(maybeUser.PasswordHash))
+                throw new InvalidLoginRequestException(
+                    message: "User account is missing password credentials. Please contact support.");
+
             if (!BCrypt.Net.BCrypt.Verify(request.Password, maybeUser.PasswordHash))
                 throw new InvalidLoginRequestException(
                     message: "The provided credentials are invalid.");

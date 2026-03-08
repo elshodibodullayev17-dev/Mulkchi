@@ -30,19 +30,19 @@ public class RentalContractsController : ControllerBase
         }
         catch (RentalContractValidationException rentalContractValidationException)
         {
-            return BadRequest(rentalContractValidationException.InnerException);
+            return BadRequest(new { message = rentalContractValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (RentalContractDependencyValidationException rentalContractDependencyValidationException)
         {
-            return BadRequest(rentalContractDependencyValidationException.InnerException);
+            return BadRequest(new { message = rentalContractDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (RentalContractDependencyException rentalContractDependencyException)
+        catch (RentalContractDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, rentalContractDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (RentalContractServiceException rentalContractServiceException)
+        catch (RentalContractServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, rentalContractServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -78,13 +78,13 @@ public class RentalContractsController : ControllerBase
 
             return Ok(result);
         }
-        catch (RentalContractDependencyException rentalContractDependencyException)
+        catch (RentalContractDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, rentalContractDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (RentalContractServiceException rentalContractServiceException)
+        catch (RentalContractServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, rentalContractServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -99,24 +99,24 @@ public class RentalContractsController : ControllerBase
         }
         catch (RentalContractValidationException rentalContractValidationException)
         {
-            return BadRequest(rentalContractValidationException.InnerException);
+            return BadRequest(new { message = rentalContractValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (RentalContractDependencyValidationException rentalContractDependencyValidationException)
             when (rentalContractDependencyValidationException.InnerException is NotFoundRentalContractException)
         {
-            return NotFound(rentalContractDependencyValidationException.InnerException);
+            return NotFound(new { message = rentalContractDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (RentalContractDependencyValidationException rentalContractDependencyValidationException)
         {
-            return BadRequest(rentalContractDependencyValidationException.InnerException);
+            return BadRequest(new { message = rentalContractDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (RentalContractDependencyException rentalContractDependencyException)
+        catch (RentalContractDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, rentalContractDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (RentalContractServiceException rentalContractServiceException)
+        catch (RentalContractServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, rentalContractServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -131,24 +131,24 @@ public class RentalContractsController : ControllerBase
         }
         catch (RentalContractValidationException rentalContractValidationException)
         {
-            return BadRequest(rentalContractValidationException.InnerException);
+            return BadRequest(new { message = rentalContractValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (RentalContractDependencyValidationException rentalContractDependencyValidationException)
             when (rentalContractDependencyValidationException.InnerException is NotFoundRentalContractException)
         {
-            return NotFound(rentalContractDependencyValidationException.InnerException);
+            return NotFound(new { message = rentalContractDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (RentalContractDependencyValidationException rentalContractDependencyValidationException)
         {
-            return BadRequest(rentalContractDependencyValidationException.InnerException);
+            return BadRequest(new { message = rentalContractDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (RentalContractDependencyException rentalContractDependencyException)
+        catch (RentalContractDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, rentalContractDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (RentalContractServiceException rentalContractServiceException)
+        catch (RentalContractServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, rentalContractServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -163,24 +163,24 @@ public class RentalContractsController : ControllerBase
         }
         catch (RentalContractValidationException rentalContractValidationException)
         {
-            return BadRequest(rentalContractValidationException.InnerException);
+            return BadRequest(new { message = rentalContractValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (RentalContractDependencyValidationException rentalContractDependencyValidationException)
             when (rentalContractDependencyValidationException.InnerException is NotFoundRentalContractException)
         {
-            return NotFound(rentalContractDependencyValidationException.InnerException);
+            return NotFound(new { message = rentalContractDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (RentalContractDependencyValidationException rentalContractDependencyValidationException)
         {
-            return BadRequest(rentalContractDependencyValidationException.InnerException);
+            return BadRequest(new { message = rentalContractDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (RentalContractDependencyException rentalContractDependencyException)
+        catch (RentalContractDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, rentalContractDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (RentalContractServiceException rentalContractServiceException)
+        catch (RentalContractServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, rentalContractServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 }
