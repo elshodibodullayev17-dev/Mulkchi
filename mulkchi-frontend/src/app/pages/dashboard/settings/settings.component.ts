@@ -239,13 +239,25 @@ export class SettingsComponent implements OnInit {
     this.userService.update(updated).subscribe({
       next: (user) => {
         this.user = user;
-        this.isUpgrading = false;
-        // Update stored role so JWT reflects new role after re-login
-        this.snackBar.open(
-          'Muvaffaqiyatli! Endi siz Mulkdorsiz. Iltimos, qayta kiring (logout → login).',
-          'OK',
-          { duration: 8000 },
-        );
+        // Refresh JWT so it carries the new Host role immediately
+        this.authService.refreshToken().subscribe({
+          next: () => {
+            this.isUpgrading = false;
+            this.snackBar.open(
+              "Muvaffaqiyatli! Endi siz Mulkdorsiz. Mulk qo'shishingiz mumkin.",
+              'OK',
+              { duration: 5000 },
+            );
+          },
+          error: () => {
+            this.isUpgrading = false;
+            this.snackBar.open(
+              'Rol yangilandi. Qayta kirish tavsiya etiladi (logout → login).',
+              'OK',
+              { duration: 5000 },
+            );
+          },
+        });
       },
       error: (err) => {
         this.isUpgrading = false;
