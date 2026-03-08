@@ -90,10 +90,7 @@ const passwordStrengthValidator: ValidatorFn = (
 
           <div class="form-group">
             <label>Muloqot tili</label>
-            <select
-              formControlName="preferredLanguage"
-              class="lang-select"
-            >
+            <select formControlName="preferredLanguage" class="lang-select">
               <option value="uz">🇺🇿 O'zbekcha</option>
               <option value="ru">🇷🇺 Русский</option>
               <option value="en">🇬🇧 English</option>
@@ -284,12 +281,15 @@ export class RegisterComponent {
 
     this.authService.register(this.registerForm.value).subscribe({
       next: () => {
-        this.snackBar.open("Muvaffaqiyatli ro'yxatdan o'tdingiz! 🎉", 'OK', { duration: 3000 });
+        this.snackBar.open("Muvaffaqiyatli ro'yxatdan o'tdingiz! 🎉", 'OK', {
+          duration: 3000,
+        });
         this.router.navigate(['/dashboard']);
       },
       error: (err) => {
         this.isLoading = false;
-        this.errorMessage = err.error?.message ?? "Ro'yxatdan o'tishda xatolik yuz berdi";
+        this.errorMessage =
+          err.error?.message ?? "Ro'yxatdan o'tishda xatolik yuz berdi";
       },
     });
   }
