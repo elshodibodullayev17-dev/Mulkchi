@@ -10,9 +10,15 @@ public partial class PropertyImageServiceTests
     public async Task ShouldModifyPropertyImageAsync()
     {
         // given
+        DateTimeOffset randomDateTimeOffset = DateTimeOffset.UtcNow;
         PropertyImage randomPropertyImage = CreateRandomPropertyImage();
         PropertyImage inputPropertyImage = randomPropertyImage;
+        inputPropertyImage.UpdatedDate = randomDateTimeOffset;
         PropertyImage expectedPropertyImage = inputPropertyImage;
+
+        this.dateTimeBrokerMock.Setup(broker =>
+            broker.GetCurrentDateTimeOffset())
+                .Returns(randomDateTimeOffset);
 
         this.storageBrokerMock.Setup(broker =>
             broker.UpdatePropertyImageAsync(inputPropertyImage))
@@ -23,6 +29,10 @@ public partial class PropertyImageServiceTests
 
         // then
         actualPropertyImage.Should().BeEquivalentTo(expectedPropertyImage);
+
+        this.dateTimeBrokerMock.Verify(broker =>
+            broker.GetCurrentDateTimeOffset(),
+            Times.Once);
 
         this.storageBrokerMock.Verify(broker =>
             broker.UpdatePropertyImageAsync(inputPropertyImage),

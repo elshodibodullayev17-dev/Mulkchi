@@ -31,6 +31,7 @@ public partial class StorageBroker
     {
         SavedSearch savedSearch = (await this.SavedSearches.FindAsync(savedSearchId))!;
         savedSearch.DeletedDate = DateTimeOffset.UtcNow;
+        savedSearch.UpdatedDate = DateTimeOffset.UtcNow;
         this.Entry(savedSearch).State = EntityState.Modified;
         await this.SaveChangesAsync();
         return savedSearch;

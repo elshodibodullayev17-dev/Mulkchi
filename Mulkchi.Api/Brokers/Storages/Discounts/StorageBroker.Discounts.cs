@@ -31,6 +31,7 @@ public partial class StorageBroker
     {
         Discount discount = (await this.Discounts.FindAsync(discountId))!;
         discount.DeletedDate = DateTimeOffset.UtcNow;
+        discount.UpdatedDate = DateTimeOffset.UtcNow;
         this.Entry(discount).State = EntityState.Modified;
         await this.SaveChangesAsync();
         return discount;

@@ -31,6 +31,7 @@ public partial class StorageBroker
     {
         RentalContract rentalContract = (await this.RentalContracts.FindAsync(rentalContractId))!;
         rentalContract.DeletedDate = DateTimeOffset.UtcNow;
+        rentalContract.UpdatedDate = DateTimeOffset.UtcNow;
         this.Entry(rentalContract).State = EntityState.Modified;
         await this.SaveChangesAsync();
         return rentalContract;

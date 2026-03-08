@@ -48,6 +48,7 @@ public partial class PaymentService : IPaymentService
         TryCatch(async () =>
         {
             ValidatePaymentOnModify(payment);
+            payment.UpdatedDate = this.dateTimeBroker.GetCurrentDateTimeOffset();
             return await this.storageBroker.UpdatePaymentAsync(payment);
         });
 

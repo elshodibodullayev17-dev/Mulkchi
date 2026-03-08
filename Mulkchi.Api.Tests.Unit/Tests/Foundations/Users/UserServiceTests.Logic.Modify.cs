@@ -10,9 +10,15 @@ public partial class UserServiceTests
     public async Task ShouldModifyUserAsync()
     {
         // given
+        DateTimeOffset randomDateTimeOffset = DateTimeOffset.UtcNow;
         User randomUser = CreateRandomUser();
         User inputUser = randomUser;
+        inputUser.UpdatedDate = randomDateTimeOffset;
         User expectedUser = inputUser;
+
+        this.dateTimeBrokerMock.Setup(broker =>
+            broker.GetCurrentDateTimeOffset())
+                .Returns(randomDateTimeOffset);
 
         this.storageBrokerMock.Setup(broker =>
             broker.UpdateUserAsync(inputUser))
@@ -23,6 +29,10 @@ public partial class UserServiceTests
 
         // then
         actualUser.Should().BeEquivalentTo(expectedUser);
+
+        this.dateTimeBrokerMock.Verify(broker =>
+            broker.GetCurrentDateTimeOffset(),
+            Times.Once);
 
         this.storageBrokerMock.Verify(broker =>
             broker.UpdateUserAsync(inputUser),

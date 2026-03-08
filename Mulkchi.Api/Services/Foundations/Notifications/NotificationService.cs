@@ -48,6 +48,7 @@ public partial class NotificationService : INotificationService
         TryCatch(async () =>
         {
             ValidateNotificationOnModify(notification);
+            notification.UpdatedDate = this.dateTimeBroker.GetCurrentDateTimeOffset();
             return await this.storageBroker.UpdateNotificationAsync(notification);
         });
 

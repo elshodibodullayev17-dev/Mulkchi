@@ -10,9 +10,15 @@ public partial class MessageServiceTests
     public async Task ShouldModifyMessageAsync()
     {
         // given
+        DateTimeOffset randomDateTimeOffset = DateTimeOffset.UtcNow;
         Message randomMessage = CreateRandomMessage();
         Message inputMessage = randomMessage;
+        inputMessage.UpdatedDate = randomDateTimeOffset;
         Message expectedMessage = inputMessage;
+
+        this.dateTimeBrokerMock.Setup(broker =>
+            broker.GetCurrentDateTimeOffset())
+                .Returns(randomDateTimeOffset);
 
         this.storageBrokerMock.Setup(broker =>
             broker.UpdateMessageAsync(inputMessage))
@@ -23,6 +29,10 @@ public partial class MessageServiceTests
 
         // then
         actualMessage.Should().BeEquivalentTo(expectedMessage);
+
+        this.dateTimeBrokerMock.Verify(broker =>
+            broker.GetCurrentDateTimeOffset(),
+            Times.Once);
 
         this.storageBrokerMock.Verify(broker =>
             broker.UpdateMessageAsync(inputMessage),

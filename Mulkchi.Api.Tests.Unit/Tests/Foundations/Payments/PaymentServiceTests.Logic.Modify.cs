@@ -10,9 +10,15 @@ public partial class PaymentServiceTests
     public async Task ShouldModifyPaymentAsync()
     {
         // given
+        DateTimeOffset randomDateTimeOffset = DateTimeOffset.UtcNow;
         Payment randomPayment = CreateRandomPayment();
         Payment inputPayment = randomPayment;
+        inputPayment.UpdatedDate = randomDateTimeOffset;
         Payment expectedPayment = inputPayment;
+
+        this.dateTimeBrokerMock.Setup(broker =>
+            broker.GetCurrentDateTimeOffset())
+                .Returns(randomDateTimeOffset);
 
         this.storageBrokerMock.Setup(broker =>
             broker.UpdatePaymentAsync(inputPayment))
@@ -23,6 +29,10 @@ public partial class PaymentServiceTests
 
         // then
         actualPayment.Should().BeEquivalentTo(expectedPayment);
+
+        this.dateTimeBrokerMock.Verify(broker =>
+            broker.GetCurrentDateTimeOffset(),
+            Times.Once);
 
         this.storageBrokerMock.Verify(broker =>
             broker.UpdatePaymentAsync(inputPayment),

@@ -10,9 +10,15 @@ public partial class FavoriteServiceTests
     public async Task ShouldModifyFavoriteAsync()
     {
         // given
+        DateTimeOffset randomDateTimeOffset = DateTimeOffset.UtcNow;
         Favorite randomFavorite = CreateRandomFavorite();
         Favorite inputFavorite = randomFavorite;
+        inputFavorite.UpdatedDate = randomDateTimeOffset;
         Favorite expectedFavorite = inputFavorite;
+
+        this.dateTimeBrokerMock.Setup(broker =>
+            broker.GetCurrentDateTimeOffset())
+                .Returns(randomDateTimeOffset);
 
         this.storageBrokerMock.Setup(broker =>
             broker.UpdateFavoriteAsync(inputFavorite))
@@ -23,6 +29,10 @@ public partial class FavoriteServiceTests
 
         // then
         actualFavorite.Should().BeEquivalentTo(expectedFavorite);
+
+        this.dateTimeBrokerMock.Verify(broker =>
+            broker.GetCurrentDateTimeOffset(),
+            Times.Once);
 
         this.storageBrokerMock.Verify(broker =>
             broker.UpdateFavoriteAsync(inputFavorite),

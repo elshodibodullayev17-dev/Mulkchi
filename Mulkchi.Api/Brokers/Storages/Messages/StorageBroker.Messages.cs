@@ -31,6 +31,7 @@ public partial class StorageBroker
     {
         Message message = (await this.Messages.FindAsync(messageId))!;
         message.DeletedDate = DateTimeOffset.UtcNow;
+        message.UpdatedDate = DateTimeOffset.UtcNow;
         this.Entry(message).State = EntityState.Modified;
         await this.SaveChangesAsync();
         return message;

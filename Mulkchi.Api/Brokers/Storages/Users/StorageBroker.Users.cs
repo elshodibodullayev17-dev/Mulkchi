@@ -38,6 +38,7 @@ public partial class StorageBroker
             return null!;
 
         user.DeletedDate = DateTimeOffset.UtcNow;
+        user.UpdatedDate = DateTimeOffset.UtcNow;
         this.Entry(user).State = EntityState.Modified;
         await this.SaveChangesAsync();
         return user;

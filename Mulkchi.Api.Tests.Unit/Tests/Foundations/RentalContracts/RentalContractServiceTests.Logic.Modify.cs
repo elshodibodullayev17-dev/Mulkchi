@@ -10,9 +10,15 @@ public partial class RentalContractServiceTests
     public async Task ShouldModifyRentalContractAsync()
     {
         // given
+        DateTimeOffset randomDateTimeOffset = DateTimeOffset.UtcNow;
         RentalContract randomRentalContract = CreateRandomRentalContract();
         RentalContract inputRentalContract = randomRentalContract;
+        inputRentalContract.UpdatedDate = randomDateTimeOffset;
         RentalContract expectedRentalContract = inputRentalContract;
+
+        this.dateTimeBrokerMock.Setup(broker =>
+            broker.GetCurrentDateTimeOffset())
+                .Returns(randomDateTimeOffset);
 
         this.storageBrokerMock.Setup(broker =>
             broker.UpdateRentalContractAsync(inputRentalContract))
@@ -23,6 +29,10 @@ public partial class RentalContractServiceTests
 
         // then
         actualRentalContract.Should().BeEquivalentTo(expectedRentalContract);
+
+        this.dateTimeBrokerMock.Verify(broker =>
+            broker.GetCurrentDateTimeOffset(),
+            Times.Once);
 
         this.storageBrokerMock.Verify(broker =>
             broker.UpdateRentalContractAsync(inputRentalContract),

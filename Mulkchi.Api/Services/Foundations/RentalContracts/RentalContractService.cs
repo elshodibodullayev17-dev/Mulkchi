@@ -48,6 +48,7 @@ public partial class RentalContractService : IRentalContractService
         TryCatch(async () =>
         {
             ValidateRentalContractOnModify(rentalContract);
+            rentalContract.UpdatedDate = this.dateTimeBroker.GetCurrentDateTimeOffset();
             return await this.storageBroker.UpdateRentalContractAsync(rentalContract);
         });
 

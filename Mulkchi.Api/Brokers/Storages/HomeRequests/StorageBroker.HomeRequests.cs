@@ -31,6 +31,7 @@ public partial class StorageBroker
     {
         HomeRequest homeRequest = (await this.HomeRequests.FindAsync(homeRequestId))!;
         homeRequest.DeletedDate = DateTimeOffset.UtcNow;
+        homeRequest.UpdatedDate = DateTimeOffset.UtcNow;
         this.Entry(homeRequest).State = EntityState.Modified;
         await this.SaveChangesAsync();
         return homeRequest;

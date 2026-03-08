@@ -31,6 +31,7 @@ public partial class StorageBroker
     {
         Notification notification = (await this.Notifications.FindAsync(notificationId))!;
         notification.DeletedDate = DateTimeOffset.UtcNow;
+        notification.UpdatedDate = DateTimeOffset.UtcNow;
         this.Entry(notification).State = EntityState.Modified;
         await this.SaveChangesAsync();
         return notification;
