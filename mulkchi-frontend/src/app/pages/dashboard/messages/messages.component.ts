@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { Message } from '../../../core/models/message.models';
 import { AuthService } from '../../../core/services/auth.service';
+import { ChatService } from '../../../core/services/chat.service';
 import { MessageService } from '../../../core/services/message.service';
 
 interface Conversation {
@@ -19,9 +21,14 @@ interface Conversation {
   templateUrl: './messages.component.html',
   styleUrls: ['./messages.component.scss'],
 })
-export class MessagesComponent implements OnInit {
+export class MessagesComponent implements OnInit, OnDestroy {
   private readonly messageService = inject(MessageService);
   private readonly authService = inject(AuthService);
+  private readonly chatService = inject(ChatService);
+
+  private chatSub?: Subscription;
+  private typingSub?: Subscription;
+  private typingTimeout?: ReturnType<typeof setTimeout>;
 
   currentUserId = this.authService.getUserId() ?? '';
   allMessages: Message[] = [];
@@ -30,14 +37,22 @@ export class MessagesComponent implements OnInit {
   newMessage = '';
   isSending = false;
   isLoading = true;
+  isPartnerTyping = false;
 
   ngOnInit(): void {
     this.load();
   }
 
+  ngOnDestroy(): void {
+    this.chatSub?.unsubscribe();
+    this.typingSub?.unsubscribe();
+    clearTimeout(this.typingTimeout);
+    this.chatService.stopConnection();
+  }
+
   load(): void {
     this.isLoading = true;
-    this.messageService.getAll(1, 100).subscribe({
+    this.messageService.getAll(1, 200).subscribe({
       next: (result) => {
         this.allMessages = result.items.sort(
           (a, b) =>
@@ -46,10 +61,56 @@ export class MessagesComponent implements OnInit {
         );
         this.buildConversations();
         this.isLoading = false;
+        this.startRealTime();
       },
       error: () => {
         this.isLoading = false;
+        this.startRealTime();
       },
+    });
+  }
+
+  private startRealTime(): void {
+    this.chatService.startConnection();
+
+    this.chatSub = this.chatService.messages$.subscribe((realtimeMsgs) => {
+      if (realtimeMsgs.length === 0) return;
+      const incoming = realtimeMsgs[realtimeMsgs.length - 1];
+      // Skip duplicates (history already loaded via HTTP)
+      if (this.allMessages.some((m) => m.id === incoming.id)) return;
+
+      this.allMessages.push(incoming);
+      const prevPartnerId = this.activeConversation?.partnerId;
+      this.buildConversations();
+
+      // Re-select same conversation if it received a new message
+      if (prevPartnerId) {
+        const updated = this.conversations.find(
+          (c) => c.partnerId === prevPartnerId,
+        );
+        if (updated) {
+          this.activeConversation = updated;
+          // Auto-mark as read if conversation is open and message is incoming
+          if (incoming.senderId === prevPartnerId) {
+            this.markMsgAsRead(incoming);
+          }
+        }
+      }
+
+      // Reset typing indicator on new message
+      this.isPartnerTyping = false;
+    });
+
+    this.typingSub = this.chatService.typing$.subscribe((evt) => {
+      this.isPartnerTyping = evt.isTyping;
+      if (evt.isTyping) {
+        clearTimeout(this.typingTimeout);
+        // Auto-clear after 4s if no further events
+        this.typingTimeout = setTimeout(
+          () => (this.isPartnerTyping = false),
+          4000,
+        );
+      }
     });
   }
 
@@ -79,38 +140,73 @@ export class MessagesComponent implements OnInit {
 
     if (this.conversations.length > 0 && !this.activeConversation) {
       this.activeConversation = this.conversations[0];
+      this.markConversationAsRead(this.activeConversation);
     }
   }
 
   selectConversation(conv: Conversation): void {
     this.activeConversation = conv;
+    this.isPartnerTyping = false;
+    this.markConversationAsRead(conv);
+  }
+
+  private markConversationAsRead(conv: Conversation): void {
+    conv.messages
+      .filter((m) => !m.isRead && m.receiverId === this.currentUserId)
+      .forEach((msg) => this.markMsgAsRead(msg));
+  }
+
+  private markMsgAsRead(msg: Message): void {
+    if (msg.isRead || msg.receiverId !== this.currentUserId) return;
+    // Optimistic update
+    msg.isRead = true;
+    msg.readAt = new Date().toISOString();
+    // Rebuild counters
+    if (this.activeConversation) {
+      this.activeConversation = {
+        ...this.activeConversation,
+        unreadCount: this.activeConversation.messages.filter(
+          (m) => !m.isRead && m.receiverId === this.currentUserId,
+        ).length,
+      };
+    }
+    // Persist to server
+    this.messageService.update({ ...msg }).subscribe();
   }
 
   sendMessage(): void {
-    if (!this.newMessage.trim() || !this.activeConversation) return;
+    if (!this.newMessage.trim() || !this.activeConversation || this.isSending)
+      return;
+    const content = this.newMessage.trim();
+    this.newMessage = '';
     this.isSending = true;
-    this.messageService
-      .create({
-        content: this.newMessage.trim(),
-        senderId: this.currentUserId,
-        receiverId: this.activeConversation.partnerId,
-      })
-      .subscribe({
-        next: (msg) => {
-          this.newMessage = '';
-          this.isSending = false;
-          this.allMessages.push(msg);
-          this.buildConversations();
-          // Re-select the same conversation
-          const updated = this.conversations.find(
-            (c) => c.partnerId === this.activeConversation!.partnerId,
-          );
-          if (updated) this.activeConversation = updated;
-        },
-        error: () => {
-          this.isSending = false;
-        },
-      });
+
+    // Send via SignalR hub (saves to DB, broadcasts confirmation back)
+    this.chatService.sendMessage(this.activeConversation.partnerId, content);
+
+    // Stop typing indicator
+    this.chatService.sendTypingIndicator(
+      this.activeConversation.partnerId,
+      false,
+    );
+    this.isSending = false;
+  }
+
+  onTyping(): void {
+    if (!this.activeConversation) return;
+    this.chatService.sendTypingIndicator(
+      this.activeConversation.partnerId,
+      true,
+    );
+    clearTimeout(this.typingTimeout);
+    this.typingTimeout = setTimeout(() => {
+      if (this.activeConversation) {
+        this.chatService.sendTypingIndicator(
+          this.activeConversation.partnerId,
+          false,
+        );
+      }
+    }, 2000);
   }
 
   getShortId(id: string): string {

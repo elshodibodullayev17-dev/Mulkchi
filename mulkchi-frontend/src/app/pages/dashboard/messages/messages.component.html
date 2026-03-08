@@ -4,7 +4,7 @@
 	</div>
 
 	<div class="messages-layout">
-		<!-- Sidebar: conversation list -->
+		<!-- Sidebar -->
 		<aside class="conversations-sidebar">
 			<div class="conv-search">
 				<input type="text" placeholder="Qidirish..." disabled>
@@ -32,13 +32,19 @@
 			</div>
 		</aside>
 
-		<!-- Main: message thread -->
+		<!-- Thread -->
 		<main class="message-thread" *ngIf="activeConversation; else noConv">
 			<div class="thread-header">
 				<div class="thread-avatar">{{ activeConversation.partnerId.charAt(0).toUpperCase() }}</div>
 				<div>
 					<h2>ID: {{ getShortId(activeConversation.partnerId) }}</h2>
-					<span class="thread-sub">{{ activeConversation.messages.length }} ta xabar</span>
+					<span class="thread-sub" *ngIf="isPartnerTyping; else msgCount">
+						<span class="typing-dots"><span></span><span></span><span></span></span>
+						Yozmoqda...
+					</span>
+					<ng-template #msgCount>
+						<span class="thread-sub">{{ activeConversation.messages.length }} ta xabar</span>
+					</ng-template>
 				</div>
 			</div>
 
@@ -47,16 +53,28 @@
 					[class.msg-mine]="msg.senderId === currentUserId">
 					<div class="msg-bubble">
 						<p>{{ msg.content }}</p>
-						<span class="msg-time">{{ getTime(msg.createdDate) }}</span>
+						<div class="msg-meta">
+							<span class="msg-time">{{ getTime(msg.createdDate) }}</span>
+							<span class="read-receipt" *ngIf="msg.senderId === currentUserId">
+								<span *ngIf="msg.isRead" class="receipt-read" title="O'qildi">✓✓</span>
+								<span *ngIf="!msg.isRead" class="receipt-sent" title="Yuborildi">✓</span>
+							</span>
+						</div>
+					</div>
+				</div>
+
+				<!-- Typing indicator bubble -->
+				<div class="msg-row" *ngIf="isPartnerTyping">
+					<div class="msg-bubble typing-bubble">
+						<span class="typing-dots"><span></span><span></span><span></span></span>
 					</div>
 				</div>
 			</div>
 
 			<div class="thread-composer">
-				<input type="text" [(ngModel)]="newMessage" placeholder="Xabar yozing..." (keyup.enter)="sendMessage()">
-				<button class="send-btn" (click)="sendMessage()" [disabled]="isSending || !newMessage.trim()">
-					&#10148;
-				</button>
+				<input type="text" [(ngModel)]="newMessage" placeholder="Xabar yozing..." (keyup.enter)="sendMessage()"
+					(input)="onTyping()">
+				<button class="send-btn" (click)="sendMessage()" [disabled]="isSending || !newMessage.trim()">&#10148;</button>
 			</div>
 		</main>
 
