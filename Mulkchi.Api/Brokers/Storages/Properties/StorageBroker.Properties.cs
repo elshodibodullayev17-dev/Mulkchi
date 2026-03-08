@@ -31,6 +31,7 @@ public partial class StorageBroker
     {
         Property property = (await this.Properties.FindAsync(propertyId))!;
         property.DeletedDate = DateTimeOffset.UtcNow;
+        property.UpdatedDate = DateTimeOffset.UtcNow;
         this.Entry(property).State = EntityState.Modified;
         await this.SaveChangesAsync();
         return property;

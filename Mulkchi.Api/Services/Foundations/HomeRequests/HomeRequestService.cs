@@ -62,6 +62,7 @@ public partial class HomeRequestService : IHomeRequestService
                 homeRequest.TotalNights = (int)(homeRequest.CheckOutDate.Value - homeRequest.CheckInDate.Value).TotalDays;
             }
 
+            homeRequest.UpdatedDate = this.dateTimeBroker.GetCurrentDateTimeOffset();
             return await this.storageBroker.UpdateHomeRequestAsync(homeRequest);
         });
 

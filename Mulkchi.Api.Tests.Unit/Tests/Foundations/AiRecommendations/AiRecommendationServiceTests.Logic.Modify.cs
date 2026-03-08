@@ -10,9 +10,15 @@ public partial class AiRecommendationServiceTests
     public async Task ShouldModifyAiRecommendationAsync()
     {
         // given
+        DateTimeOffset randomDateTimeOffset = DateTimeOffset.UtcNow;
         AiRecommendation randomAiRecommendation = CreateRandomAiRecommendation();
         AiRecommendation inputAiRecommendation = randomAiRecommendation;
+        inputAiRecommendation.UpdatedDate = randomDateTimeOffset;
         AiRecommendation expectedAiRecommendation = inputAiRecommendation;
+
+        this.dateTimeBrokerMock.Setup(broker =>
+            broker.GetCurrentDateTimeOffset())
+                .Returns(randomDateTimeOffset);
 
         this.storageBrokerMock.Setup(broker =>
             broker.UpdateAiRecommendationAsync(inputAiRecommendation))
@@ -23,6 +29,10 @@ public partial class AiRecommendationServiceTests
 
         // then
         actualAiRecommendation.Should().BeEquivalentTo(expectedAiRecommendation);
+
+        this.dateTimeBrokerMock.Verify(broker =>
+            broker.GetCurrentDateTimeOffset(),
+            Times.Once);
 
         this.storageBrokerMock.Verify(broker =>
             broker.UpdateAiRecommendationAsync(inputAiRecommendation),

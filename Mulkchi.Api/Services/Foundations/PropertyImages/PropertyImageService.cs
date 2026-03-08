@@ -48,6 +48,7 @@ public partial class PropertyImageService : IPropertyImageService
         TryCatch(async () =>
         {
             ValidatePropertyImageOnModify(propertyImage);
+            propertyImage.UpdatedDate = this.dateTimeBroker.GetCurrentDateTimeOffset();
             return await this.storageBroker.UpdatePropertyImageAsync(propertyImage);
         });
 

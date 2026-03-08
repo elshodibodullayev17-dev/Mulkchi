@@ -31,6 +31,7 @@ public partial class StorageBroker
     {
         PropertyView propertyView = (await this.PropertyViews.FindAsync(propertyViewId))!;
         propertyView.DeletedDate = DateTimeOffset.UtcNow;
+        propertyView.UpdatedDate = DateTimeOffset.UtcNow;
         this.Entry(propertyView).State = EntityState.Modified;
         await this.SaveChangesAsync();
         return propertyView;

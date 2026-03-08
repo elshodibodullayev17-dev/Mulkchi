@@ -48,6 +48,7 @@ public partial class MessageService : IMessageService
         TryCatch(async () =>
         {
             ValidateMessageOnModify(message);
+            message.UpdatedDate = this.dateTimeBroker.GetCurrentDateTimeOffset();
             return await this.storageBroker.UpdateMessageAsync(message);
         });
 

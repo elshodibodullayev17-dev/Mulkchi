@@ -10,9 +10,15 @@ public partial class SavedSearchServiceTests
     public async Task ShouldModifySavedSearchAsync()
     {
         // given
+        DateTimeOffset randomDateTimeOffset = DateTimeOffset.UtcNow;
         SavedSearch randomSavedSearch = CreateRandomSavedSearch();
         SavedSearch inputSavedSearch = randomSavedSearch;
+        inputSavedSearch.UpdatedDate = randomDateTimeOffset;
         SavedSearch expectedSavedSearch = inputSavedSearch;
+
+        this.dateTimeBrokerMock.Setup(broker =>
+            broker.GetCurrentDateTimeOffset())
+                .Returns(randomDateTimeOffset);
 
         this.storageBrokerMock.Setup(broker =>
             broker.UpdateSavedSearchAsync(inputSavedSearch))
@@ -23,6 +29,10 @@ public partial class SavedSearchServiceTests
 
         // then
         actualSavedSearch.Should().BeEquivalentTo(expectedSavedSearch);
+
+        this.dateTimeBrokerMock.Verify(broker =>
+            broker.GetCurrentDateTimeOffset(),
+            Times.Once);
 
         this.storageBrokerMock.Verify(broker =>
             broker.UpdateSavedSearchAsync(inputSavedSearch),

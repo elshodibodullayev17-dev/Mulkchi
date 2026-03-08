@@ -31,6 +31,7 @@ public partial class StorageBroker
     {
         Payment payment = (await this.Payments.FindAsync(paymentId))!;
         payment.DeletedDate = DateTimeOffset.UtcNow;
+        payment.UpdatedDate = DateTimeOffset.UtcNow;
         this.Entry(payment).State = EntityState.Modified;
         await this.SaveChangesAsync();
         return payment;

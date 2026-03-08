@@ -31,6 +31,7 @@ public partial class StorageBroker
     {
         PropertyImage propertyImage = (await this.PropertyImages.FindAsync(propertyImageId))!;
         propertyImage.DeletedDate = DateTimeOffset.UtcNow;
+        propertyImage.UpdatedDate = DateTimeOffset.UtcNow;
         this.Entry(propertyImage).State = EntityState.Modified;
         await this.SaveChangesAsync();
         return propertyImage;

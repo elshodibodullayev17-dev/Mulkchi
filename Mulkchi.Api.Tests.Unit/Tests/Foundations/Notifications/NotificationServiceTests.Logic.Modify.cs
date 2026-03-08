@@ -10,9 +10,15 @@ public partial class NotificationServiceTests
     public async Task ShouldModifyNotificationAsync()
     {
         // given
+        DateTimeOffset randomDateTimeOffset = DateTimeOffset.UtcNow;
         Notification randomNotification = CreateRandomNotification();
         Notification inputNotification = randomNotification;
+        inputNotification.UpdatedDate = randomDateTimeOffset;
         Notification expectedNotification = inputNotification;
+
+        this.dateTimeBrokerMock.Setup(broker =>
+            broker.GetCurrentDateTimeOffset())
+                .Returns(randomDateTimeOffset);
 
         this.storageBrokerMock.Setup(broker =>
             broker.UpdateNotificationAsync(inputNotification))
@@ -23,6 +29,10 @@ public partial class NotificationServiceTests
 
         // then
         actualNotification.Should().BeEquivalentTo(expectedNotification);
+
+        this.dateTimeBrokerMock.Verify(broker =>
+            broker.GetCurrentDateTimeOffset(),
+            Times.Once);
 
         this.storageBrokerMock.Verify(broker =>
             broker.UpdateNotificationAsync(inputNotification),

@@ -31,6 +31,7 @@ public partial class StorageBroker
     {
         Review review = (await this.Reviews.FindAsync(reviewId))!;
         review.DeletedDate = DateTimeOffset.UtcNow;
+        review.UpdatedDate = DateTimeOffset.UtcNow;
         this.Entry(review).State = EntityState.Modified;
         await this.SaveChangesAsync();
         return review;

@@ -48,6 +48,7 @@ public partial class SavedSearchService : ISavedSearchService
         TryCatch(async () =>
         {
             ValidateSavedSearchOnModify(savedSearch);
+            savedSearch.UpdatedDate = this.dateTimeBroker.GetCurrentDateTimeOffset();
             return await this.storageBroker.UpdateSavedSearchAsync(savedSearch);
         });
 

@@ -57,6 +57,7 @@ public partial class FavoriteService : IFavoriteService
         TryCatch(async () =>
         {
             ValidateFavoriteOnModify(favorite);
+            favorite.UpdatedDate = this.dateTimeBroker.GetCurrentDateTimeOffset();
             return await this.storageBroker.UpdateFavoriteAsync(favorite);
         });
 

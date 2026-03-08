@@ -31,6 +31,7 @@ public partial class StorageBroker
     {
         Favorite favorite = (await this.Favorites.FindAsync(favoriteId))!;
         favorite.DeletedDate = DateTimeOffset.UtcNow;
+        favorite.UpdatedDate = DateTimeOffset.UtcNow;
         this.Entry(favorite).State = EntityState.Modified;
         await this.SaveChangesAsync();
         return favorite;

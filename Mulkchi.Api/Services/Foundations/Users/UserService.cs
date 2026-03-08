@@ -48,6 +48,7 @@ public partial class UserService : IUserService
         TryCatch(async () =>
         {
             ValidateUserOnModify(user);
+            user.UpdatedDate = this.dateTimeBroker.GetCurrentDateTimeOffset();
             return await this.storageBroker.UpdateUserAsync(user);
         });
 

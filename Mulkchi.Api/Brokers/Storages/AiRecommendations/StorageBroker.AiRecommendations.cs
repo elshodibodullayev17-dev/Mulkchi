@@ -31,6 +31,7 @@ public partial class StorageBroker
     {
         AiRecommendation aiRecommendation = (await this.AiRecommendations.FindAsync(aiRecommendationId))!;
         aiRecommendation.DeletedDate = DateTimeOffset.UtcNow;
+        aiRecommendation.UpdatedDate = DateTimeOffset.UtcNow;
         this.Entry(aiRecommendation).State = EntityState.Modified;
         await this.SaveChangesAsync();
         return aiRecommendation;

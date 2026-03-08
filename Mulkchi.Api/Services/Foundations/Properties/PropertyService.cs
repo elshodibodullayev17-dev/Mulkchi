@@ -48,6 +48,7 @@ public partial class PropertyService : IPropertyService
         TryCatch(async () =>
         {
             ValidatePropertyOnModify(property);
+            property.UpdatedDate = this.dateTimeBroker.GetCurrentDateTimeOffset();
             return await this.storageBroker.UpdatePropertyAsync(property);
         });
 
