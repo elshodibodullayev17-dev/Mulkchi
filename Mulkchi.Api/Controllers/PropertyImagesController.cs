@@ -29,19 +29,19 @@ public class PropertyImagesController : ControllerBase
         }
         catch (PropertyImageValidationException propertyImageValidationException)
         {
-            return BadRequest(propertyImageValidationException.InnerException);
+            return BadRequest(new { message = propertyImageValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PropertyImageDependencyValidationException propertyImageDependencyValidationException)
         {
-            return BadRequest(propertyImageDependencyValidationException.InnerException);
+            return BadRequest(new { message = propertyImageDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (PropertyImageDependencyException propertyImageDependencyException)
+        catch (PropertyImageDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyImageDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (PropertyImageServiceException propertyImageServiceException)
+        catch (PropertyImageServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyImageServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -69,13 +69,13 @@ public class PropertyImagesController : ControllerBase
 
             return Ok(result);
         }
-        catch (PropertyImageDependencyException propertyImageDependencyException)
+        catch (PropertyImageDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyImageDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (PropertyImageServiceException propertyImageServiceException)
+        catch (PropertyImageServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyImageServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -90,24 +90,24 @@ public class PropertyImagesController : ControllerBase
         }
         catch (PropertyImageValidationException propertyImageValidationException)
         {
-            return BadRequest(propertyImageValidationException.InnerException);
+            return BadRequest(new { message = propertyImageValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PropertyImageDependencyValidationException propertyImageDependencyValidationException)
             when (propertyImageDependencyValidationException.InnerException is NotFoundPropertyImageException)
         {
-            return NotFound(propertyImageDependencyValidationException.InnerException);
+            return NotFound(new { message = propertyImageDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PropertyImageDependencyValidationException propertyImageDependencyValidationException)
         {
-            return BadRequest(propertyImageDependencyValidationException.InnerException);
+            return BadRequest(new { message = propertyImageDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (PropertyImageDependencyException propertyImageDependencyException)
+        catch (PropertyImageDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyImageDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (PropertyImageServiceException propertyImageServiceException)
+        catch (PropertyImageServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyImageServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -122,24 +122,24 @@ public class PropertyImagesController : ControllerBase
         }
         catch (PropertyImageValidationException propertyImageValidationException)
         {
-            return BadRequest(propertyImageValidationException.InnerException);
+            return BadRequest(new { message = propertyImageValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PropertyImageDependencyValidationException propertyImageDependencyValidationException)
             when (propertyImageDependencyValidationException.InnerException is NotFoundPropertyImageException)
         {
-            return NotFound(propertyImageDependencyValidationException.InnerException);
+            return NotFound(new { message = propertyImageDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PropertyImageDependencyValidationException propertyImageDependencyValidationException)
         {
-            return BadRequest(propertyImageDependencyValidationException.InnerException);
+            return BadRequest(new { message = propertyImageDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (PropertyImageDependencyException propertyImageDependencyException)
+        catch (PropertyImageDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyImageDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (PropertyImageServiceException propertyImageServiceException)
+        catch (PropertyImageServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyImageServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 
@@ -154,24 +154,24 @@ public class PropertyImagesController : ControllerBase
         }
         catch (PropertyImageValidationException propertyImageValidationException)
         {
-            return BadRequest(propertyImageValidationException.InnerException);
+            return BadRequest(new { message = propertyImageValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PropertyImageDependencyValidationException propertyImageDependencyValidationException)
             when (propertyImageDependencyValidationException.InnerException is NotFoundPropertyImageException)
         {
-            return NotFound(propertyImageDependencyValidationException.InnerException);
+            return NotFound(new { message = propertyImageDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
         catch (PropertyImageDependencyValidationException propertyImageDependencyValidationException)
         {
-            return BadRequest(propertyImageDependencyValidationException.InnerException);
+            return BadRequest(new { message = propertyImageDependencyValidationException.InnerException?.Message ?? "An error occurred." });
         }
-        catch (PropertyImageDependencyException propertyImageDependencyException)
+        catch (PropertyImageDependencyException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyImageDependencyException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
-        catch (PropertyImageServiceException propertyImageServiceException)
+        catch (PropertyImageServiceException)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, propertyImageServiceException.InnerException);
+            return StatusCode(StatusCodes.Status500InternalServerError, new { message = "Internal server error." });
         }
     }
 }
