@@ -267,8 +267,8 @@ public class Startup
         services.AddScoped<IAnnouncementService, AnnouncementService>();
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IBookingService, BookingService>();
-        services.AddSingleton<IUserConnectionTracker, UserConnectionTracker>();
-        services.AddSingleton<IPriceRecommendationService, PriceRecommendationService>();
+        services.AddScoped<IUserConnectionTracker, UserConnectionTracker>();
+        services.AddScoped<IPriceRecommendationService, PriceRecommendationService>();
         
         // Configure EmailSettings
         services.Configure<EmailSettings>(this.configuration.GetSection("EmailSettings"));
