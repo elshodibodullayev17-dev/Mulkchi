@@ -6,6 +6,7 @@ using Microsoft.OpenApi.Models;
 using Mulkchi.Api.Brokers.DateTimes;
 using Mulkchi.Api.Brokers.Loggings;
 using Mulkchi.Api.Brokers.Storages;
+using Mulkchi.Api.Brokers.Notifications;
 using Microsoft.AspNetCore.SignalR;
 using Mulkchi.Api.Hubs;
 using Mulkchi.Api.Services.Foundations.Users;
@@ -25,6 +26,7 @@ using Mulkchi.Api.Services.Foundations.Discounts;
 using Mulkchi.Api.Services.Foundations.DiscountUsages;
 using Mulkchi.Api.Services.Foundations.Announcements;
 using Mulkchi.Api.Services.Foundations.Auth;
+using Mulkchi.Api.Services.Foundations.Bookings;
 
 namespace Mulkchi.Api;
 
@@ -192,6 +194,13 @@ public class Startup
         services.AddScoped<IDiscountUsageService, DiscountUsageService>();
         services.AddScoped<IAnnouncementService, AnnouncementService>();
         services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IBookingService, BookingService>();
+        
+        // Configure EmailSettings
+        services.Configure<EmailSettings>(this.configuration.GetSection("EmailSettings"));
+        
+        // Register email broker
+        services.AddTransient<IEmailBroker, SmtpEmailBroker>();
     }
 
     private void AddDbContext(IServiceCollection services)

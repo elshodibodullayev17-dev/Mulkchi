@@ -7,6 +7,7 @@ using Mulkchi.Api.Brokers.Storages;
 using Mulkchi.Api.Models.Foundations.Bookings;
 using Mulkchi.Api.Services.Foundations.Bookings;
 using Mulkchi.Api.Services.Foundations.Auth;
+using Mulkchi.Api.Brokers.Notifications;
 
 namespace Mulkchi.Api.Tests.Unit.Tests.Foundations.Bookings;
 
@@ -14,15 +15,18 @@ public partial class BookingServiceTests
 {
     private readonly Mock<IStorageBroker> storageBrokerMock;
     private readonly Mock<ICurrentUserService> currentUserServiceMock;
+    private readonly Mock<IEmailBroker> emailBrokerMock;
     private readonly IBookingService bookingService;
 
     public BookingServiceTests()
     {
         this.storageBrokerMock = new Mock<IStorageBroker>();
         this.currentUserServiceMock = new Mock<ICurrentUserService>();
+        this.emailBrokerMock = new Mock<IEmailBroker>();
         this.bookingService = new BookingService(
             this.storageBrokerMock.Object,
-            this.currentUserServiceMock.Object);
+            this.currentUserServiceMock.Object,
+            this.emailBrokerMock.Object);
     }
 
     private static Booking CreateRandomBooking()
