@@ -27,6 +27,7 @@ using Mulkchi.Api.Services.Foundations.DiscountUsages;
 using Mulkchi.Api.Services.Foundations.Announcements;
 using Mulkchi.Api.Services.Foundations.Auth;
 using Mulkchi.Api.Services.Foundations.Bookings;
+using Mulkchi.Api.Middleware;
 
 namespace Mulkchi.Api;
 
@@ -75,6 +76,9 @@ public class Startup
         app.UseHttpsRedirection();
         app.UseStaticFiles(); // Enable static file serving
         app.UseCors("AllowAngular");
+        
+        // Add rate limiting middleware
+        app.UseMiddleware<RateLimitMiddleware>();
         
         // Add request localization
         var supportedCultures = new[] { "uz", "ru", "en" };
