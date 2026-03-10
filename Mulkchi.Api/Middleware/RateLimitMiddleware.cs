@@ -24,10 +24,10 @@ public class RateLimitMiddleware
         var path = context.Request.Path.Value?.ToLower() ?? "";
         var method = context.Request.Method;
 
-        // Check auth endpoints (10 requests per minute)
+        // Check auth endpoints (20 requests per minute for development)
         if (path.StartsWith("/api/auth/"))
         {
-            if (IsRateLimited(_authRequests, clientIp, TimeSpan.FromMinutes(1), 10))
+            if (IsRateLimited(_authRequests, clientIp, TimeSpan.FromMinutes(1), 20))
             {
                 context.Response.StatusCode = (int)HttpStatusCode.TooManyRequests;
                 context.Response.Headers["Retry-After"] = "60";
@@ -48,11 +48,11 @@ public class RateLimitMiddleware
             }
         }
 
-        // Check general requests (100 requests per minute)
+        // Check general requests (200 requests per minute for development)
         if (method == "GET")
         {
             var currentCount = _generalRequests.GetOrAdd(clientIp, 0);
-            if (currentCount >= 100)
+            if (currentCount >= 200)
             {
                 context.Response.StatusCode = (int)HttpStatusCode.TooManyRequests;
                 context.Response.Headers["Retry-After"] = "60";
